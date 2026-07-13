@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 2 · Flowchart mastery - learn mermaid with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-mermaid-with-phoebe</a> / Session 2 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Mermaid with Phoebe · Session 2 of 6</div>
+    <h1>Tame the <span class="accent">spaghetti</span>: flowchart mastery</h1>
+    <p class="sub">Session 1 gave you nodes and arrows. Today you get the three tools that turn a tangle into a diagram people thank you for: subgraphs for structure, classes for meaning, and the hygiene habits that keep big diagrams readable.</p>
+    <div class="chip-row">
+      <span class="chip level">🟢 Easy</span>
+      <span class="chip audience">Data &amp; AI teams</span>
+      <span class="chip time">45 min live + self-study</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Recap</span>
+      <span class="a2" style="flex:4">3-22 · Concepts (live cards)</span>
+      <span class="a3" style="flex:4">22-40 · Three demos</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this session exists</h2>
+    </div>
+    <p class="lede">Every flowchart starts clean. Then someone adds "just one more box" ten times, and now it reads like a plate of noodles. That homework diagram you brought - the one that grew past 10 nodes - is today's patient. The cure is not a bigger monitor: it is grouping (subgraphs), visual meaning (classes), and knowing when one diagram should become two. Nova's map gets the full treatment too.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill peach">★ Try it now</span>
+      <span class="pill inkpill">Every pink diagram block is REAL mermaid, rendered live</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      Subgraph syntax for zoning a diagram, classDef styling that gives every color one job, the v11 shape catalog, click-to-link interactivity, and a rescued Nova map: three named zones, styled by workload, each node linking to its (fictional) repo. Plus a repeatable recipe for rescuing any messy flowchart you inherit.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: SUBGRAPHS ============ -->
+  <section class="section" id="subgraphs">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers "Flowchart: subgraphs"</span>
+      <h2>Subgraphs - boxes within boxes <span class="tag concept">7 min live</span></h2>
+    </div>
+    <p class="lede">A subgraph draws a labeled container around a group of nodes. Readers scan the containers first and the boxes second - which means a 20-node diagram with 3 zones reads like a 3-node diagram. That is the whole trick.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three labeled zones - Sources, Platform, Consumers - each containing small nodes, read left to right">
+        <style> .s2aT { font: 700 16px Inter, sans-serif; fill: #291B24; } .s2aW { font: 700 14px Inter, sans-serif; fill: #FFFFFF; } .s2aX { font: 400 13px Inter, sans-serif; fill: #806A78; } .s2aN { font: 600 14px Inter, sans-serif; fill: #3A2400; } .s2aArr { stroke: #D9C6D2; stroke-width: 2.5; fill: none; marker-end: url(#s2aAh); }
+        </style> <defs> <marker id="s2aAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"> <path d="M0,0 L6,3 L0,6" fill="none" stroke="#D9C6D2" stroke-width="1.5"/> </marker> </defs>
+        <rect x="20" y="30" width="230" height="150" rx="14" fill="#FFEFF5" stroke="#FF9EBF" stroke-width="2"/> <text class="s2aT" x="40" y="58">Sources</text> <rect x="45" y="76" width="120" height="34" rx="8" fill="#FF3670"/> <text class="s2aW" x="62" y="98">Events</text> <rect x="45" y="122" width="120" height="34" rx="8" fill="#FF9EBF"/> <text class="s2aT" x="62" y="144" style="font-size:14px">CRM</text>
+        <line class="s2aArr" x1="255" y1="105" x2="315" y2="105"/> <rect x="322" y="30" width="230" height="150" rx="14" fill="#FFEFF5" stroke="#FF9EBF" stroke-width="2"/> <text class="s2aT" x="342" y="58">Platform</text> <rect x="347" y="76" width="120" height="34" rx="8" fill="#D6246E"/> <text class="s2aW" x="364" y="98">Pipeline</text> <rect x="347" y="122" width="120" height="34" rx="8" fill="#8E1146"/>
+        <text class="s2aW" x="364" y="144">Warehouse</text> <line class="s2aArr" x1="557" y1="105" x2="617" y2="105"/> <rect x="624" y="30" width="230" height="150" rx="14" fill="#FFEFF5" stroke="#FF9EBF" stroke-width="2"/> <text class="s2aT" x="644" y="58">Consumers</text> <rect x="649" y="76" width="120" height="34" rx="8" fill="#FF3670"/> <text class="s2aW" x="666" y="98">Dashboards</text>
+        <rect x="649" y="122" width="120" height="34" rx="8" fill="#FF9EBF"/> <text class="s2aT" x="666" y="144" style="font-size:14px">ML</text> <rect x="20" y="218" width="14" height="14" rx="3" fill="#F59E0B"/> <text class="s2aN" x="44" y="230">Readers scan the three zones first, the boxes second. Structure does the explaining.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the zoning mental model: containers carry the story, nodes carry the detail.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>The subgraph block<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A subgraph is three things: the keyword, an ID with an optional display title, and an <code>end</code>. Everything declared between them lives inside the box. Edges work exactly as before - including edges that cross the box wall, and edges attached to the subgraph ID itself.</p>
+        <div class="mmd" data-caption="Nova zoned into Sources / Platform / Consumers - same nodes as Session 1, suddenly scannable.">
+<pre class="mmd-src">
+flowchart LR
+  subgraph src[Sources]
+    ev[App events]
+    crm[CRM export]
+  end
+  subgraph plat[Platform]
+    ing[Ingestion] --> qa{Quality checks}
+    qa -->|pass| dw[(Warehouse)]
+  end
+  subgraph cons[Consumers]
+    bi[Dashboards]
+    ml[ML features]
+  end
+  ev -->|stream| ing
+  crm -.->|nightly| ing
+  dw --> bi
+  dw --> ml
+</pre>
+        </div>
+        <ul>
+          <li><strong>Always give the ID:</strong> <code>subgraph src[Sources]</code>. The ID (<code>src</code>) is how you draw edges to the whole zone later - <code>src --&gt; plat</code> connects box wall to box wall.</li>
+          <li><strong>Declare inside, connect anywhere.</strong> A node's home is the subgraph where it is first declared. Cross-zone edges (like <code>ev --&gt; ing</code>) are fine and normal.</li>
+          <li><strong>Nesting works:</strong> a <code>subgraph</code> inside a <code>subgraph</code> draws boxes within boxes - handy for a "Platform" zone containing "Streaming" and "Batch" sub-zones.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>The architecture review that finally landed.</strong> A platform team presented the same 25-node diagram twice. Flat version: execs squinted, meeting drifted. Zoned version - Sources, Our platform, Downstream teams - the CFO pointed at the middle box and asked exactly the right cost question. Same nodes, three subgraphs, different meeting.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Direction inside a subgraph<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Each subgraph can set its own flow with a <code>direction</code> statement on its first line - a top-down zone inside a left-right diagram, for example:</p>
+        <div class="prompt-box good"><span class="label">Pattern</span>subgraph plat[Platform]
+  direction TB
+  ing --> qa --> dw
+end</div>
+        <ul>
+          <li><strong>The catch (docs say so too):</strong> if any node inside the subgraph links to a node outside it, the subgraph's own direction is ignored and it inherits the parent flow. Design zones as units first, wire them second.</li>
+          <li><strong>When it shines:</strong> a wide LR pipeline with one tall TB zone for a decision ladder or an approval chain.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Zone design - what makes a good subgraph<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Subgraphs are a grouping tool, and groupings are claims: "these things belong together". Good claims to make:</p>
+        <ul>
+          <li><strong>Ownership</strong> - one zone per team or system boundary. The best default for architecture diagrams.</li>
+          <li><strong>Lifecycle stage</strong> - raw / staged / served zones in a data platform.</li>
+          <li><strong>Trust boundary</strong> - inside the VPC vs outside; great for security conversations.</li>
+        </ul>
+        <p>Bad claim: grouping by "stuff that happened to fit there". If you cannot name the zone in two words, it is not a zone. And 3-5 zones is the sweet spot - seven subgraphs is spaghetti with extra steps.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: STYLING ============ -->
+  <section class="section" id="styling">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers "Flowchart: styling and classes"</span>
+      <h2>Styling - meaning through color <span class="tag concept">7 min live</span></h2>
+    </div>
+    <p class="lede">Untrained color is decoration. Trained color is a legend: stream things pink, batch things pale, storage things dark - and suddenly readers decode your diagram before reading a single label. Mermaid's tool for this is <code>classDef</code>.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>classDef + class - define once, apply everywhere<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A <code>classDef</code> names a reusable style. A <code>class</code> statement (or the <code>:::</code> shorthand right on a node) applies it. One definition, any number of nodes - exactly like CSS.</p>
+        <div class="mmd" data-caption="Three named classes, one meaning each: stream, batch, storage. The ::: shorthand applies a class inline.">
+<pre class="mmd-src">
+flowchart LR
+  ev[App events]:::stream -->|stream| ing[Ingestion]
+  crm[CRM export]:::batch -.->|nightly| ing
+  ing --> dw[(Warehouse)]
+  dw --> bi[Dashboards]
+  class dw storage
+  linkStyle 1 stroke:#F59E0B,stroke-width:3px
+  classDef stream fill:#D6246E,color:#FFEFF5,stroke:#8E1146
+  classDef batch fill:#FFEFF5,color:#8E1146,stroke:#D6246E
+  classDef storage fill:#8E1146,color:#FFEFF5,stroke:#8E1146
+</pre>
+        </div>
+        <table class="clean">
+          <thead><tr><th>Statement</th><th>Does</th><th>Use when</th></tr></thead>
+          <tbody>
+            <tr><td><code>classDef name fill:...,stroke:...</code></td><td>defines a named style</td><td>always - your palette lives here</td></tr>
+            <tr><td><code>class a,b,c name</code></td><td>applies it to listed nodes</td><td>styling many nodes at once</td></tr>
+            <tr><td><code>a[Label]:::name</code></td><td>applies it inline</td><td>styling at the point of declaration</td></tr>
+            <tr><td><code>style a fill:#FFEFF5</code></td><td>styles ONE node directly</td><td>a true one-off (rare - prefer classes)</td></tr>
+            <tr><td><code>linkStyle 1 stroke:#F59E0B</code></td><td>styles edge number 1 (0-based, in source order)</td><td>highlighting one critical edge</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <strong>House style</strong>
+          Define every <code>classDef</code> at the BOTTOM of the block, together. Content first, palette last - the next editor finds all styling in one place, and your diff stays readable when the palette changes.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>One meaning per color - the discipline<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Class names should name MEANINGS (<code>stream</code>, <code>batch</code>, <code>storage</code>, <code>deprecated</code>), never looks (<code>pinkBox</code>, <code>dark2</code>). If a color means two things in one diagram, it means nothing.</p>
+        <div class="prompt-box bad"><span class="label">Color chaos</span>classDef red fill:#D6246E
+class ev,dw,alerts red   %% streaming? storage? on fire? nobody knows</div>
+        <div class="prompt-box good"><span class="label">Color legend</span>classDef stream fill:#D6246E,color:#FFEFF5
+classDef storage fill:#8E1146,color:#FFEFF5
+class ev stream
+class dw storage   %% every color has exactly one job</div>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>The migration diagram that ran itself.</strong> A data team marked every legacy node with a <code>deprecated</code> class (pale fill, dashed stroke). Each migration PR moved one node out of the class. The diagram became the burndown chart - stakeholders watched the pale boxes disappear week by week, no status deck required.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>v11 expanded shapes - a bigger vocabulary<span class="mini">3 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Mermaid v11.3+ added a second way to pick shapes: the <code>@{ }</code> attribute syntax. Instead of memorizing bracket gymnastics, you name the shape - and the catalog grew to 30+ shapes (see flowchart.html#expanded-node-shapes in the docs).</p>
+        <div class="mmd" data-caption="The v11 @{ shape } syntax - named shapes instead of bracket combinations. cyl is the classic database cylinder.">
+<pre class="mmd-src">
+flowchart LR
+  raw@{ shape: cyl, label: "Raw zone" } --> job@{ shape: rect, label: "Transform job" }
+  job --> marts@{ shape: cyl, label: "Marts" }
+  job --> rules@{ shape: hex, label: "Quality rules" }
+</pre>
+        </div>
+        <ul>
+          <li><strong>Handy names:</strong> <code>cyl</code> (database), <code>diam</code> (decision), <code>stadium</code> (start/end), <code>hex</code> (preparation), <code>circle</code>, <code>rounded</code>, <code>rect</code>.</li>
+          <li><strong>When to use which style:</strong> brackets for the daily six shapes (they type faster), <code>@{ }</code> when you need a shape brackets cannot make, or when generating mermaid programmatically.</li>
+          <li><strong>Quote the label</strong> inside <code>@{ }</code> - it is already a habit from Session 1, and here it is required whenever the label has spaces.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: INTERACTION + HYGIENE ============ -->
+  <section class="section" id="interaction">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers "Flowchart: interaction" + big-diagram hygiene</span>
+      <h2>Interaction + big-diagram hygiene <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">Two finishing skills: making nodes clickable, and knowing when a diagram has outgrown one page. The second one matters more - no amount of styling saves a 60-node hairball.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One tangled 20-node diagram on the left becomes three small linked diagrams on the right">
+        <style> .s2bT { font: 700 16px Inter, sans-serif; fill: #291B24; } .s2bW { font: 700 13px Inter, sans-serif; fill: #FFFFFF; } .s2bX { font: 400 13px Inter, sans-serif; fill: #806A78; } .s2bN { font: 600 14px Inter, sans-serif; fill: #3A2400; } .s2bL { stroke: #D9C6D2; stroke-width: 1.5; fill: none; }
+          .s2bArr { stroke: #D9C6D2; stroke-width: 2.5; fill: none; marker-end: url(#s2bAh); } </style> <defs> <marker id="s2bAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"> <path d="M0,0 L6,3 L0,6" fill="none" stroke="#D9C6D2" stroke-width="1.5"/> </marker>
+        </defs> <rect x="20" y="30" width="330" height="180" rx="14" fill="#FFEFF5" stroke="#FF9EBF" stroke-width="2"/> <rect x="45" y="55" width="52" height="24" rx="6" fill="#FF9EBF"/> <rect x="130" y="48" width="52" height="24" rx="6" fill="#FF3670"/> <rect x="230" y="60" width="52" height="24" rx="6" fill="#FF9EBF"/> <rect x="60" y="110" width="52" height="24" rx="6" fill="#D6246E"/>
+        <rect x="160" y="100" width="52" height="24" rx="6" fill="#FF9EBF"/> <rect x="255" y="115" width="52" height="24" rx="6" fill="#FF3670"/> <rect x="45" y="165" width="52" height="24" rx="6" fill="#FF9EBF"/> <rect x="150" y="160" width="52" height="24" rx="6" fill="#8E1146"/> <rect x="250" y="168" width="52" height="24" rx="6" fill="#FF9EBF"/> <path class="s2bL" d="M97 67 L130 60 M182 60 L230 72 M97 67 L60 110 M112 122 L160 112 M212 112 L255 127 M112 122 L97 165 M97 177 L150 172 M202 172 L250 180 M182 60 L176 100 M256 84 L281 115 M86 134 L150 166"/>
+        <text class="s2bT" x="20" y="245">One diagram, every question</text> <text class="s2bX" x="20" y="264">20+ nodes, wires crossing, nobody reads it</text> <line class="s2bArr" x1="368" y1="120" x2="438" y2="120"/> <rect x="452" y="30" width="190" height="70" rx="12" fill="#D6246E"/> <text class="s2bW" x="472" y="60">Overview map</text> <text class="s2bW" x="472" y="82" style="font-weight:400">3 zones, 9 nodes</text>
+        <rect x="452" y="140" width="190" height="70" rx="12" fill="#FF3670"/> <text class="s2bW" x="472" y="170">Ingestion detail</text> <text class="s2bW" x="472" y="192" style="font-weight:400">one zone, zoomed in</text> <rect x="668" y="85" width="190" height="70" rx="12" fill="#8E1146"/> <text class="s2bW" x="688" y="115">Serving detail</text> <text class="s2bW" x="688" y="137" style="font-weight:400">one zone, zoomed in</text>
+        <line class="s2bArr" x1="547" y1="100" x2="547" y2="136"/> <line class="s2bArr" x1="642" y1="80" x2="700" y2="85"/> <rect x="452" y="238" width="14" height="14" rx="3" fill="#F59E0B"/> <text class="s2bN" x="476" y="250">Each diagram answers ONE question; links carry readers between them.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the split rule: one hairball becomes an overview plus zoomed details, connected by links.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Click - nodes that go somewhere<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The <code>click</code> statement attaches a link (or a JavaScript callback) to a node. The pattern for links: <code>click nodeId "https://..." "tooltip"</code>, with an optional <code>_blank</code> target at the end to open a new tab.</p>
+        <ul>
+          <li><strong>Links:</strong> <code>click dw "https://example.com/warehouse" "Open the docs"</code> - the node becomes a hyperlink.</li>
+          <li><strong>Callbacks:</strong> <code>click dw call myFunction()</code> runs page JavaScript - for self-hosted pages and internal tools.</li>
+          <li><strong>The GitHub caveat:</strong> GitHub strips click interactions when rendering fences, for security. Clicks work in mermaid.live, self-hosted pages (like this one), and most docs sites - treat them as a bonus layer, never as the only way to reach the information.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>When to split, how to link<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The split signal is not a node count - it is a question count. A good diagram answers one question ("how does data flow through Nova?"). When yours starts answering three, split it:</p>
+        <ul>
+          <li><strong>Overview diagram:</strong> zones only, maybe 8-12 nodes, the map of maps.</li>
+          <li><strong>Detail diagrams:</strong> one per zone, as deep as needed. Each lives next to the code it describes.</li>
+          <li><strong>Link them:</strong> <code>click</code> links where supported, plain markdown links under the fence everywhere else. The overview links down; each detail links back up.</li>
+        </ul>
+        <p>Practical threshold: past roughly 20 nodes, start looking for the seam. Past 30, you are overdue.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Layout nudging - the polite fixes<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>You cannot move boxes by hand, but you can nudge the layout engine, in escalating order:</p>
+        <ul>
+          <li><strong>Reorder declarations.</strong> Mermaid lays nodes out roughly in source order - moving the line that declares a node often untangles a crossing wire. Free, try it first.</li>
+          <li><strong>Flip direction.</strong> LR to TD (or the reverse) re-deals the whole hand. Also free.</li>
+          <li><strong>Invisible edges:</strong> <code>a ~~~ b</code> draws nothing but tells the engine "keep these ranked apart". The precision tool for two stubborn nodes that refuse to line up.</li>
+          <li><strong>Longer arrows:</strong> extra dashes (<code>----&gt;</code>) request extra rank distance, as in Session 1.</li>
+        </ul>
+        <div class="callout tip">
+          <strong>Budget rule</strong>
+          Spend at most five minutes nudging. If the layout still fights you, the diagram is telling you it wants to be two diagrams.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Demo 1 of 3 · Nova levels up</span>
+      <h2>Nova, zoned and styled <span class="tag demo">★ 8 min · follow along</span></h2>
+    </div>
+    <p class="lede">We rebuild Session 1's map with everything from today: three subgraph zones, plus a three-class palette - stream, batch, storage - so the diagram explains its own workloads at a glance. Build it line by line in mermaid.live; the finished source is below.</p>
+
+    <div class="mmd" data-caption="Nova v2 - three zones, one meaning per color. This replaces the Session 1 map as our reference artifact.">
+<pre class="mmd-src">
+flowchart LR
+  subgraph src[Sources]
+    ev[App events]:::stream
+    crm[CRM export]:::batch
+  end
+  subgraph plat[Platform]
+    ing[Ingestion] --> qa{Quality checks}
+    qa -->|pass| dw[(Warehouse)]:::storage
+    qa -->|fail| dlq[Quarantine]:::storage
+  end
+  subgraph cons[Consumers]
+    bi[Dashboards]
+    ml[ML features]
+  end
+  ev -->|stream| ing
+  crm -.->|nightly| ing
+  dw --> bi
+  dw --> ml
+  classDef stream fill:#D6246E,color:#FFEFF5,stroke:#8E1146
+  classDef batch fill:#FFEFF5,color:#8E1146,stroke:#D6246E
+  classDef storage fill:#8E1146,color:#FFEFF5,stroke:#8E1146
+</pre>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p>Start from your Session 1 source in mermaid.live. Wrap the two source nodes in <code>subgraph src[Sources]</code> ... <code>end</code>. Watch the container appear around them.</p></div>
+      <div class="step"><p>Zone the middle: move ingestion, quality checks, warehouse, and quarantine into <code>subgraph plat[Platform]</code>. Cross-zone edges keep working - only the declarations moved.</p></div>
+      <div class="step"><p>Zone the right: dashboards and ML features into <code>subgraph cons[Consumers]</code>. Three zones, story readable from the containers alone.</p></div>
+      <div class="step"><p>Add the palette at the bottom: three <code>classDef</code> lines - <code>stream</code>, <code>batch</code>, <code>storage</code>.</p></div>
+      <div class="step"><p>Apply with <code>:::</code> at the point of declaration: <code>ev[App events]:::stream</code>, <code>crm[CRM export]:::batch</code>, and storage on both cylinders of truth - warehouse and quarantine.</p></div>
+      <div class="step"><p>Read it back as a stranger would: can you tell what streams, what batches, and where data rests, without reading a label? That is the pass condition.</p></div>
+    </div>
+
+    <div class="callout tip">
+      <strong>Keep this source</strong>
+      Nova v2 is the base for Session 4's data-model work and Session 6's theming. Save the mermaid.live share URL somewhere you will find it.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Demo 2 of 3</span>
+      <h2>Rescue a messy diagram <span class="tag demo">★ 6 min · build your own</span></h2>
+    </div>
+    <p class="lede">Here is a real-shaped mess: 15 nodes, zero structure, the diagram you inherit on day one of a new job. Your mission - group it into zones and restyle it using nothing but today's tools. No nodes may be harmed.</p>
+
+    <div class="mmd" data-caption="The patient - 15 flat nodes. Copy it into mermaid.live and start the rescue.">
+<pre class="mmd-src">
+flowchart TD
+  a[Web app] --> b[Event API]
+  m[Mobile app] --> b
+  b --> c[Kafka]
+  c --> d[Stream job]
+  e[CRM] --> f[Nightly export]
+  f --> g[S3 landing]
+  g --> h[Batch loader]
+  d --> i[(Staging)]
+  h --> i
+  i --> j[dbt models]
+  j --> k[(Marts)]
+  k --> l[BI tool]
+  k --> n[Feature store]
+  n --> o[Model training]
+</pre>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p>Diagnose before cutting: read the node list and name the natural zones out loud. (One good answer: Producers, Streaming path, Batch path, Warehouse, Serving.)</p></div>
+      <div class="step"><p>Wrap each group in a titled subgraph. Declarations move inside the blocks; the edge lines stay where they are and keep working.</p></div>
+      <div class="step"><p>Flip <code>TD</code> to <code>LR</code> and compare. With zones in place, one direction will clearly read better - keep the winner.</p></div>
+      <div class="step"><p>Add a palette: <code>stream</code> and <code>batch</code> classes on the two paths, <code>storage</code> on the cylinders. Define the classDefs at the bottom, as always.</p></div>
+      <div class="step"><p>Count the wire crossings before and after. The rescue recipe - zones, direction, palette - typically cuts them to near zero without touching a single edge definition.</p></div>
+    </div>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p>This rescue is a genuinely great first-week move on a new team. Take the scariest diagram in the wiki, zone and restyle it, open a small PR. You learn the architecture, and the team gets a readable map - everyone wins.</p>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Demo 3 of 3</span>
+      <h2>Make Nova clickable <span class="tag demo">★ 4 min · follow along</span></h2>
+    </div>
+    <p class="lede">Last layer: links. Each Nova platform node gets a click-through to its (fictional) repo README - turning the overview diagram into a navigation hub for the whole platform.</p>
+
+    <div class="mmd" data-caption="Click statements on Nova's core path - try clicking a node. On this page the links are live; GitHub would strip them.">
+<pre class="mmd-src">
+flowchart LR
+  ing[Ingestion] --> qa{Quality checks} --> dw[(Warehouse)]
+  click ing "https://github.com/nova-platform/ingestion#readme" "Ingestion README"
+  click qa "https://github.com/nova-platform/quality-checks#readme" "Quality checks README"
+  click dw "https://github.com/nova-platform/warehouse#readme" "Warehouse README"
+</pre>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p>Take your Demo 1 source and add one <code>click</code> line per platform node, pointing at the repo README that owns it. Tooltip text in the second quotes.</p></div>
+      <div class="step"><p>Test in mermaid.live: hover shows the tooltip, click follows the link. Add <code>_blank</code> after the tooltip if you want a new tab.</p></div>
+      <div class="step"><p>Remember the deployment rule: clicks survive on mermaid.live, self-hosted pages, and most docs sites - but GitHub strips them. Keep a plain link list under the fence for GitHub readers.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 30-45 min total</span></h2>
+    </div>
+    <ul>
+      <li>Apply the rescue recipe to the messy diagram you brought from Session 1: zones, direction check, palette. Post before/after in your team channel and count the reactions.</li>
+      <li>Write a three-class palette for YOUR domain (maybe <code>realtime</code> / <code>batch</code> / <code>external</code>?) and reuse it in two different diagrams. Consistency across diagrams is the compounding win.</li>
+      <li>Rebuild Nova v2 from memory - zones and classes included - then diff against Demo 1. Whatever you forgot is your review list.</li>
+      <li>Try three shapes from the v11 <code>@{ shape: ... }</code> catalog you have never used, and decide if any earn a place in your house conventions.</li>
+      <li>Bring to Session 3: one process you can describe in prose but have never diagrammed - a retry flow, an approval chain, an incident timeline. Sequence diagrams are next, and prose is their raw material.</li>
+    </ul>
+  </section>
+
+  <!-- ============ OFFICIAL ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Official docs covered</h2>
+    </div>
+    <p class="lede">This session teaches the working content of these sections of the flowchart page at <a href="https://mermaid.js.org/syntax/flowchart.html" target="_blank" rel="noopener">mermaid.js.org</a> (mermaid 11.x). Left with the official docs: the full 30+ shape catalog table and the animated-edge extras.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Flowchart: subgraphs</span><span class="note">Part 1 + Demos - blocks, nesting, direction, edges to zones</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Flowchart: classDef, class, :::, style, linkStyle</span><span class="note">Part 2 - the full styling toolkit with house rules</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Flowchart: v11 expanded shapes</span><span class="note">syntax + handy names today; full catalog is a docs lookup</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Flowchart: click interactions</span><span class="note">links + tooltips today; JS callbacks touched, deep dive in Session 6</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · Which line opens a subgraph you can later draw edges to by ID?</p>
+      <button class="qopt" type="button">A · subgraph "Platform zone"</button>
+      <button class="qopt" type="button">B · subgraph plat[Platform zone]</button>
+      <button class="qopt" type="button">C · zone plat = Platform zone</button>
+      <p class="qwhy">ID first, display title in brackets, close with end. The ID (plat) is what edges and class statements reference later.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · Six nodes need the same look. classDef or style?</p>
+      <button class="qopt" type="button">A · style - it is the more specific tool</button>
+      <button class="qopt" type="button">B · Either - they are interchangeable</button>
+      <button class="qopt" type="button">C · classDef once, then class a,b,c... - style is for true one-offs</button>
+      <p class="qwhy">classDef is CSS-thinking: define a meaning once, apply everywhere, change in one place. Six style lines is six future edits.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Your flowchart hit 30 nodes and answers three different questions. Best move?</p>
+      <button class="qopt" type="button">A · Split it - an overview map plus linked per-zone detail diagrams</button>
+      <button class="qopt" type="button">B · More classDefs until the colors sort it out</button>
+      <button class="qopt" type="button">C · Switch to TD and add more subgraphs inside subgraphs</button>
+      <p class="qwhy">Styling cannot save a diagram that answers too many questions. One diagram, one question - link the family together.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 2 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Subgraph</b><span>subgraph id[Title] ... end. Always give the ID - edges and styles reference it. Nesting allowed.</span></div>
+      <div class="cheat-item"><b>Zone direction</b><span>direction TB/LR as the first line inside a subgraph - ignored if any inner node links outside the zone.</span></div>
+      <div class="cheat-item"><b>classDef</b><span>classDef name fill:#...,stroke:#...,color:#... - define all classes together at the bottom of the block.</span></div>
+      <div class="cheat-item"><b>Apply a class</b><span>class a,b,c name for lists · node[Label]:::name inline · style for a genuine one-off · linkStyle N for edge N (0-based).</span></div>
+      <div class="cheat-item"><b>Color discipline</b><span>Class names = meanings (stream, batch, deprecated), never looks. One meaning per color, always.</span></div>
+      <div class="cheat-item"><b>v11 shapes</b><span>node@{ shape: cyl, label: "..." } - named shapes: cyl, diam, stadium, hex, circle, rounded + 30 more in docs.</span></div>
+      <div class="cheat-item"><b>Click</b><span>click id "url" "tooltip" (+ _blank for new tab). Works on live/self-hosted pages; GitHub strips it.</span></div>
+      <div class="cheat-item"><b>Split rule</b><span>One diagram, one question. ~20+ nodes: find the seam. Overview map + linked zone details beats one hairball.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 2 of 6 · learn-mermaid-with-phoebe · by Phoebe Fu</span>
+    <span><a href="01-diagrams-as-code.html">← Prev: Diagrams as code</a> &nbsp;·&nbsp; <a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="03-runtime-stories.html">Next: Runtime stories →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+<script type="module" src="../assets/mermaid-live.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep dive 6.3 · Power config - learn mermaid with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-mermaid-with-phoebe</a> / Deep dive 6.3 of 3</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Mermaid with Phoebe · Deep dive 6.3 of 3</div>
+    <h1>Under the <span class="accent">hood</span>: directives, icons, layouts, math</h1>
+    <p class="sub">The last ten percent that makes mermaid feel professional: config that layers predictably, real logos in your architecture diagrams, a smarter layout engine for hairy graphs, and equations in labels - plus the security dial that governs it all.</p>
+    <div class="chip-row">
+      <span class="chip level">🔴 Self-paced</span>
+      <span class="chip audience">Data &amp; AI teams</span>
+      <span class="chip time">~35 min self-paced</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:3">Config layers</span>
+      <span class="a2" style="flex:2">Icons</span>
+      <span class="a3" style="flex:2">Layout engines</span>
+      <span class="a4" style="flex:3">Math + security</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this deep dive exists</h2>
+    </div>
+    <p class="lede">Everything so far has been about WHAT you draw. This deep dive is about the machine that draws it: how configuration flows from site defaults down to a single diagram, how to bring real icons and better layout engines into play, and where the security model draws its lines. Honest framing: two features here (ELK layout and KaTeX math) need extra setup beyond a plain CDN script tag - we show the source and say so, instead of pretending. Everything else on this page renders live.</p>
+    <div class="legend">
+      <span class="pill solid">Live - renders with plain CDN mermaid@11</span>
+      <span class="pill light">Shown as source - needs extra setup</span>
+      <span class="pill peach">★ Try it now</span>
+      <span class="pill inkpill">This page's own config is the demo</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with</strong>
+      A mental model of config precedence (defaults, then initialize(), then per-diagram frontmatter - with secure keys locked at site level), one diagram flipped to dark theme while the rest of the page stays pink, an architecture diagram with icons, the rule of thumb for when ELK beats dagre, KaTeX-in-labels syntax, and a working understanding of securityLevel - including why click links need "loose".
+    </div>
+  </section>
+
+  <!-- ============ PART 1: CONFIG PRECEDENCE ============ -->
+  <section class="section" id="precedence">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers "Configuration" + "Directives"</span>
+      <h2>Config layers: who wins <span class="tag concept">9 min</span></h2>
+    </div>
+    <p class="lede">Mermaid builds each diagram's render config from three sources, applied in order: built-in defaults, then the site-wide <code>mermaid.initialize()</code> call, then per-diagram config from the author (frontmatter, or the older <code>%%{init}%%</code> directives). Later layers override earlier ones - except a short list of secure keys that only the site owner controls.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Config precedence ladder: defaults, then initialize site config, then per-diagram frontmatter or directives, producing the render config - with secure keys locked at site level">
+        <style>
+          .cplT { font: 700 16px Inter, sans-serif; fill: #291B24; }
+          .cplW { font: 700 15px Inter, sans-serif; fill: #FFEFF5; }
+          .cplS { font: 600 12.5px Inter, sans-serif; fill: #FFEFF5; }
+          .cplX { font: 400 12.5px Inter, sans-serif; fill: #806A78; }
+          .cplN { font: 600 13.5px Inter, sans-serif; fill: #3A2400; }
+          .cplA { stroke: #D9C6D2; stroke-width: 2.5; fill: none; marker-end: url(#cplAh); }
+        </style>
+        <defs>
+          <marker id="cplAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#D9C6D2" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <text class="cplT" x="30" y="34">Each layer overrides the one before it</text>
+        <rect x="30" y="60" width="180" height="86" rx="12" fill="#FF9EBF"/>
+        <text class="cplW" x="48" y="90" fill="#291B24">1 · Defaults</text>
+        <text class="cplS" x="48" y="112" fill="#291B24">built into mermaid</text>
+        <text class="cplS" x="48" y="130" fill="#291B24">theme, fonts, sizes</text>
+        <line class="cplA" x1="216" y1="103" x2="256" y2="103"/>
+        <rect x="262" y="60" width="190" height="86" rx="12" fill="#FF3670"/>
+        <text class="cplW" x="280" y="90">2 · initialize()</text>
+        <text class="cplS" x="280" y="112">site owner, once per page</text>
+        <text class="cplS" x="280" y="130">this page: pink theme</text>
+        <line class="cplA" x1="458" y1="103" x2="498" y2="103"/>
+        <rect x="504" y="60" width="190" height="86" rx="12" fill="#D6246E"/>
+        <text class="cplW" x="522" y="90">3 · Per diagram</text>
+        <text class="cplS" x="522" y="112">frontmatter config</text>
+        <text class="cplS" x="522" y="130">(or legacy directives)</text>
+        <line class="cplA" x1="700" y1="103" x2="740" y2="103"/>
+        <rect x="746" y="60" width="110" height="86" rx="12" fill="#8E1146"/>
+        <text class="cplW" x="762" y="96">Render</text>
+        <text class="cplW" x="762" y="118">config</text>
+        <text class="cplX" x="30" y="176">Winner on any normal key: the per-diagram layer. The diagram author gets the last word...</text>
+        <rect x="30" y="196" width="14" height="14" rx="3" fill="#F59E0B"/>
+        <text class="cplN" x="54" y="208">...except SECURE keys: securityLevel, startOnLoad and friends stay pinned at the initialize() level.</text>
+        <text class="cplN" x="54" y="230">A diagram pasted into your page cannot loosen your page's security. That is the whole design.</text>
+        <text class="cplX" x="30" y="268">Directives (%%{init}%%) sit in layer 3 too - deprecated since v10.5 in favor of frontmatter, still parsed everywhere.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the precedence ladder: defaults → initialize() → per-diagram frontmatter → render config, with secure keys locked at step 2.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode self">Self-study</span>Frontmatter: one diagram goes dark<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Frontmatter is a YAML block between <code>---</code> fences at the very top of the diagram. Its <code>config:</code> key can override almost the entire configuration for that one diagram. Proof, live: this page's <code>initialize()</code> sets the pink theme, and the diagram below flips itself to the dark theme anyway - while every other diagram on the page stays pink.</p>
+        <div class="mmd" data-caption="This diagram overrides the page's pink theme with frontmatter - the rest of the page never notices.">
+<pre class="mmd-src">
+---
+config:
+  theme: dark
+---
+flowchart LR
+  ev["App events"] --> ing["Ingestion"]
+  ing --> dw[("Warehouse")]
+  dw --> bi["Dashboards"]
+</pre>
+        </div>
+        <ul>
+          <li><strong>The order matters:</strong> frontmatter must be the FIRST thing in the block - the <code>---</code> fence before the diagram keyword.</li>
+          <li><strong>title lives here too:</strong> <code>title: My diagram</code> in frontmatter is the modern way to caption a diagram.</li>
+          <li><strong>Scope is one diagram.</strong> Ten diagrams on a page, one frontmatter block each, zero interference.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Directives: the legacy dial (still everywhere)<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Before frontmatter existed, per-diagram config went in a <code>%%{init: {...}}%%</code> directive on the first line. Deprecated since v10.5, but still parsed - and you WILL meet it in older READMEs and Stack Overflow answers, so read it fluently:</p>
+        <div class="mmd" data-caption="A legacy directive doing what frontmatter does today - deprecated, still working. Read it, don't write it.">
+<pre class="mmd-src">
+%%{init: { "theme": "forest" } }%%
+flowchart LR
+  a["Same trick"] --> b["older syntax"]
+  b --> c["still parses in v11"]
+</pre>
+        </div>
+        <div class="callout tip">
+          <strong>Translation rule</strong>
+          <code>%%{init: { "theme": "forest" } }%%</code> is exactly <code>--- config: theme: forest ---</code> in frontmatter. When you touch an old diagram, migrate the directive while you're there - same layer, same precedence, nicer diff.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Per-diagram overrides you'll actually use<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Theme is the party trick; the workhorse overrides are diagram-type settings. Nesting under <code>config:</code> mirrors the config schema - here, flowchart edges become right-angled steps for that circuit-board look, on this one diagram only:</p>
+        <div class="mmd" data-caption="A diagram-type override: flowchart curve set to step via frontmatter. Only this diagram gets the right angles.">
+<pre class="mmd-src">
+---
+config:
+  flowchart:
+    curve: step
+---
+flowchart LR
+  raw["Raw zone"] --> stg["Staging"]
+  stg --> mart["Marts"]
+  stg --> ml["Feature store"]
+</pre>
+        </div>
+        <div class="prompt-box good"><span class="label">★ Try it now</span>Flip this block to Code, open it on mermaid.live, and swap step for basis, then linear. Three renders, three personalities, same meaning - per-diagram config is how one doc supports them all.</div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: ICONS ============ -->
+  <section class="section" id="icons">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers "Registering icon packs" + architecture icons</span>
+      <h2>Icons: logos in your boxes <span class="tag concept">7 min</span></h2>
+    </div>
+    <p class="lede">Architecture diagrams ship with five built-in icons - <code>cloud</code>, <code>database</code>, <code>disk</code>, <code>internet</code>, <code>server</code> - and those render anywhere mermaid does. The upgrade is registering an iconify pack (200,000+ icons, including every vendor logo you deploy) so your warehouse box can wear the actual Snowflake or Redshift mark.</p>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>The built-ins, live: Nova as an architecture diagram<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Architecture diagrams place <code>service</code> nodes (each with an icon) inside <code>group</code> boxes, and wire them edge-to-edge with side anchors: <code>L</code>, <code>R</code>, <code>T</code>, <code>B</code>. The five default icons need no registration at all:</p>
+        <div class="mmd" data-caption="Nova with the five built-in icons - cloud, server, database, disk, internet. No icon pack needed.">
+<pre class="mmd-src">
+architecture-beta
+  group nova(cloud)[Nova platform]
+  service ing(server)[Ingestion] in nova
+  service dw(database)[Warehouse] in nova
+  service lake(disk)[Object storage] in nova
+  service web(internet)[Dashboards]
+  ing:R -- L:dw
+  dw:B -- T:lake
+  dw:R -- L:web
+</pre>
+        </div>
+        <ul>
+          <li><strong>Icon goes in parentheses,</strong> label in brackets: <code>service dw(database)[Warehouse]</code>.</li>
+          <li><strong>Edges anchor to sides:</strong> <code>ing:R -- L:dw</code> means "ingestion's right side to warehouse's left side" - you're steering geometry, not just topology.</li>
+          <li><strong>Groups nest services</strong> with <code>in group_id</code> - the platform boundary draws itself.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Registering real icon packs (self-hosted power)<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>On a page you control, register any iconify pack once and reference its icons as <code>packname:icon-name</code> in architecture diagrams (and flowchart icon shapes). The docs' own recipe, fetching the <code>logos</code> pack from a CDN:</p>
+        <div class="prompt-box good"><span class="label">Site setup - runs next to mermaid.initialize()</span>mermaid.registerIconPacks([
+  {
+    name: "logos",
+    loader: () =>
+      fetch("https://unpkg.com/@iconify-json/logos@1/icons.json")
+        .then((res) => res.json()),
+  },
+]);</div>
+        <p>Then in any architecture diagram on that page:</p>
+        <div class="prompt-box good"><span class="label">Usage - icon names become logos:whatever</span>architecture-beta
+  service dw(logos:aws-redshift)[Warehouse]
+  service orch(logos:airflow)[Orchestration]</div>
+        <div class="callout tip">
+          <strong>Honest portability note</strong>
+          Registered packs are a JavaScript-side setup, so they work where YOU run mermaid: your docs site, your wiki, this course's pages. GitHub's built-in renderer registers nothing beyond the defaults - push a diagram using <code>logos:airflow</code> to a README and you'll get a placeholder, not the logo. Design READMEs around the five built-ins; save vendor logos for self-hosted pages.
+        </div>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>A platform team's internal docs site registered the logos pack in its mermaid setup. Every architecture diagram suddenly showed the real Kafka, Snowflake and Airflow marks - and new joiners stopped asking "which box is the warehouse?" The same diagrams in GitHub fall back to plain boxes: readable there, gorgeous on the docs site, one source for both.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: LAYOUT ENGINES ============ -->
+  <section class="section" id="layouts">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers "Layouts"</span>
+      <h2>Layout engines: dagre vs ELK <span class="tag concept">7 min</span></h2>
+    </div>
+    <p class="lede">Every flowchart so far was laid out by dagre, mermaid's default engine - fast, fine, occasionally spaghetti. ELK (Eclipse Layout Kernel) is the heavyweight alternative: better edge routing, fewer crossings, calmer results on big graphs. Switching is one line of frontmatter... where ELK is available.</p>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>One line to switch - and where it works<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The switch itself is beautifully boring:</p>
+        <div class="prompt-box good"><span class="label">Shown as source - ELK isn't bundled with plain CDN mermaid, so this block isn't live here</span>---
+config:
+  layout: elk
+---
+flowchart TD
+  raw["Raw events"] --> val["Validation"]
+  raw --> enr["Enrichment"]
+  crm["CRM export"] --> val
+  val --> dw[("Warehouse")]
+  enr --> dw
+  dw --> bi["Dashboards"]
+  dw --> ml["Feature store"]
+  bi --> alerts["Alerting"]
+  ml --> alerts</div>
+        <div class="callout tip">
+          <strong>Honest availability note</strong>
+          ELK ships as a separate package (<code>@mermaid-js/layout-elk</code>) that self-hosted pages must register alongside mermaid - which is why the block above is source, not live: this course's plain CDN setup doesn't include it. mermaid.live has ELK built in, so paste the block there and it just works. Other supported layouts in the docs: <code>dagre</code> (default), <code>elk</code>, <code>tidy-tree</code>, <code>cose-bilkent</code>.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>When ELK earns its keep<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Many edge crossings</strong> - the classic data lineage graph where every source feeds every mart. ELK's routing untangles what dagre leaves knotted.</li>
+          <li><strong>Long ranks</strong> - wide layers (20 tables in one tier) that dagre spreads into a football field. ELK packs them more sensibly.</li>
+          <li><strong>Dense subgraph nesting</strong> - multiple zones with cross-zone edges tend to route cleaner under ELK.</li>
+          <li><strong>Not worth it below ~15 nodes:</strong> for small diagrams the engines produce near-identical results, and dagre needs zero extra setup. Try dagre first, reach for ELK when the diagram visibly fights you.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>A 40-table lineage diagram for a warehouse migration was unreadable under the default layout - edges everywhere. One frontmatter line switching to ELK on mermaid.live turned it into something the team could actually walk through in the review meeting. Same source, different brain doing the geometry.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 4: MATH + SECURITY ============ -->
+  <section class="section" id="math-security">
+    <div class="section-kicker">
+      <span class="klabel">Part 4 · covers "Math configuration" + securityLevel</span>
+      <h2>Math in labels, and the security dial <span class="tag concept">8 min</span></h2>
+    </div>
+    <p class="lede">Two under-the-hood topics that share a theme: what mermaid will and won't render for you. KaTeX puts real equations in flowchart and sequence labels; securityLevel decides how much your diagrams are allowed to do - including whether click links work at all.</p>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>KaTeX: equations in labels<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Wrap an expression in <code>$$...$$</code> inside a quoted label and mermaid hands it to the KaTeX typesetter (v10.9+). Supported in flowcharts and sequence diagrams - a lovely fit for ML pipeline docs where the transformation IS a formula:</p>
+        <div class="prompt-box good"><span class="label">Shown as source - KaTeX needs extra setup beyond this page's plain CDN script, so this block isn't live here</span>flowchart LR
+  feat["Features x"] --> score["$$P(churn) = \sigma(w^T x + b)$$"]
+  score --> gate{"$$score \geq 0.9$$"}
+  gate -->|yes| act["Retention flow"]
+  gate -->|no| skip["No action"]</div>
+        <div class="callout tip">
+          <strong>Honest availability note</strong>
+          Math rendering needs KaTeX available to mermaid - mermaid.live has it wired up, so the block above works there as-is. This course's minimal CDN setup doesn't include it, and GitHub's renderer doesn't do math either. Also budget for cross-platform quirks: by default mermaid renders math via the browser's MathML, which differs between browsers; the <code>forceLegacyMathML</code> config plus KaTeX's stylesheet gives consistent output when that matters.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>securityLevel: the dial behind everything<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Diagrams are user input, and mermaid treats them that way. The <code>securityLevel</code> setting - a SECURE key, so only <code>initialize()</code> can set it, never a pasted diagram - has four positions:</p>
+        <table class="clean">
+          <thead><tr><th>Level</th><th>What it means</th><th>Use when</th></tr></thead>
+          <tbody>
+            <tr><td><code>strict</code></td><td>default - HTML in labels is encoded, click interactions disabled</td><td>rendering diagrams you didn't write (the safe default; this page uses it)</td></tr>
+            <tr><td><code>loose</code></td><td>HTML allowed, click links and callbacks enabled</td><td>trusted content where you want clickable diagrams</td></tr>
+            <tr><td><code>antiscript</code></td><td>HTML allowed but script tags stripped</td><td>a middle ground for mostly-trusted content</td></tr>
+            <tr><td><code>sandbox</code></td><td>everything renders inside a locked-down iframe</td><td>maximum paranoia; some interactive features stop working</td></tr>
+          </tbody>
+        </table>
+        <p>The everyday symptom: <code>click</code> statements that silently do nothing. A flowchart like this needs the SITE to be at <code>loose</code> - no frontmatter can rescue it, by design:</p>
+        <div class="prompt-box bad"><span class="label">Does nothing under strict (this page's level) - needs securityLevel loose in initialize()</span>flowchart LR
+  dash["Revenue dashboard"]
+  click dash "https://bi.nova.example/revenue" _blank</div>
+        <div class="callout tip">
+          <strong>Why the lock exists</strong>
+          If a diagram could set its own securityLevel, any pasted diagram could grant itself script access - the lock is what makes "render diagrams from anywhere" a safe feature. When click links matter (a lineage map linking to your catalog), you own the page, you set loose consciously, and you only render trusted sources on it.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 35-45 min total</span></h2>
+    </div>
+    <ul>
+      <li>Take any diagram from your repos and flip just IT to the dark theme with frontmatter. Then migrate one old %%{init}%% directive you find in the wild to frontmatter - same layer, cleaner syntax.</li>
+      <li>Rebuild your platform as an architecture-beta diagram using only the five built-in icons. Then, on a local HTML page, register the logos pack and swap in the real vendor marks - compare which version each audience deserves.</li>
+      <li>Find (or make) a flowchart with 20+ nodes and real edge crossings, paste it into mermaid.live, and add layout: elk. Screenshot before and after - that pair is your argument for setting up ELK on the docs site.</li>
+      <li>On mermaid.live, put one honest formula from your work into a flowchart label with $$...$$ - a loss function, a score threshold, anything real.</li>
+      <li>Check the mermaid.initialize() call in any docs site you own: what securityLevel is it running? If you've ever wondered why click links die there, you now know where to look.</li>
+    </ul>
+  </section>
+
+  <!-- ============ OFFICIAL ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Official docs covered</h2>
+    </div>
+    <p class="lede">This deep dive works through these sections of the official docs at <a href="https://mermaid.js.org" target="_blank" rel="noopener">mermaid.js.org</a> (mermaid 11.x): the configuration, directives, icons, layouts and math pages under Config, plus the securityLevel setting from the usage guide.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Configuration + directives</span><span class="note">Part 1 - three layers, precedence, frontmatter, %%{init}%% legacy</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Registering icon packs</span><span class="note">Part 2 - built-in five, registerIconPacks, iconify, portability</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Layouts (ELK)</span><span class="note">Part 3 - layout: elk, when it beats dagre, availability</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Math configuration</span><span class="note">Part 4 - $$...$$ in flowchart/sequence, MathML vs legacy KaTeX</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">securityLevel</span><span class="note">Part 4 - strict/loose/antiscript/sandbox, why click needs loose</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · The site's initialize() sets the pink theme. One diagram carries frontmatter with config: theme: dark. What renders?</p>
+      <button class="qopt" type="button">A · Pink - site config always beats diagram config</button>
+      <button class="qopt" type="button">B · Dark for that diagram - per-diagram config wins on normal keys</button>
+      <button class="qopt" type="button">C · A parse error - themes can't be set per diagram</button>
+      <p class="qwhy">Defaults, then initialize(), then per-diagram frontmatter - the author gets the last word on everything except secure keys. You watched it happen in Part 1.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · Your 40-node lineage flowchart is spaghetti. How do you hand layout to ELK?</p>
+      <button class="qopt" type="button">A · Change the first line to flowchart-elk TD</button>
+      <button class="qopt" type="button">B · Add %%elk on the last line</button>
+      <button class="qopt" type="button">C · Frontmatter: config: layout: elk (plus the ELK package on self-hosted pages)</button>
+      <p class="qwhy">layout: elk in frontmatter config is the whole switch. It works out of the box on mermaid.live; self-hosted pages must register @mermaid-js/layout-elk first.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · You added click statements to a flowchart on the docs site and nothing happens. Most likely cause?</p>
+      <button class="qopt" type="button">A · The site runs securityLevel strict (the default), which disables click - and no frontmatter can override it</button>
+      <button class="qopt" type="button">B · click only works with the ELK layout engine</button>
+      <button class="qopt" type="button">C · KaTeX isn't installed</button>
+      <p class="qwhy">securityLevel is a secure, site-level key: strict disables interactions by design, and only the initialize() call can loosen it. That lock is what makes rendering untrusted diagrams safe.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Deep dive 6.3 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Config layers</b><span>defaults → initialize() → per-diagram frontmatter/directives → render config. Later wins, secure keys excepted.</span></div>
+      <div class="cheat-item"><b>Frontmatter skeleton</b><span>--- config: theme: dark --- as the FIRST lines of the block. Also home for title: and diagram-type settings.</span></div>
+      <div class="cheat-item"><b>Directives (legacy)</b><span>%%{init: { "theme": "forest" } }%% - deprecated since v10.5, still parsed. Migrate to frontmatter when you touch one.</span></div>
+      <div class="cheat-item"><b>Icons</b><span>Built-ins render everywhere: cloud, database, disk, internet, server. registerIconPacks unlocks iconify (logos:airflow) on pages you host.</span></div>
+      <div class="cheat-item"><b>ELK switch</b><span>config: layout: elk in frontmatter. Built into mermaid.live; self-hosted needs @mermaid-js/layout-elk. Reach for it on 15+ node graphs with crossings.</span></div>
+      <div class="cheat-item"><b>Math</b><span>"$$...$$" inside quoted labels, flowchart + sequence only (v10.9+). Needs KaTeX available; forceLegacyMathML for consistent output.</span></div>
+      <div class="cheat-item"><b>securityLevel</b><span>strict (default, safe) · loose (click works) · antiscript · sandbox. Secure key: initialize() only, never per diagram.</span></div>
+      <div class="cheat-item"><b>Debug order for "config ignored"</b><span>Is it a secure key? → is frontmatter the first line? → valid YAML? → right nesting under config: ?</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Deep dive 6.3 of 3 · learn-mermaid-with-phoebe · by Phoebe Fu</span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="62-structure-extras.html">← Prev: Structure extras</a> &nbsp;·&nbsp; <a href="../index.html">Back to all sessions →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+<script type="module" src="../assets/mermaid-live.js?v=1"></script>
+</body>
+</html>

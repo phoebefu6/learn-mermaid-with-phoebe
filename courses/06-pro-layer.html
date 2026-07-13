@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 6 · The pro layer - learn mermaid with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-mermaid-with-phoebe</a> / Session 6 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Mermaid with Phoebe · Session 6 of 6</div>
+    <h1>Make it <span class="accent">yours</span>: theming, config, and shipping</h1>
+    <p class="sub">The finale: restyle every diagram with one config block, draw architecture-grade cloud layouts, then ship - CLI exports, CI rendering, and the ten lines of JavaScript that power this very course site.</p>
+    <div class="chip-row">
+      <span class="chip level">🔴 Hardest</span>
+      <span class="chip audience">Data &amp; AI teams</span>
+      <span class="chip time">45 min live + self-study depth</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-25 · Concepts (live cards)</span>
+      <span class="a3" style="flex:4">25-43 · Three demos</span>
+      <span class="a4" style="flex:1">43-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this session exists</h2>
+    </div>
+    <p class="lede">Five sessions in, you can diagram Nova end to end - but everything still wears mermaid's default clothes and lives inside editors. The pro layer changes both: theming makes diagrams carry YOUR brand, config directives tune behavior per diagram, and the shipping toolchain (CLI, CI, embed script) puts rendered diagrams anywhere a browser or a build pipeline can reach. This is also where a five-session secret gets revealed. The live sessions end today, but the course does not: three self-paced deep dives follow, starting with mermaid's data chart types.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill peach">★ Try it now</span>
+      <span class="pill inkpill">Every diagram on this page is REAL mermaid, rendered live</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      The five built-in themes and the one that obeys you (base + themeVariables), frontmatter config vs the older init directive, an architecture-beta cloud layout and a C4 context diagram for Nova, mmdc exports in three formats, the exact embed script this site uses, and accessible diagrams via accTitle and accDescr. Plus the reveal: how every pink diagram you have seen was made.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: THEMING ============ -->
+  <section class="section" id="theming">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers "Theming" + config basics</span>
+      <h2>Theming - one block restyles everything <span class="tag concept">8 min live</span></h2>
+    </div>
+    <p class="lede">Mermaid ships five themes: <code>default</code>, <code>neutral</code> (print-friendly), <code>dark</code>, <code>forest</code>, and <code>base</code>. The first four are fixed palettes. Only <code>base</code> is designed to be customized - hand it themeVariables and it becomes your brand.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mermaid source plus a theme layer produces a branded diagram; only theme base accepts themeVariables">
+        <style>
+          .thT { font: 700 17px Inter, sans-serif; fill: #291B24; }
+          .thW { font: 700 15px Inter, sans-serif; fill: #FFFFFF; }
+          .thX { font: 400 13px Inter, sans-serif; fill: #806A78; }
+          .thC { font: 600 12.5px 'SF Mono', Menlo, monospace; fill: #FFEFF5; }
+          .thN { font: 600 14px Inter, sans-serif; fill: #3A2400; }
+          .thArr { stroke: #D9C6D2; stroke-width: 2.5; fill: none; marker-end: url(#thAh); }
+        </style>
+        <defs>
+          <marker id="thAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#D9C6D2" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="20" y="60" width="230" height="110" rx="12" fill="#291B24"/><text class="thC" x="38" y="90">flowchart LR</text><text class="thC" x="38" y="112">  a[Source] --&gt; b[Diagram]</text>
+        <text class="thT" x="20" y="200">Your source</text><text class="thX" x="20" y="222">unchanged - meaning lives here</text>
+        <line class="thArr" x1="258" y1="115" x2="306" y2="115"/>
+        <rect x="312" y="30" width="250" height="70" rx="12" fill="#FF9EBF"/><text class="thT" x="332" y="60">4 fixed themes</text><text class="thX" x="332" y="82">default · neutral · dark · forest</text>
+        <rect x="312" y="118" width="250" height="94" rx="12" fill="#D6246E"/><text class="thW" x="332" y="148">theme: base</text><text class="thC" x="332" y="172">+ primaryColor, lineColor,</text><text class="thC" x="332" y="192">  fontFamily, 40+ variables</text>
+        <text class="thT" x="312" y="240">The theme layer</text>
+        <line class="thArr" x1="570" y1="115" x2="618" y2="115"/>
+        <rect x="624" y="60" width="236" height="110" rx="12" fill="#FFEFF5" stroke="#FF9EBF"/><rect x="648" y="98" width="78" height="32" rx="8" fill="#FF3670"/><rect x="758" y="98" width="78" height="32" rx="8" fill="#8E1146"/>
+        <line x1="726" y1="114" x2="754" y2="114" stroke="#D9C6D2" stroke-width="2.5"/>
+        <text class="thT" x="624" y="200">Branded output</text><text class="thX" x="624" y="222">same layout, your colors</text>
+        <rect x="20" y="248" width="14" height="14" rx="3" fill="#F59E0B"/><text class="thN" x="44" y="260">Only theme base reads your themeVariables - the other four politely ignore them.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - source stays put, the theme layer decides the clothes. Base is the only tailor.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Two ways to configure: frontmatter and init<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Per-diagram config attaches to the source itself, so it travels with the diagram. The modern way is a <strong>frontmatter block</strong>: YAML between <code>---</code> fences, before the diagram type line. The older way is the <strong>init directive</strong> - a <code>%%{init: ...}%%</code> comment with JSON. Both work in v11; frontmatter is what current docs teach and what reads best in review.</p>
+        <div class="prompt-box good"><span class="label">Frontmatter - the modern way (YAML, top of the block)</span>---
+config:
+  theme: forest
+---
+flowchart LR
+  a[Same source] --> b[New clothes]</div>
+        <div class="prompt-box bad"><span class="label">Init directive - legacy, still valid (JSON in a comment)</span>%%{init: {'theme': 'forest'}}%%
+flowchart LR
+  a[Same source] --> b[New clothes]</div>
+        <p>And here it is live - this block overrides the page's own theme with <code>forest</code>, proving the config travels inside the source:</p>
+        <div class="mmd" data-caption="A frontmatter block flips one diagram to the forest theme - the rest of the page stays pink.">
+<pre class="mmd-src">
+---
+config:
+  theme: forest
+---
+flowchart LR
+  a[Same Nova source] --> b{Theme?}
+  b -->|forest| c[Green diagram]
+  b -->|none| d[Page default]
+</pre>
+        </div>
+        <div class="callout tip">
+          <strong>YAML bites once</strong>
+          Frontmatter is real YAML: two-space indentation matters, and hex colors must be quoted (<code>'#D6246E'</code>) or YAML eats everything after the # as a comment. Those two rules prevent most theming frustration.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The reveal: how every pink diagram was made<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Time to confess. Every pink diagram across all six sessions is <strong>stock mermaid</strong> - no CSS hacks, no SVG editing. The page initializes mermaid with <code>theme: base</code> plus pink themeVariables, and every diagram wears them automatically. Here is that exact trick, self-contained in one block:</p>
+        <div class="mmd" data-caption="The course's own look, reproduced in frontmatter - theme base + three pink themeVariables.">
+<pre class="mmd-src">
+---
+config:
+  theme: base
+  themeVariables:
+    primaryColor: '#FFEFF5'
+    primaryBorderColor: '#D6246E'
+    lineColor: '#C05585'
+---
+flowchart LR
+  src[App events] --> ing[Ingestion]
+  ing --> dw[(Warehouse)]
+  dw --> bi[Dashboards]
+</pre>
+        </div>
+        <p>Three variables did most of that work. The heavy hitters: <code>primaryColor</code> (node fill), <code>primaryBorderColor</code>, <code>primaryTextColor</code>, <code>lineColor</code> (edges), <code>fontFamily</code>, plus secondary/tertiary sets for subgraphs and second-class nodes. Mermaid derives sensible values for everything you do not set.</p>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>A platform team put their company's exact brand hex codes into one shared frontmatter snippet and pasted it atop every architecture diagram in their docs. Design stopped asking them to "redo the diagrams in brand colors" - the diagrams simply WERE brand-colored, forever, for free.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>themeVariables worth memorizing<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <thead><tr><th>Variable</th><th>Controls</th><th>Start here</th></tr></thead>
+          <tbody>
+            <tr><td><code>primaryColor</code></td><td>main node fill</td><td>your lightest brand tint</td></tr>
+            <tr><td><code>primaryBorderColor</code></td><td>main node border</td><td>your strongest brand color</td></tr>
+            <tr><td><code>primaryTextColor</code></td><td>text inside nodes</td><td>near-black for contrast</td></tr>
+            <tr><td><code>lineColor</code></td><td>edges and arrowheads</td><td>a mid-tone of the border</td></tr>
+            <tr><td><code>fontFamily</code></td><td>every label</td><td>your docs font</td></tr>
+            <tr><td><code>clusterBkg</code> / <code>clusterBorder</code></td><td>subgraph boxes</td><td>a whisper-faint tint</td></tr>
+            <tr><td><code>pie1</code>...<code>pie12</code></td><td>pie slice colors</td><td>brand ramp, darkest first</td></tr>
+          </tbody>
+        </table>
+        <p>Contrast check your choices: light fill + dark border + near-black text survives projectors, printers, and colorblind readers. Diagram-specific variables (sequence actors, gantt bars) are listed per diagram in the theming docs.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: ARCHITECTURE-GRADE ============ -->
+  <section class="section" id="architecture-grade">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers "Architecture" + "C4" diagram types</span>
+      <h2>Architecture-grade diagrams <span class="tag concept">7 min live</span></h2>
+    </div>
+    <p class="lede">Flowcharts describe flow; sometimes you need to describe DEPLOYMENT - what runs where, grouped how. Mermaid v11 added <code>architecture-beta</code> for cloud-style layouts with icons, and ships an experimental C4 grammar for context diagrams.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>architecture-beta: Nova's cloud layout<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The grammar has four words: <code>group</code> (a labeled container), <code>service</code> (a box with an icon), <code>junction</code> (an invisible split point), and edges that name which SIDE they leave and enter: <code>ing:R --&gt; L:dw</code> means "from ingestion's right side into the warehouse's left side". You place things; mermaid routes.</p>
+        <div class="mmd" data-caption="Nova as a deployment view - a cloud group, iconed services, and a junction fanning the warehouse out to two consumers.">
+<pre class="mmd-src">
+architecture-beta
+  group nova(cloud)[Nova platform]
+  service gw(internet)[Event gateway]
+  service ing(server)[Ingestion] in nova
+  service dw(database)[Warehouse] in nova
+  service bi(server)[Dashboards] in nova
+  service ml(disk)[Feature store] in nova
+  junction fan in nova
+
+  gw:R --> L:ing
+  ing:R --> L:dw
+  dw:R -- L:fan
+  fan:T -- B:bi
+  fan:B -- T:ml
+</pre>
+        </div>
+        <ul>
+          <li><strong>Icons:</strong> five ship built in - <code>cloud</code>, <code>database</code>, <code>disk</code>, <code>internet</code>, <code>server</code>. Thousands more via iconify packs when you control the renderer.</li>
+          <li><strong>Sides are the layout tool:</strong> <code>L R T B</code> on each edge end is how you sculpt the arrangement - there is no direction flag like a flowchart's LR.</li>
+          <li><strong>Beta means beta:</strong> the keyword is literally <code>architecture-beta</code>. Keep labels plain (letters, numbers, spaces) and expect the syntax to evolve.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>C4 context: Nova and its neighbors<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>C4 is a documentation METHOD (Context, Container, Component, Code) with its own boxy visual convention. Mermaid implements it - <code>C4Context</code> and friends - but flags it <strong>experimental</strong>: the docs say syntax and properties can change in future releases. Use it when your org already speaks C4; keep examples small.</p>
+        <div class="mmd" data-caption="A minimal C4 context diagram - who touches Nova and what feeds it. Experimental grammar, so we stay small.">
+<pre class="mmd-src">
+C4Context
+  title Nova in context
+  Person(analyst, "Analyst", "Reads dashboards daily")
+  System(nova, "Nova platform", "Events to warehouse to insight")
+  System_Ext(crm, "CRM", "Nightly export source")
+  Rel(analyst, nova, "Uses")
+  Rel(crm, nova, "Sends data")
+</pre>
+        </div>
+        <div class="callout tip">
+          <strong>Which one when</strong>
+          Subgraphed flowchart = logical flow (Session 2, still your default). architecture-beta = deployment view with icons. C4Context = stakeholder-facing context when C4 is the house style. All three can describe Nova; they answer different questions.
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: SHIPPING ============ -->
+  <section class="section" id="shipping">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers mermaid-cli + usage/embedding + accessibility</span>
+      <h2>Shipping - CLI, CI, and everywhere <span class="tag concept">7 min live</span></h2>
+    </div>
+    <p class="lede">Rendering in editors is table stakes. The pro layer renders diagrams in PIPELINES: batch-export with the CLI, regenerate in CI on every push, embed live in any web page - and make every diagram readable to screen readers while you are at it.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One committed mmd source ships three ways: host renders natively, your page embeds mermaid.js, or mmdc pre-renders files">
+        <style>
+          .shT { font: 700 16px Inter, sans-serif; fill: #291B24; }
+          .shW { font: 700 15px Inter, sans-serif; fill: #FFFFFF; }
+          .shX { font: 400 12.5px Inter, sans-serif; fill: #806A78; }
+          .shN { font: 600 14px Inter, sans-serif; fill: #3A2400; }
+          .shArr { stroke: #D9C6D2; stroke-width: 2.5; fill: none; marker-end: url(#shAh); }
+        </style>
+        <defs>
+          <marker id="shAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#D9C6D2" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="30" y="98" width="200" height="70" rx="12" fill="#8E1146"/><text class="shW" x="58" y="128">nova.mmd</text><text class="shW" x="58" y="150">committed in git</text>
+        <line class="shArr" x1="238" y1="115" x2="330" y2="52"/><line class="shArr" x1="238" y1="133" x2="330" y2="133"/><line class="shArr" x1="238" y1="151" x2="330" y2="216"/>
+        <rect x="336" y="24" width="240" height="58" rx="12" fill="#FF9EBF"/><text class="shT" x="356" y="48">1 · Host renders it</text><text class="shX" x="356" y="68">GitHub, Notion, docs sites - zero setup</text>
+        <rect x="336" y="106" width="240" height="58" rx="12" fill="#FF3670"/><text class="shW" x="356" y="130">2 · Your page + mermaid.js</text><text class="shX" x="356" y="150" fill="#FFEFF5">this course site - ten lines of JS</text>
+        <rect x="336" y="188" width="240" height="58" rx="12" fill="#D6246E"/><text class="shW" x="356" y="212">3 · mmdc pre-renders</text><text class="shX" x="356" y="232" fill="#FFEFF5">CI job - SVG, PNG, PDF artifacts</text>
+        <rect x="620" y="98" width="240" height="70" rx="12" fill="#FFEFF5" stroke="#FF9EBF"/><text class="shT" x="640" y="126">Readers see diagrams</text><text class="shX" x="640" y="148">source stays the single truth</text>
+        <line class="shArr" x1="582" y1="53" x2="640" y2="96"/><line class="shArr" x1="582" y1="135" x2="614" y2="135"/><line class="shArr" x1="582" y1="217" x2="640" y2="170"/>
+        <rect x="30" y="256" width="14" height="14" rx="3" fill="#F59E0B"/><text class="shN" x="54" y="268">Pick per destination: hosts for docs, embed for sites you own, pre-render for slides and PDFs.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - one committed source, three delivery routes. All three can coexist.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>mermaid-cli: mmdc in one minute<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><code>mmdc</code> is the official command-line renderer. It spins up headless Chromium via puppeteer, renders exactly what the browser would, and writes the file format you asked for - the extension picks it.</p>
+        <div class="prompt-box good"><span class="label">The whole workflow</span>npm install -g @mermaid-js/mermaid-cli
+
+mmdc -i nova.mmd -o nova.svg    # crisp, infinite zoom
+mmdc -i nova.mmd -o nova.png    # for slides and chats
+mmdc -i nova.mmd -o nova.pdf    # for the print crowd</div>
+        <p>No npm on the machine? The maintained docker image skips the install entirely: <code>docker run --rm -v $(pwd):/data minlag/mermaid-cli -i nova.mmd -o nova.svg</code>. Because puppeteer downloads a browser, the first install is heavy - normal, not broken.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>CI: render on push, never by hand<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The pattern is one job: when a <code>.mmd</code> file changes, run mmdc over it and publish the output. Two flavors:</p>
+        <ul>
+          <li><strong>Commit artifacts back</strong> - the job renders <code>docs/*.mmd</code> to <code>docs/img/*.svg</code> and commits them, so even non-mermaid surfaces (wikis, emails, slides) get current images.</li>
+          <li><strong>Attach to the docs build</strong> - MkDocs or Docusaurus renders fences at build time; mmdc covers only the exports slides need.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>A data platform team wired mmdc into their docs pipeline: every merge re-exported twelve architecture diagrams to SVG for their internal portal. The diagrams stopped drifting from reality because updating them was no longer a task anyone could forget - it was a side effect of merging.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Embedding: the ten lines behind this site<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Everything this course does - live rendering, pink theme, all of it - starts with one ES module import and one initialize call. Here is the skeleton, ready to steal:</p>
+        <div class="prompt-box good"><span class="label">Minimal live-mermaid page - adapt freely</span>&lt;script type="module"&gt;
+  import mermaid from
+    "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({
+    startOnLoad: false,
+    securityLevel: "strict",
+    theme: "base",
+    themeVariables: { primaryColor: "#FFEFF5",
+      primaryBorderColor: "#D6246E", lineColor: "#C05585" }
+  });
+  await mermaid.run({ querySelector: ".mermaid" });
+&lt;/script&gt;</div>
+        <p><strong>securityLevel matters:</strong> <code>strict</code> (the default) sanitizes labels and disables click interactions - right for pages that render other people's diagrams. <code>loose</code> enables clicks and HTML labels - only for sources you fully trust. This page runs strict.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Accessibility: accTitle and accDescr<span class="mini">1 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>An SVG diagram is invisible to a screen reader unless you say what it means. Two lines fix that in ANY diagram type, right after the type keyword:</p>
+        <div class="mmd" data-caption="accTitle and accDescr render invisibly - but a screen reader announces both. Flip to Code to see them.">
+<pre class="mmd-src">
+flowchart LR
+  accTitle: Nova high level flow
+  accDescr: App events flow through ingestion into the warehouse which feeds dashboards
+  src[App events] --> ing[Ingestion]
+  ing --> dw[(Warehouse)]
+  dw --> bi[Dashboards]
+</pre>
+        </div>
+        <p>Multi-line descriptions use <code>accDescr { ... }</code> with no colon. Rule of thumb: the description should let someone who cannot see the diagram repeat its point in a meeting.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>GitHub's renderer vs pre-rendered SVG<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>When a host renders your fence, the HOST picks the mermaid version and config - GitHub ignores your custom themes and strips click interactions, and its mermaid version may lag features like architecture-beta. So:</p>
+        <ul>
+          <li><strong>Fence it</strong> when the diagram lives next to code and freshness beats styling - READMEs, PRs, issues.</li>
+          <li><strong>Pre-render to SVG</strong> (mmdc in CI) when brand theming, exact appearance, or clickable links matter - slides, portals, published docs.</li>
+          <li><strong>Docs sites are the sweet spot</strong> - MkDocs and Docusaurus let you configure the mermaid version AND theme, so fences render branded.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Demo 1 of 3</span>
+      <h2>Brand-theme a Nova diagram <span class="tag demo">★ 8 min · follow along</span></h2>
+    </div>
+    <p class="lede">Take Nova's 30,000-foot map from Session 1 and dress it in YOUR company's colors - one frontmatter block, no design tools.</p>
+    <div class="steps">
+      <div class="step"><p>Grab three brand hex codes: a light tint, a strong accent, a mid-tone. No brand guide handy? Use your company homepage and a color picker.</p></div>
+      <div class="step"><p>In mermaid.live, paste the Nova map, then add frontmatter above it: <code>theme: base</code> plus <code>themeVariables</code> with <code>primaryColor</code> set to the tint.</p></div>
+      <div class="step"><p>Add <code>primaryBorderColor</code> (the accent) and <code>lineColor</code> (the mid-tone). Quote every hex code - YAML treats a bare # as a comment.</p></div>
+      <div class="step"><p>Squint test: text readable on the tint? If not, set <code>primaryTextColor</code> to near-black. Set <code>fontFamily</code> to your docs font as a bonus.</p></div>
+      <div class="step"><p>Save the snippet somewhere shared - the frontmatter block IS your team's diagram brand kit now. Paste it atop any diagram, forever.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Demo 2 of 3</span>
+      <h2>Export Nova with mmdc <span class="tag demo">★ 6 min · build your own</span></h2>
+    </div>
+    <p class="lede">From browser tool to build tool: install the CLI and turn the Nova map into files you can drop into slides and PDFs.</p>
+    <div class="steps">
+      <div class="step"><p>Install: <code>npm install -g @mermaid-js/mermaid-cli</code>. Expect a puppeteer browser download - it is large and normal.</p></div>
+      <div class="step"><p>Save your themed Demo 1 source (frontmatter included) as <code>nova.mmd</code> in an empty folder.</p></div>
+      <div class="step"><p>Run <code>mmdc -i nova.mmd -o nova.svg</code>, then <code>mmdc -i nova.mmd -o nova.png</code>. Two files, one source.</p></div>
+      <div class="step"><p>Open both. Zoom the SVG to 800% - still crisp. That is why SVG is the default and PNG is for hosts that refuse vectors.</p></div>
+      <div class="step"><p>Drop the PNG into a slide. You have now shipped a mermaid diagram to the one place fences cannot reach.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Demo 3 of 3</span>
+      <h2>Make every Nova diagram accessible <span class="tag demo">★ 4 min · build your own</span></h2>
+    </div>
+    <p class="lede">Sweep your Nova collection from Sessions 1-5 and give each diagram a voice. This is the cheapest professionalism upgrade in the whole course.</p>
+    <div class="steps">
+      <div class="step"><p>Open each Nova diagram you have built (map, sequence, ERD, gantt - whatever you kept).</p></div>
+      <div class="step"><p>Add <code>accTitle:</code> naming the diagram, right under the type keyword.</p></div>
+      <div class="step"><p>Add <code>accDescr:</code> stating the takeaway in one sentence - what should a listener LEARN, not what shapes exist.</p></div>
+      <div class="step"><p>Re-render each to confirm nothing broke; the lines are invisible in the output by design.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 30-45 min total</span></h2>
+    </div>
+    <ul>
+      <li>Build your team's frontmatter brand kit (theme base + 4-6 themeVariables) and put it in the repo where diagrams live, with a two-line README.</li>
+      <li>Redraw one real system you own as <code>architecture-beta</code> - one group, four or five services, one junction. Compare it against your subgraphed flowchart of the same system: which answers which question?</li>
+      <li>Wire mmdc into one pipeline - even a package.json script counts: <code>"diagrams": "mmdc -i docs/nova.mmd -o docs/nova.svg"</code>.</li>
+      <li>Add accTitle and accDescr to every diagram in one real doc, then read the descriptions aloud - if one sounds useless, it is.</li>
+      <li>Start Deep dive 6.1 whenever you like: mermaid's chart types, self-paced, Nova data included.</li>
+    </ul>
+  </section>
+
+  <!-- ============ OFFICIAL ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Official docs covered</h2>
+    </div>
+    <p class="lede">This session teaches the working content of these sections of the official docs at <a href="https://mermaid.js.org" target="_blank" rel="noopener">mermaid.js.org</a> (mermaid 11.x) plus the <a href="https://github.com/mermaid-js/mermaid-cli" target="_blank" rel="noopener">mermaid-cli</a> repo.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Theming</span><span class="note">Part 1 - five themes, base + themeVariables, the pink reveal</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Configuration + directives</span><span class="note">Part 1 - frontmatter config vs init directive</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Architecture (architecture-beta)</span><span class="note">Part 2 - groups, services, junctions, side-anchored edges</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">C4 diagrams</span><span class="note">Part 2 - context level only; experimental, syntax may change</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">mermaid-cli (mmdc)</span><span class="note">Part 3 + Demo 2 - SVG/PNG/PDF exports, docker, CI pattern</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Usage: embedding in web pages</span><span class="note">Part 3 - the ESM import + initialize + run skeleton</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Accessibility</span><span class="note">Part 3 + Demo 3 - accTitle, accDescr, multi-line form</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">ELK layout engine</span><span class="note">named only - Deep dive 6.3 covers layout tuning</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · You set themeVariables but the diagram ignores them completely. Most likely cause?</p>
+      <button class="qopt" type="button">A · themeVariables need the paid Mermaid Chart product</button>
+      <button class="qopt" type="button">B · The theme is not base - only base reads themeVariables</button>
+      <button class="qopt" type="button">C · Hex colors are not allowed in themeVariables</button>
+      <p class="qwhy">The four fixed themes ignore your variables by design. Set theme: base first, then customize - and quote your hex codes in YAML.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · Frontmatter block vs %%{init}%% directive - which statement is true?</p>
+      <button class="qopt" type="button">A · The init directive is newer and replaces frontmatter</button>
+      <button class="qopt" type="button">B · Frontmatter goes after the diagram type line</button>
+      <button class="qopt" type="button">C · Both configure one diagram; frontmatter (YAML, before the type line) is the modern form</button>
+      <p class="qwhy">Frontmatter sits between --- fences at the very top; init is the older JSON-in-a-comment form. Both still work in v11.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · What does mmdc -i nova.mmd -o nova.png actually do?</p>
+      <button class="qopt" type="button">A · Renders the source in headless Chromium via puppeteer and writes a PNG</button>
+      <button class="qopt" type="button">B · Uploads nova.mmd to mermaid.live and downloads a screenshot</button>
+      <button class="qopt" type="button">C · Converts the PNG back into editable mermaid source</button>
+      <p class="qwhy">mmdc is a real browser in a trench coat: puppeteer renders exactly what you would see, and the output extension (svg/png/pdf) picks the format.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 6 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Five themes</b><span>default · neutral (print) · dark · forest · base. Only base is customizable - the rest are fixed palettes.</span></div>
+      <div class="cheat-item"><b>Brand kit</b><span>theme: base + themeVariables: primaryColor (fill), primaryBorderColor, primaryTextColor, lineColor, fontFamily.</span></div>
+      <div class="cheat-item"><b>Frontmatter</b><span>--- config: theme: ... --- above the type line. Real YAML: two-space indents, quote '#hex' colors.</span></div>
+      <div class="cheat-item"><b>Init directive</b><span>%%{init: {'theme':'base'}}%% - the legacy JSON form. Still valid; prefer frontmatter for new work.</span></div>
+      <div class="cheat-item"><b>architecture-beta</b><span>group id(icon)[Label] · service id(icon)[Label] in group · junction id · edges anchor sides: a:R --&gt; L:b.</span></div>
+      <div class="cheat-item"><b>C4Context</b><span>Person / System / System_Ext / Rel(a, b, "verb"). Experimental - keep small, expect change.</span></div>
+      <div class="cheat-item"><b>mmdc</b><span>npm i -g @mermaid-js/mermaid-cli · mmdc -i in.mmd -o out.svg|png|pdf · puppeteer inside · docker image if npm is unwelcome.</span></div>
+      <div class="cheat-item"><b>Access + trust</b><span>accTitle: / accDescr: right after the type line, every diagram · securityLevel strict for others' sources, loose only for your own.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 6 of 6 · learn-mermaid-with-phoebe · by Phoebe Fu</span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="05-plans-and-people.html">← Plans and people</a> &nbsp;·&nbsp; <a href="61-data-charts.html">Next: Deep dives →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+<script type="module" src="../assets/mermaid-live.js?v=1"></script>
+</body>
+</html>

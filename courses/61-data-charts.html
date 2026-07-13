@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep dive 6.1 · Data charts - learn mermaid with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-mermaid-with-phoebe</a> / Deep dive 6.1 of 3</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Mermaid with Phoebe · Deep dive 6.1 of 3</div>
+    <h1>Numbers in <span class="accent">pink</span>: mermaid's chart types</h1>
+    <p class="sub">Five chart types that live where your words live: pie, quadrant, xy, sankey, and radar - each with a Nova example, an honest when-to-use, and the gotchas the docs whisper.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Self-paced</span>
+      <span class="chip audience">Data &amp; AI teams</span>
+      <span class="chip time">~30 min</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:3">Pie + quadrant</span>
+      <span class="a2" style="flex:3">xy + sankey</span>
+      <span class="a3" style="flex:2">Radar</span>
+      <span class="a4" style="flex:2">Quiz + cheat sheet</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this deep dive exists</h2>
+    </div>
+    <p class="lede">Honest framing first: mermaid's charts are QUICK-LOOK charts for documents, not a BI tool. No drill-downs, no live data, limited styling. But that is exactly their power - when a design doc needs one bar chart, opening a BI tool is overkill and pasting a screenshot starts the staleness clock. A ten-line chart that lives IN the doc, diffs in PRs, and re-renders forever wins. One caveat throughout: several of these types are beta - the keyword carries a <code>-beta</code> suffix or recently dropped it, and syntax may move between versions. When a chart misbehaves, check the current docs first.</p>
+    <div class="legend">
+      <span class="pill solid">Core - read every section</span>
+      <span class="pill peach">★ Try it now</span>
+      <span class="pill inkpill">Every chart on this page is REAL mermaid, rendered live</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with</strong>
+      Five chart grammars applied to Nova's numbers: spend shares (pie), a data quality priority grid (quadrant), pipeline volume trends (xy), event flow volumes (sankey), and team skill coverage (radar) - plus a decision strip for picking the right one in two seconds.
+    </div>
+  </section>
+
+  <!-- ============ WHICH CHART WHEN ============ -->
+  <section class="section" id="which-chart">
+    <div class="section-kicker">
+      <span class="klabel">The map</span>
+      <h2>Which chart when</h2>
+    </div>
+    <p class="lede">Each type answers exactly one question shape. Match the question, not the aesthetics.</p>
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Decision strip: shares of a whole means pie, prioritizing on two axes means quadrant, trend over categories means xy chart, flow volumes means sankey, coverage across dimensions means radar">
+        <style>
+          .wcQ { font: 600 13.5px Inter, sans-serif; fill: #291B24; }
+          .wcW { font: 700 16px Inter, sans-serif; fill: #FFFFFF; }
+          .wcX { font: 400 12px Inter, sans-serif; fill: #806A78; }
+          .wcN { font: 600 14px Inter, sans-serif; fill: #3A2400; }
+          .wcArr { stroke: #D9C6D2; stroke-width: 2; fill: none; marker-end: url(#wcAh); }
+        </style>
+        <defs>
+          <marker id="wcAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#D9C6D2" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <text class="wcQ" x="26" y="40">"Shares of</text>
+        <text class="wcQ" x="26" y="58">one whole?"</text>
+        <line class="wcArr" x1="60" y1="70" x2="60" y2="96"/>
+        <rect x="20" y="102" width="130" height="46" rx="10" fill="#8E1146"/>
+        <text class="wcW" x="60" y="130">pie</text>
+        <text class="wcX" x="20" y="172">Nova warehouse</text>
+        <text class="wcX" x="20" y="188">spend split</text>
+        <text class="wcQ" x="196" y="40">"Prioritize on</text>
+        <text class="wcQ" x="196" y="58">two axes?"</text>
+        <line class="wcArr" x1="235" y1="70" x2="235" y2="96"/>
+        <rect x="194" y="102" width="130" height="46" rx="10" fill="#D6246E"/>
+        <text class="wcW" x="212" y="130">quadrant</text>
+        <text class="wcX" x="194" y="172">quality fixes:</text>
+        <text class="wcX" x="194" y="188">effort vs impact</text>
+        <text class="wcQ" x="370" y="40">"Trend over</text>
+        <text class="wcQ" x="370" y="58">categories?"</text>
+        <line class="wcArr" x1="409" y1="70" x2="409" y2="96"/>
+        <rect x="368" y="102" width="130" height="46" rx="10" fill="#FF3670"/>
+        <text class="wcW" x="392" y="130">xychart</text>
+        <text class="wcX" x="368" y="172">pipeline volume</text>
+        <text class="wcX" x="368" y="188">by month</text>
+        <text class="wcQ" x="544" y="40">"Where do the</text>
+        <text class="wcQ" x="544" y="58">volumes flow?"</text>
+        <line class="wcArr" x1="583" y1="70" x2="583" y2="96"/>
+        <rect x="542" y="102" width="130" height="46" rx="10" fill="#FF9EBF"/>
+        <text class="wcQ" x="572" y="130" style="font-weight:700;font-size:16px">sankey</text>
+        <text class="wcX" x="542" y="172">events through</text>
+        <text class="wcX" x="542" y="188">the quality gate</text>
+        <text class="wcQ" x="718" y="40">"Coverage across</text>
+        <text class="wcQ" x="718" y="58">dimensions?"</text>
+        <line class="wcArr" x1="757" y1="70" x2="757" y2="96"/>
+        <rect x="716" y="102" width="130" height="46" rx="10" fill="#8E1146"/>
+        <text class="wcW" x="752" y="130">radar</text>
+        <text class="wcX" x="716" y="172">team skill</text>
+        <text class="wcX" x="716" y="188">coverage</text>
+        <rect x="20" y="222" width="14" height="14" rx="3" fill="#F59E0B"/>
+        <text class="wcN" x="44" y="234">None of these replace a BI tool - they live next to the words, answering one question each.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - five question shapes, five chart types. Match the question first.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ PIE ============ -->
+  <section class="section" id="pie">
+    <div class="section-kicker">
+      <span class="klabel">Chart 1 of 5 · stable</span>
+      <h2>Pie - shares of one whole <span class="tag concept">4 min</span></h2>
+    </div>
+    <p class="lede">The oldest and most stable chart in mermaid. One <code>pie</code> keyword, optional <code>showData</code> to print values, optional <code>title</code>, then quoted labels with values. Slices draw clockwise in source order.</p>
+    <details class="card" open>
+      <summary><span class="mode self">Core</span>Nova's warehouse spend, in six lines<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Use it in data work for:</strong> cost splits, storage by domain, ticket categories - any "what makes up the total" moment in a budget doc or postmortem. Above five or six slices, switch to a table; pies stop communicating.</p>
+        <div class="mmd" data-caption="pie with showData - values print next to the legend, so nobody squints at slice angles.">
+<pre class="mmd-src">
+pie showData title Nova warehouse spend
+  "Compute" : 55
+  "Storage" : 30
+  "Egress" : 15
+</pre>
+        </div>
+        <ul>
+          <li><strong>Gotcha: values must be positive.</strong> Zero or negative values throw a parse error - filter them out before charting.</li>
+          <li><strong>Gotcha: labels need quotes</strong>, always - unquoted labels are the number-one pie syntax error.</li>
+          <li><strong>Order is yours:</strong> mermaid does not sort - list slices largest-first for the classic look.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ QUADRANT ============ -->
+  <section class="section" id="quadrant">
+    <div class="section-kicker">
+      <span class="klabel">Chart 2 of 5 · stable</span>
+      <h2>Quadrant - prioritize on two axes <span class="tag concept">5 min</span></h2>
+    </div>
+    <p class="lede">The consultant's favorite, as code: <code>quadrantChart</code> takes axis labels (left <code>--&gt;</code> right, bottom <code>--&gt;</code> top), four quadrant names, and points at <code>[x, y]</code> coordinates from 0 to 1.</p>
+    <details class="card">
+      <summary><span class="mode self">Core</span>Nova's data quality backlog, prioritized<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Use it in data work for:</strong> prioritizing quality fixes, tool evaluations, model backlog triage - any effort-vs-impact conversation where a picture ends the debate faster than a spreadsheet.</p>
+        <div class="mmd" data-caption="Effort vs impact for Nova's data quality backlog - quadrant-2 (top left) is the do-first zone.">
+<pre class="mmd-src">
+quadrantChart
+  title Nova data quality fixes
+  x-axis Low effort --> High effort
+  y-axis Low impact --> High impact
+  quadrant-1 Plan properly
+  quadrant-2 Do first
+  quadrant-3 Quietly drop
+  quadrant-4 Nice to have
+  Null user ids: [0.2, 0.85]
+  Late CRM loads: [0.45, 0.7]
+  Duplicate events: [0.3, 0.5]
+  Schema drift alerts: [0.8, 0.75]
+  Emoji in names: [0.15, 0.1]
+</pre>
+        </div>
+        <ul>
+          <li><strong>Gotcha: quadrant numbering is fixed</strong> - quadrant-1 is top RIGHT, then counterclockwise. Mislabeling these flips your story.</li>
+          <li><strong>Gotcha: coordinates are 0 to 1</strong>, not percentages or raw values - normalize before plotting.</li>
+          <li><strong>Crowding:</strong> past ~8 points labels collide; shortlist before you chart.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ XYCHART ============ -->
+  <section class="section" id="xychart">
+    <div class="section-kicker">
+      <span class="klabel">Chart 3 of 5 · beta lineage</span>
+      <h2>XY chart - trend over categories <span class="tag concept">5 min</span></h2>
+    </div>
+    <p class="lede">Bars, lines, or both on one classic two-axis plot. Born as <code>xychart-beta</code>; current docs have graduated it to plain <code>xychart</code>, and v11 accepts both spellings. We use the beta form here because it renders on every v11, old or new.</p>
+    <details class="card">
+      <summary><span class="mode self">Core</span>Nova pipeline volume by month<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Use it in data work for:</strong> volume trends, cost curves, row counts per load - the workhorse chart of every capacity review. Bar and line stack in one chart: bars for actuals, line for the target.</p>
+        <div class="mmd" data-caption="Bar = actual events ingested, line = capacity plan. Two series, one chart, twelve lines of text.">
+<pre class="mmd-src">
+xychart-beta
+  title "Nova pipeline volume by month"
+  x-axis [Jan, Feb, Mar, Apr, May, Jun]
+  y-axis "Events (millions)" 0 --> 40
+  bar [12, 15, 19, 24, 30, 36]
+  line [14, 18, 22, 26, 31, 38]
+</pre>
+        </div>
+        <ul>
+          <li><strong>Gotcha: series are positional.</strong> Values map to x-axis categories by ORDER - the fourth number is April, no keys, no gaps allowed.</li>
+          <li><strong>Gotcha: quote multi-word strings</strong> - the title and any category with a space need double quotes.</li>
+          <li><strong>No legend labels for series</strong> out of the box - say what bar and line mean in the caption or surrounding text.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ SANKEY ============ -->
+  <section class="section" id="sankey">
+    <div class="section-kicker">
+      <span class="klabel">Chart 4 of 5 · beta lineage</span>
+      <h2>Sankey - where the volumes flow <span class="tag concept">5 min</span></h2>
+    </div>
+    <p class="lede">The most data-native syntax in mermaid: after the keyword, the body is literally CSV - <code>source,target,value</code> per line. Born as <code>sankey-beta</code>, graduated to <code>sankey</code> in current docs; v11 accepts both, and we use the beta form for maximum compatibility.</p>
+    <details class="card">
+      <summary><span class="mode self">Core</span>Nova's event flow through the quality gate<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Use it in data work for:</strong> pipeline volume accounting - where records enter, split, and land. A sankey makes data LOSS visible: that thin quarantine ribbon below is the chart equivalent of a failing quality check, and it often comes straight out of a GROUP BY.</p>
+        <div class="mmd" data-caption="60M app events + 25M CRM rows enter the gate; 78M pass to the warehouse, 7M land in quarantine.">
+<pre class="mmd-src">
+sankey-beta
+App events,Quality gate,60
+CRM export,Quality gate,25
+Quality gate,Warehouse,78
+Quality gate,Quarantine,7
+Warehouse,Dashboards,48
+Warehouse,ML features,30
+</pre>
+        </div>
+        <ul>
+          <li><strong>Gotcha: it is real CSV.</strong> No pipes, no arrows - and a comma INSIDE a node name needs the whole name wrapped in double quotes.</li>
+          <li><strong>Gotcha: conservation is on you.</strong> Mermaid will happily draw inflows that do not match outflows - reviewers will notice. Make the sums balance (60 + 25 = 78 + 7).</li>
+          <li><strong>Node names ARE identity:</strong> the exact same string links flows together - "Warehouse" and "warehouse" become two nodes.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ RADAR ============ -->
+  <section class="section" id="radar">
+    <div class="section-kicker">
+      <span class="klabel">Chart 5 of 5 · beta, v11.6+</span>
+      <h2>Radar - coverage across dimensions <span class="tag concept">4 min</span></h2>
+    </div>
+    <p class="lede">The newest of the five (v11.6.0, keyword <code>radar-beta</code>): named axes, one polygon per <code>curve</code>, optional <code>max</code> and <code>min</code> for the scale. Newer means the syntax is most likely of all five to move - check the docs page when upgrading.</p>
+    <details class="card">
+      <summary><span class="mode self">Core</span>Nova team skill coverage<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><strong>Use it in data work for:</strong> skill matrices, tool capability comparisons, maturity assessments - anything scored on the same scale across 4-6 dimensions. Two curves make gaps visible instantly.</p>
+        <div class="mmd" data-caption="Today's team vs the hiring target on a 0-5 scale - the ML and governance gaps jump out.">
+<pre class="mmd-src">
+radar-beta
+  axis sql["SQL"], py["Python"], viz["Visualization"]
+  axis ml["ML"], gov["Governance"]
+  curve now["Team today"]{4, 3, 4, 2, 2}
+  curve goal["Hiring target"]{5, 4, 4, 4, 3}
+  max 5
+  min 0
+</pre>
+        </div>
+        <ul>
+          <li><strong>Gotcha: curve values are positional</strong> - they map to axes in declaration order. Use the named form <code>curve c{sql: 4, ml: 2}</code> when order gets fragile.</li>
+          <li><strong>Gotcha: set max explicitly.</strong> Without it the scale is derived from the data, and two radars side by side silently use different scales.</li>
+          <li><strong>Keep it to 3-4 curves</strong> - beyond that the polygons overlap into noise.</li>
+        </ul>
+      </div>
+    </details>
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p>A data lead replaced the "skills spreadsheet nobody opened" with one radar-beta block in the team's quarterly planning doc. Because the chart was text, updating a score was a one-character PR - and the ML gap it exposed became the quarter's hiring case, approved with the chart itself as slide one.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 20-30 min total</span></h2>
+    </div>
+    <ul>
+      <li>Put ONE of these five charts into a real document at work this week - a cost pie in the budget doc, a sankey in the pipeline runbook, a radar in the team plan. One is enough; living in a real doc is the point.</li>
+      <li>Pull real numbers for it - a GROUP BY, a billing export, an honest guess reviewed by a teammate. Fake-looking numbers kill chart credibility faster than bad colors.</li>
+      <li>Balance drill: extend the Nova sankey with one more destination (say, a data share to Finance) and keep every node's inflow equal to its outflow.</li>
+      <li>Check your renderer: paste the xy and sankey examples wherever YOUR docs live - if the host's mermaid is older, switch keywords between beta and non-beta forms per its docs.</li>
+    </ul>
+  </section>
+
+  <!-- ============ OFFICIAL ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Official docs covered</h2>
+    </div>
+    <p class="lede">This deep dive teaches the working content of these syntax pages at <a href="https://mermaid.js.org" target="_blank" rel="noopener">mermaid.js.org</a> (mermaid 11.x). Config-level styling for each chart lives with Session 6's theming toolkit.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Pie chart</span><span class="note">stable - showData, title, positive values only</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Quadrant chart</span><span class="note">stable - axes, quadrant labels, 0-1 points</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">XY chart</span><span class="note">beta lineage - xychart-beta / xychart, bar + line series</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Sankey</span><span class="note">beta lineage - sankey-beta / sankey, CSV body, experimental per docs</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Radar</span><span class="note">beta - radar-beta, v11.6+, axes + curves + max/min</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · Your quadrant point sits in the wrong corner. The most likely cause?</p>
+      <button class="qopt" type="button">A · Points must be listed largest first</button>
+      <button class="qopt" type="button">B · The x-axis label needs quotes</button>
+      <button class="qopt" type="button">C · Coordinates must be 0 to 1, and quadrant-1 is top right - a raw value or wrong quadrant label misplaces it</button>
+      <p class="qwhy">Two traps in one chart: normalize values into the 0-1 range, and remember the fixed numbering - quadrant-1 top right, counterclockwise from there.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · What is the body of a sankey diagram, after the keyword line?</p>
+      <button class="qopt" type="button">A · CSV lines: source,target,value</button>
+      <button class="qopt" type="button">B · Arrow statements: source --&gt; target : value</button>
+      <button class="qopt" type="button">C · A JSON array of flow objects</button>
+      <p class="qwhy">Sankey is the most data-native grammar in mermaid - plain CSV, which means you can often generate it straight from a GROUP BY.</p>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · In an xychart, how do bar values map to x-axis categories?</p>
+      <button class="qopt" type="button">A · By key, like bar [Jan: 12, Feb: 15]</button>
+      <button class="qopt" type="button">B · By position - the nth value belongs to the nth category</button>
+      <button class="qopt" type="button">C · Alphabetically by category name</button>
+      <p class="qwhy">Series are positional arrays. Skipping a month silently shifts every later value one category left - the classic xychart bug.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Deep dive 6.1 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>pie</b><span>pie showData title Text · "Label" : 55 · positive values only, quotes required, slices draw in source order.</span></div>
+      <div class="cheat-item"><b>quadrantChart</b><span>x-axis Low --&gt; High · quadrant-1..4 (top right, counterclockwise) · Point: [0.2, 0.85] with 0-1 coordinates.</span></div>
+      <div class="cheat-item"><b>xychart-beta</b><span>x-axis [Jan, Feb] · y-axis "Label" 0 --&gt; 40 · bar [...] + line [...] together · values map by position.</span></div>
+      <div class="cheat-item"><b>sankey-beta</b><span>CSV body: source,target,value per line · same string = same node · keep inflows equal to outflows.</span></div>
+      <div class="cheat-item"><b>radar-beta</b><span>axis id["Label"] · curve id["Label"]{4, 3, 2} · set max explicitly · v11.6+, the newest of the five.</span></div>
+      <div class="cheat-item"><b>Beta rule</b><span>xychart and sankey graduated from -beta in current docs; both spellings work in v11. Radar and architecture keep -beta. When in doubt, check the docs page.</span></div>
+      <div class="cheat-item"><b>Picking</b><span>Shares → pie · effort/impact → quadrant · trend → xychart · flow volumes → sankey · multi-dimension coverage → radar.</span></div>
+      <div class="cheat-item"><b>Honesty</b><span>These are doc charts, not BI. One question per chart, real numbers, and a caption that says what to conclude.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Deep dive 6.1 of 3 · learn-mermaid-with-phoebe · by Phoebe Fu</span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="06-pro-layer.html">← Session 6</a> &nbsp;·&nbsp; <a href="62-structure-extras.html">Next: Structure extras →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+<script type="module" src="../assets/mermaid-live.js?v=1"></script>
+</body>
+</html>

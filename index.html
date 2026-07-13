@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>learn mermaid with phoebe - diagrams as code, live</title>
+<link rel="stylesheet" href="assets/style.css?v=1">
+<style>
+  .stats-row { display: flex; gap: 2.4rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .stat b { display: block; font-size: 2.1rem; font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: .72rem; opacity: .85; text-transform: uppercase; letter-spacing: .09em; font-weight: 600; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .course-card {
+    border: 1px solid var(--hairline);
+    border-top: 4px solid var(--diff, var(--indigo));
+    border-radius: var(--radius);
+    padding: 1.2rem 1.3rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: #fff;
+    transition: box-shadow .15s ease, border-color .15s ease, transform .15s ease;
+    position: relative;
+  }
+  .course-card:hover { border-color: var(--indigo-soft); border-top-color: var(--diff, var(--indigo)); box-shadow: 0 8px 28px rgba(214,36,110,.12); transform: translateY(-3px); }
+  .course-card .cicon { font-size: 1.7rem; line-height: 1; }
+  .course-card .cnum { font-size: .72rem; font-weight: 700; color: var(--indigo); text-transform: uppercase; letter-spacing: .1em; }
+  .course-card h3 { font-size: 1.05rem; font-weight: 800; line-height: 1.3; }
+  .course-card p { font-size: .85rem; color: var(--muted); flex: 1; }
+  .course-card .meta { display: flex; gap: .4rem; flex-wrap: wrap; }
+
+  .diff-legend { display: flex; gap: 1rem; margin-top: 1.6rem; font-size: .74rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .diff-legend i { display: inline-block; width: .85rem; height: .35rem; border-radius: 999px; margin-right: .35rem; vertical-align: middle; }
+
+  .paths { margin-top: 2.6rem; }
+  .paths h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .3rem; }
+  .paths .plede { color: var(--muted); font-size: .92rem; margin-bottom: .8rem; }
+  .path { display: flex; gap: .55rem; align-items: center; padding: .75rem 0; border-bottom: .5px solid var(--hairline); flex-wrap: wrap; }
+  .path:last-child { border-bottom: none; }
+  .path b { min-width: 15.5rem; font-size: .9rem; }
+  .path .pstep { background: var(--indigo-50); color: var(--indigo); border-radius: 999px; padding: .16rem .68rem; font-weight: 700; font-size: .8rem; text-decoration: none; transition: all .12s ease; }
+  .path .pstep:hover { background: var(--indigo); color: #fff; }
+  .path .parr { color: var(--faint); font-weight: 700; }
+
+  .dd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .6rem; margin-top: .9rem; }
+  .dd { border: 1px solid var(--hairline); border-radius: 10px; padding: .6rem .85rem; display: flex; gap: .55rem; align-items: baseline; text-decoration: none; color: var(--ink); font-weight: 600; font-size: .84rem; transition: all .12s ease; }
+  .dd b { color: var(--indigo); font-variant-numeric: tabular-nums; }
+  .dd:hover { border-color: var(--indigo); transform: translateY(-2px); }
+
+  .hero-live { margin-top: -1.4rem; }
+  .hero-live .hlede { color: var(--muted); font-size: .95rem; margin: 1.4rem 0 0; }
+  .hero-live .hlede b { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Mermaid with Phoebe</div>
+    <h1>Stop drawing diagrams. Start typing them.</h1>
+    <p class="sub">Six 45-minute sessions on mermaid, the text-to-diagram language built into GitHub, Notion, and half your toolbox. We diagram one realistic data platform end to end - flowcharts to ER models to roadmaps - and every diagram in this course is real mermaid, rendered live in your browser.</p>
+    <div class="stats-row">
+      <div class="stat"><b data-count="6">6</b><span>sessions</span></div>
+      <div class="stat"><b data-count="3">3</b><span>deep dives</span></div>
+      <div class="stat"><b data-count="20">20</b><span>diagram types taught</span></div>
+      <div class="stat"><b data-count="45">45</b><span>min per session</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="section hero-live" id="live-proof">
+    <p class="hlede"><b>Proof, not promises:</b> this is Nova, the running project - the diagram below is live mermaid source, rendered by mermaid.js the moment you loaded this page. Flip it to Code. Copy it. That is the whole course in one block.</p>
+    <div class="mmd" data-caption="Session 1 builds this. Session 6 ships a branded, exported, CI-rendered version of it.">
+<pre class="mmd-src">
+flowchart LR
+  ev[App events] -->|stream| ing[Ingestion]
+  crm[CRM export] -.->|nightly| ing
+  ing --> qa{Quality checks}
+  qa -->|pass| dw[(Warehouse)]
+  qa -->|fail| dlq[Quarantine]
+  dw --> bi[Dashboards]
+  dw --> ml[ML features]
+</pre>
+    </div>
+  </section>
+
+  <section class="section" id="sessions">
+    <div class="course-grid">
+      <a class="course-card" href="courses/01-diagrams-as-code.html" style="--diff:#34D399">
+        <span class="cicon">✍️</span>
+        <span class="cnum">Session 1 · easiest</span>
+        <h3>Draw with text: diagrams as code</h3>
+        <p>Why typed diagrams beat dragged ones, flowchart fundamentals, and your first diagram rendering in GitHub and Notion.</p>
+        <span class="meta"><span class="pill amber">▶ Start here</span><span class="pill light">Everyone</span></span>
+      </a>
+      <a class="course-card" href="courses/02-flowchart-mastery.html" style="--diff:#34D399">
+        <span class="cicon">🗺️</span>
+        <span class="cnum">Session 2 · easy</span>
+        <h3>Tame the spaghetti: flowchart mastery</h3>
+        <p>Subgraphs, styling classes, click links, and big-diagram hygiene - Nova's full architecture map takes shape.</p>
+        <span class="meta"><span class="pill light">Everyone</span></span>
+      </a>
+      <a class="course-card" href="courses/03-runtime-stories.html" style="--diff:#FBBF24">
+        <span class="cicon">💬</span>
+        <span class="cnum">Session 3 · medium</span>
+        <h3>Who calls whom: sequence and state</h3>
+        <p>Sequence diagrams for conversations between systems, state machines for lifecycles - the runtime side of Nova.</p>
+        <span class="meta"><span class="pill light">Builders</span></span>
+      </a>
+      <a class="course-card" href="courses/04-data-models.html" style="--diff:#FBBF24">
+        <span class="cicon">🗄️</span>
+        <span class="cnum">Session 4 · medium</span>
+        <h3>Schemas that speak: ER and class diagrams</h3>
+        <p>Crow's foot cardinality you can actually read, the Nova warehouse model, and class diagrams for when structure is code.</p>
+        <span class="meta"><span class="pill light">Data teams</span></span>
+      </a>
+      <a class="course-card" href="courses/05-plans-and-people.html" style="--diff:#FB923C">
+        <span class="cicon">📅</span>
+        <span class="cnum">Session 5 · hard(er)</span>
+        <h3>Six diagrams for humans</h3>
+        <p>Gantt, timeline, kanban, gitgraph, journey, mindmap - a breadth session for the work AROUND the system.</p>
+        <span class="meta"><span class="pill light">Leads &amp; PMs too</span></span>
+      </a>
+      <a class="course-card" href="courses/06-pro-layer.html" style="--diff:#F87171">
+        <span class="cicon">🎨</span>
+        <span class="cnum">Session 6 · hardest</span>
+        <h3>Make it yours: the pro layer</h3>
+        <p>Theming (how this course got pink), architecture and C4 diagrams, CLI exports in CI, accessibility, embedding everywhere.</p>
+        <span class="meta"><span class="pill light">Power users</span></span>
+      </a>
+    </div>
+    <div class="diff-legend">
+      <span><i style="background:#34D399"></i>easy - everyone</span>
+      <span><i style="background:#FBBF24"></i>medium - hands-on builders</span>
+      <span><i style="background:#FB923C"></i>harder - breadth session</span>
+      <span><i style="background:#F87171"></i>hardest - config &amp; tooling</span>
+    </div>
+
+    <div class="paths">
+      <h2>Choose your path 🗺️</h2>
+      <p class="plede">Everyone starts at Session 1 - the fence and the fundamentals live there. After that, follow your work.</p>
+      <div class="path"><b>🚀 Full journey (recommended)</b>
+        <a class="pstep" href="courses/01-diagrams-as-code.html">1</a><span class="parr">→</span>
+        <a class="pstep" href="courses/02-flowchart-mastery.html">2</a><span class="parr">→</span>
+        <a class="pstep" href="courses/03-runtime-stories.html">3</a><span class="parr">→</span>
+        <a class="pstep" href="courses/04-data-models.html">4</a><span class="parr">→</span>
+        <a class="pstep" href="courses/05-plans-and-people.html">5</a><span class="parr">→</span>
+        <a class="pstep" href="courses/06-pro-layer.html">6</a><span class="parr">→</span>
+        <a class="pstep" href="courses/61-data-charts.html">deep dives</a>
+      </div>
+      <div class="path"><b>📊 Data &amp; platform people</b>
+        <a class="pstep" href="courses/01-diagrams-as-code.html">1</a><span class="parr">→</span>
+        <a class="pstep" href="courses/02-flowchart-mastery.html">2</a><span class="parr">→</span>
+        <a class="pstep" href="courses/04-data-models.html">4</a><span class="parr">→</span>
+        <a class="pstep" href="courses/06-pro-layer.html">6</a><span class="parr">→</span>
+        <a class="pstep" href="courses/61-data-charts.html">6.1</a>
+      </div>
+      <div class="path"><b>👔 Leads, PMs &amp; storytellers</b>
+        <a class="pstep" href="courses/01-diagrams-as-code.html">1</a><span class="parr">→</span>
+        <a class="pstep" href="courses/02-flowchart-mastery.html">2</a><span class="parr">→</span>
+        <a class="pstep" href="courses/05-plans-and-people.html">5</a>
+      </div>
+    </div>
+
+    <div class="paths">
+      <h2>The deep-dive track 🔬</h2>
+      <p class="plede">Mermaid ships ~29 diagram types and half are experimental - the sessions teach the stable daily drivers deep, and these three self-paced pages cover the adventurous rest plus the power config.</p>
+      <div class="dd-grid">
+        <a class="dd" href="courses/61-data-charts.html"><b>6.1</b>Data charts: pie, quadrant, xy, sankey, radar</a>
+        <a class="dd" href="courses/62-structure-extras.html"><b>6.2</b>Structure extras: block, packet, treemap</a>
+        <a class="dd" href="courses/63-power-config.html"><b>6.3</b>Power config: directives, icons, ELK, math</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>learn-mermaid-with-phoebe · by Phoebe Fu · source: <a href="https://mermaid.js.org" target="_blank" rel="noopener">mermaid.js.org</a> (v11)</span>
+  </footer>
+</main>
+
+<script src="assets/app.js?v=1"></script>
+<script type="module" src="assets/mermaid-live.js?v=1"></script>
+</body>
+</html>

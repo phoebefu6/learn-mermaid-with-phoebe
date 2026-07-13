@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 4 · Data models - learn mermaid with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-mermaid-with-phoebe</a> / Session 4 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Mermaid with Phoebe · Session 4 of 6</div>
+    <h1>Schemas that <span class="accent">speak</span>: ER and class diagrams</h1>
+    <p class="sub">Your warehouse has a shape, and today you learn to write it down: entity-relationship diagrams for the data, class diagrams for the code that moves it. By the end, Nova's whole core model fits on one page - and reads out loud like a sentence.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Moderate</span>
+      <span class="chip audience">Data &amp; AI teams</span>
+      <span class="chip time">45 min live + self-study depth</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Recap</span>
+      <span class="a2" style="flex:4">3-22 · Concepts (live cards)</span>
+      <span class="a3" style="flex:4">22-41 · Three demos</span>
+      <span class="a4" style="flex:1">41-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this session exists</h2>
+    </div>
+    <p class="lede">Sessions 1-3 drew how Nova FLOWS - boxes, arrows, sequences. But every data conversation eventually hits the same question: "wait, what exactly is IN the warehouse, and how do the tables relate?" That answer usually lives in someone's head, a stale wiki page, or a 40-tab spreadsheet. Today it becomes twelve lines of text: erDiagram for the data model, classDiagram for the pipeline code that feeds it. These two are the most copy-pasted diagram types in data teams, and the syntax is smaller than it looks.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill peach">★ Try it now</span>
+      <span class="pill inkpill">Every diagram on this page is REAL mermaid, rendered live</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      The full ER vocabulary - entities, crow's foot cardinalities, identifying vs non-identifying relationships, typed attributes with PK/FK/UK keys - plus working classDiagram basics: members, visibility, and the six relationship arrows. And the big artifact: Nova's core warehouse model (CUSTOMER, SUBSCRIPTION, EVENT, ORDER, CAMPAIGN) on one page, ready to drop into your own repo as a template.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: ER DIAGRAMS ============ -->
+  <section class="section" id="er-diagrams">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers "Entity Relationship Diagrams" core syntax</span>
+      <h2>ER diagrams - the warehouse on one page <span class="tag concept">9 min live</span></h2>
+    </div>
+    <p class="lede">An erDiagram is built from sentences: <code>ENTITY cardinality--cardinality ENTITY : verb</code>. Learn to read that one line shape and you can read any data model ever written in mermaid.</p>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Entities and the relationship sentence<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Entities are THINGS your business tracks - written in CAPS by convention, one per table (or one per business concept, if you're modeling before the tables exist). A relationship line connects two of them, with a cardinality pair on each end and a verb label after the colon.</p>
+        <div class="mmd" data-caption="One relationship sentence: each ORDER has exactly one CUSTOMER, each CUSTOMER places zero or more ORDERs.">
+<pre class="mmd-src">
+erDiagram
+  CUSTOMER ||--o{ ORDER : places
+</pre>
+        </div>
+        <p>The middle of the line picks the relationship style: <code>--</code> is <strong>identifying</strong> (solid line - the child cannot exist without the parent, like an order line without its order) and <code>..</code> is <strong>non-identifying</strong> (dashed line - the entities are related but independently viable). The full cardinality alphabet:</p>
+        <table class="clean">
+          <thead><tr><th>Left of --</th><th>Right of --</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>|o</code></td><td><code>o|</code></td><td>zero or one</td></tr>
+            <tr><td><code>||</code></td><td><code>||</code></td><td>exactly one</td></tr>
+            <tr><td><code>}o</code></td><td><code>o{</code></td><td>zero or more</td></tr>
+            <tr><td><code>}|</code></td><td><code>|{</code></td><td>one or more</td></tr>
+          </tbody>
+        </table>
+        <p>Notice the mirror: the crow's foot (<code>{</code> or <code>}</code>) always points AT the entity it describes, so the same "many" symbol is written <code>}o</code> on the left end and <code>o{</code> on the right end. If typing symbols feels cryptic, mermaid also accepts word aliases like <code>one or more</code> and <code>zero or many</code> - handy while learning, symbols once fluent.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Attributes, types, and keys<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>An entity earns its place on the diagram when you show WHAT it holds. Open a block with braces and list <code>type name</code> pairs, one per line. Tag key columns with <code>PK</code>, <code>FK</code>, or <code>UK</code>, and hang a comment in quotes at the end of any line - the single best place to record data gotchas.</p>
+        <div class="mmd" data-caption="Attribute blocks: type, name, optional key tag, optional quoted comment - the anatomy of a documented table.">
+<pre class="mmd-src">
+erDiagram
+  CUSTOMER ||--o{ SUBSCRIPTION : signs
+  CUSTOMER {
+    int customer_id PK
+    string email UK "lowercased at ingestion"
+    string full_name
+    date signed_up_on
+  }
+  SUBSCRIPTION {
+    int subscription_id PK
+    int customer_id FK
+    string plan
+    date ends_on "null while active"
+  }
+</pre>
+        </div>
+        <ul>
+          <li><strong>Types are free text</strong> - <code>int</code>, <code>string</code>, <code>timestamp</code>, <code>decimal</code>, whatever your warehouse calls them. Mermaid doesn't validate; your reviewers do.</li>
+          <li><strong>PK / FK / UK</strong> = primary, foreign, unique key. A column can carry several, comma-separated: <code>int customer_id PK, FK</code> - exactly what bridge tables need.</li>
+          <li><strong>Quoted comments</strong> render right on the diagram. "null while active" has saved more analysts than any wiki page.</li>
+        </ul>
+        <div class="callout tip">
+          <strong>Comment the traps, not the obvious</strong>
+          Nobody needs "the customer's email" explained. They desperately need "lowercased at ingestion" and "null for organic orders". Reserve quoted comments for the facts that break queries.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Nova's core warehouse model - the whole thing<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Here is Nova's core model: five entities, five relationships, every key marked. This is the artifact Demo 1 builds line by line - read it top to bottom and notice it narrates itself: customers sign subscriptions, place orders, generate events; campaigns target customers and get attribution credit on orders.</p>
+        <div class="mmd" data-caption="Nova's core warehouse model - five entities, keys marked, gotchas commented. The template for your own model.">
+<pre class="mmd-src">
+erDiagram
+  CUSTOMER ||--o{ SUBSCRIPTION : signs
+  CUSTOMER ||--o{ ORDER : places
+  CUSTOMER ||--o{ EVENT : generates
+  CAMPAIGN |o..o{ ORDER : "gets credit for"
+  CAMPAIGN }o..o{ CUSTOMER : targets
+
+  CUSTOMER {
+    int customer_id PK
+    string email UK "lowercased at ingestion"
+    date signed_up_on
+  }
+  SUBSCRIPTION {
+    int subscription_id PK
+    int customer_id FK
+    string plan
+    date ends_on "null while active"
+  }
+  EVENT {
+    string event_id PK
+    int customer_id FK
+    string event_type
+    timestamp occurred_at
+  }
+  ORDER {
+    int order_id PK
+    int customer_id FK
+    int campaign_id FK "null for organic orders"
+    decimal amount
+  }
+  CAMPAIGN {
+    int campaign_id PK
+    string channel
+    date launched_on
+  }
+</pre>
+        </div>
+        <p>Note the relationship styles doing real work: customer-to-order is <strong>identifying</strong> (<code>--</code>, an order is meaningless without its customer), while campaign links are <strong>non-identifying</strong> (<code>..</code>, orders exist happily without a campaign - that's what "null for organic orders" is telling you, in two places that now agree).</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>How much model belongs on one diagram?<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Real warehouses have hundreds of tables; ER diagrams have a working budget of roughly 8-12 entities before they stop being read. Three habits keep them useful:</p>
+        <ul>
+          <li><strong>One diagram per domain</strong> - a "customer domain" ERD, a "billing domain" ERD - linked from a small index diagram, exactly like we split Nova's flowcharts in Session 2.</li>
+          <li><strong>Attributes only where they earn rent.</strong> Show full blocks for the 3-4 entities under discussion; leave the rest as bare named boxes for context.</li>
+          <li><strong>Model the business, not the database dump.</strong> Skip audit columns and ETL bookkeeping unless the diagram is ABOUT them. The reader wants the shape, not the DDL.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: CARDINALITY ============ -->
+  <section class="section" id="cardinality">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers cardinality + identifying relationships in depth</span>
+      <h2>Reading and writing cardinality <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">Cardinality symbols are where every beginner stalls, and one grammar trick fixes it forever: the symbol pair sitting NEXT TO an entity answers "how many of THIS entity per one of the other?"</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Crow's foot decoder: the four cardinality symbol pairs and how to read a relationship line from both ends">
+        <style>
+          .cfT { font: 700 19px Inter, sans-serif; fill: #291B24; }
+          .cfW { font: 700 15px Inter, sans-serif; fill: #FFFFFF; }
+          .cfC { font: 700 17px 'SF Mono', Menlo, monospace; fill: #FFFFFF; }
+          .cfM { font: 600 15px Inter, sans-serif; fill: #291B24; }
+          .cfX { font: 400 13px Inter, sans-serif; fill: #806A78; }
+          .cfN { font: 600 14px Inter, sans-serif; fill: #3A2400; }
+        </style>
+        <text class="cfT" x="20" y="30">The four symbol pairs</text>
+        <rect x="20" y="48" width="96" height="34" rx="8" fill="#8E1146"/>
+        <text class="cfC" x="44" y="71">|o  o|</text>
+        <text class="cfM" x="132" y="70">zero or one</text>
+        <text class="cfX" x="252" y="70">optional, at most one</text>
+        <rect x="20" y="92" width="96" height="34" rx="8" fill="#D6246E"/>
+        <text class="cfC" x="44" y="115">||  ||</text>
+        <text class="cfM" x="132" y="114">exactly one</text>
+        <text class="cfX" x="252" y="114">mandatory single</text>
+        <rect x="20" y="136" width="96" height="34" rx="8" fill="#FF3670"/>
+        <text class="cfC" x="44" y="159">}o  o{</text>
+        <text class="cfM" x="132" y="158">zero or more</text>
+        <text class="cfX" x="252" y="158">optional many</text>
+        <rect x="20" y="180" width="96" height="34" rx="8" fill="#FF9EBF"/>
+        <text class="cfC" x="44" y="203">}|  |{</text>
+        <text class="cfM" x="132" y="202">one or more</text>
+        <text class="cfX" x="252" y="202">mandatory many</text>
+        <text class="cfT" x="470" y="30">Reading one line, both ways</text>
+        <rect x="470" y="52" width="150" height="44" rx="10" fill="#8E1146"/>
+        <text class="cfW" x="497" y="79">CUSTOMER</text>
+        <rect x="710" y="52" width="120" height="44" rx="10" fill="#FF3670"/>
+        <text class="cfW" x="742" y="79">ORDER</text>
+        <line x1="620" y1="74" x2="710" y2="74" stroke="#D9C6D2" stroke-width="3"/>
+        <rect x="626" y="58" width="30" height="18" rx="4" fill="#FFEFF5"/>
+        <text class="cfM" x="631" y="72">||</text>
+        <rect x="672" y="58" width="30" height="18" rx="4" fill="#FFEFF5"/>
+        <text class="cfM" x="675" y="72">o{</text>
+        <text class="cfX" x="470" y="126">Symbol NEAREST an entity describes</text>
+        <text class="cfX" x="470" y="144">how many of THAT entity you get.</text>
+        <text class="cfM" x="470" y="176">|| by CUSTOMER: each order has</text>
+        <text class="cfM" x="470" y="196">exactly one customer.</text>
+        <text class="cfM" x="470" y="226">o{ by ORDER: each customer places</text>
+        <text class="cfM" x="470" y="246">zero or more orders.</text>
+        <rect x="20" y="258" width="14" height="14" rx="3" fill="#F59E0B"/>
+        <text class="cfN" x="44" y="270">The crow's foot always points AT the "many" entity - same symbol, mirrored spelling per side.</text>
+        <text class="cfX" x="20" y="302">Say every relationship out loud in both directions before you commit it. If either sentence sounds wrong, the symbols are wrong.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the crow's foot decoder. Four pairs, one reading rule, zero mystery.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The three patterns that cover 90% of models<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Almost every real relationship is one of three shapes. Learn them as idioms and you'll write them without thinking:</p>
+        <div class="mmd" data-caption="The three everyday patterns: mandatory one-to-many, optional one-to-one, and many-to-many resolved through a bridge table.">
+<pre class="mmd-src">
+erDiagram
+  TEAM ||--|{ MEMBER : has
+  CUSTOMER |o--o| LOYALTY-CARD : holds
+  CUSTOMER ||--o{ CAMPAIGN-TOUCH : receives
+  CAMPAIGN ||--o{ CAMPAIGN-TOUCH : sends
+  CAMPAIGN-TOUCH {
+    int customer_id PK, FK
+    int campaign_id PK, FK
+    date touched_on
+  }
+</pre>
+        </div>
+        <ul>
+          <li><strong>One-to-many</strong> - the workhorse. <code>TEAM ||--|{ MEMBER</code>: a team has one or more members, a member belongs to exactly one team. Ask "can it exist empty?" to pick <code>|{</code> vs <code>o{</code>.</li>
+          <li><strong>Optional one-to-one</strong> - <code>|o--o|</code>. Both sides may exist alone; at most one pairing. Loyalty cards, parking spots, profile extensions.</li>
+          <li><strong>Many-to-many via bridge</strong> - customers receive many campaigns, campaigns hit many customers. Warehouses don't store many-to-many directly: a bridge entity (CAMPAIGN-TOUCH) with a composite key (<code>PK, FK</code> twice) resolves it into two clean one-to-manys - and usually grows useful facts of its own, like <code>touched_on</code>.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>The optionality argument that saved a quarter.</strong> A team modeled orders-to-campaigns as mandatory (<code>||</code>) in their tracking plan. An analyst reading the ERD asked "so organic orders are... impossible?" That one symbol flushed out a broken assumption in the attribution logic BEFORE the quarter's numbers shipped wrong. Cardinality review is cheap; restatements are not.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Identifying or not? The two-question test<span class="mini">1 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Choosing <code>--</code> vs <code>..</code> trips people up because it FEELS philosophical. It isn't. Ask two questions about the child entity:</p>
+        <ul>
+          <li><strong>Can it exist without the parent?</strong> An EVENT without a CUSTOMER is noise; that relationship is identifying (<code>--</code>). An ORDER without a CAMPAIGN is just an organic order; non-identifying (<code>..</code>).</li>
+          <li><strong>Is the parent's key part of the child's identity?</strong> If the foreign key sits inside the primary key (like both columns of CAMPAIGN-TOUCH), that's identifying by definition.</li>
+        </ul>
+        <p>When still unsure, default to non-identifying - it's the weaker claim, and a reviewer can strengthen it with evidence.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: CLASS DIAGRAMS ============ -->
+  <section class="section" id="class-diagrams">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers "Class diagrams" basics + relationships</span>
+      <h2>Class diagrams - when structure is code <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">ER diagrams describe what you STORE; class diagrams describe what you BUILD - the connectors, checks, and pipeline objects around the warehouse. Same idea, richer arrows: six relationship types instead of one line style.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Classes, members, visibility<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A class block lists attributes and methods - methods are just members with <code>()</code>. Prefix each member with a visibility marker: <code>+</code> public, <code>-</code> private, <code>#</code> protected, <code>~</code> package. Return types go AFTER the method: <code>+run() CheckResult</code>.</p>
+        <div class="mmd" data-caption="One class, fully furnished: typed attributes, methods with return types, all four visibility markers.">
+<pre class="mmd-src">
+classDiagram
+  class QualityCheck {
+    +String name
+    +String severity
+    -int failCount
+    #bool strictMode
+    ~String ownerTeam
+    +run(batch) CheckResult
+    -log(message) void
+  }
+</pre>
+        </div>
+        <ul>
+          <li><strong>Visibility is documentation of intent</strong>: <code>+</code> is the API your teammates call, <code>-</code> is internals free to change, <code>#</code> is the contract with subclasses.</li>
+          <li><strong>Suffixes for the fine print:</strong> <code>$</code> marks a static member, <code>*</code> an abstract one - <code>+read() Batch*</code> reads as "subclasses must implement this".</li>
+          <li><strong>Don't inventory every field.</strong> A diagram class with 30 members is a screenshot of the code, not a model of it. Show what a caller or subclass needs to know.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The six arrows + Nova's ingestion SDK<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Class relationships are drawn with six arrows, and the two diamonds are the ones interviews ask about. Composition (<code>*--</code>) means the part LIVES AND DIES with the whole; aggregation (<code>o--</code>) means the whole USES parts that outlive it.</p>
+        <table class="clean">
+          <thead><tr><th>You type</th><th>Relationship</th><th>Read it as</th></tr></thead>
+          <tbody>
+            <tr><td><code>&lt;|--</code></td><td>inheritance</td><td>"is a"</td></tr>
+            <tr><td><code>*--</code></td><td>composition</td><td>"owns, part dies with whole"</td></tr>
+            <tr><td><code>o--</code></td><td>aggregation</td><td>"has, part outlives whole"</td></tr>
+            <tr><td><code>--&gt;</code></td><td>association</td><td>"knows about"</td></tr>
+            <tr><td><code>..&gt;</code></td><td>dependency</td><td>"uses briefly"</td></tr>
+            <tr><td><code>..|&gt;</code></td><td>realization</td><td>"implements the interface"</td></tr>
+          </tbody>
+        </table>
+        <p>Here is Nova's ingestion SDK - the code from Sessions 2-3's flowcharts, now as structure. Multiplicities ride the relationship in quotes, labels after a colon:</p>
+        <div class="mmd" data-caption="Nova's ingestion SDK: one abstract Connector, two concrete sources, a Pipeline that aggregates connectors and owns its run log.">
+<pre class="mmd-src">
+classDiagram
+  class Connector {
+    +String name
+    #int batchSize
+    +connect() bool
+    +read() Batch*
+  }
+  class EventStreamConnector {
+    +String topic
+    +read() Batch
+  }
+  class CrmExportConnector {
+    +String dropPath
+    +read() Batch
+  }
+  class Pipeline {
+    -List~Connector~ sources
+    +run() RunReport
+  }
+  Connector &lt;|-- EventStreamConnector
+  Connector &lt;|-- CrmExportConnector
+  Pipeline o-- "1..*" Connector : reads from
+  Pipeline *-- RunLog : owns
+</pre>
+        </div>
+        <p>Read the diamonds: connectors are <strong>aggregated</strong> (<code>o--</code>) because they're registered from outside and survive any single pipeline run; the RunLog is <strong>composed</strong> (<code>*--</code>) because it is created by the run and meaningless without it.</p>
+      </div>
+    </details>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Composition versus aggregation: filled diamond means the part dies with the whole, hollow diamond means the part outlives it">
+        <style>
+          .caT { font: 700 18px Inter, sans-serif; fill: #291B24; }
+          .caW { font: 700 14px Inter, sans-serif; fill: #FFFFFF; }
+          .caM { font: 600 14px Inter, sans-serif; fill: #291B24; }
+          .caX { font: 400 13px Inter, sans-serif; fill: #806A78; }
+          .caN { font: 600 14px Inter, sans-serif; fill: #3A2400; }
+        </style>
+        <text class="caT" x="20" y="32">Composition  *--</text>
+        <rect x="20" y="52" width="130" height="42" rx="10" fill="#8E1146"/>
+        <text class="caW" x="48" y="78">Pipeline</text>
+        <polygon points="150,73 168,63 186,73 168,83" fill="#D6246E"/>
+        <line x1="186" y1="73" x2="256" y2="73" stroke="#D9C6D2" stroke-width="2.5"/>
+        <rect x="256" y="52" width="120" height="42" rx="10" fill="#FF3670"/>
+        <text class="caW" x="288" y="78">RunLog</text>
+        <text class="caM" x="20" y="126">Filled diamond: strong ownership.</text>
+        <text class="caX" x="20" y="148">Delete the pipeline run and its log</text>
+        <text class="caX" x="20" y="166">goes with it. Part dies with whole.</text>
+        <text class="caT" x="470" y="32">Aggregation  o--</text>
+        <rect x="470" y="52" width="130" height="42" rx="10" fill="#8E1146"/>
+        <text class="caW" x="498" y="78">Pipeline</text>
+        <polygon points="600,73 618,63 636,73 618,83" fill="#FFEFF5" stroke="#D6246E" stroke-width="2"/>
+        <line x1="636" y1="73" x2="706" y2="73" stroke="#D9C6D2" stroke-width="2.5"/>
+        <rect x="706" y="52" width="130" height="42" rx="10" fill="#FF9EBF"/>
+        <text class="caM" x="728" y="78">Connector</text>
+        <text class="caM" x="470" y="126">Hollow diamond: shared use.</text>
+        <text class="caX" x="470" y="148">Retire the pipeline and connectors live</text>
+        <text class="caX" x="470" y="166">on, serving others. Part outlives whole.</text>
+        <rect x="20" y="192" width="14" height="14" rx="3" fill="#F59E0B"/>
+        <text class="caN" x="44" y="204">Memory hook: the FILLED diamond has swallowed the part - it isn't coming back out.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - composition vs aggregation, the two diamonds that carry lifecycle meaning.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Generics, annotations, namespaces, notes<span class="mini">3 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Four refinements for when the SDK diagram grows up:</p>
+        <ul>
+          <li><strong>Generics with tildes:</strong> angle brackets clash with mermaid's arrow syntax, so <code>List&lt;Connector&gt;</code> is written <code>List~Connector~</code>. Works in class names too: <code>class Queue~T~</code>.</li>
+          <li><strong>Annotations</strong> mark a class's kind on the first line of its body: <code>&lt;&lt;interface&gt;&gt;</code>, <code>&lt;&lt;abstract&gt;&gt;</code>, <code>&lt;&lt;service&gt;&gt;</code>. Pair <code>&lt;&lt;interface&gt;&gt;</code> with realization arrows (<code>..|&gt;</code>) and your "implements" story draws itself.</li>
+          <li><strong>Namespaces</strong> group classes into labeled boxes: <code>namespace Ingestion { class Connector }</code> - the class-diagram cousin of Session 2's subgraphs.</li>
+          <li><strong>Notes</strong> pin commentary: <code>note for Connector "one subclass per source system"</code>.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>The highest-value class diagram in most data teams is the connector/check/writer interface sheet: the three interfaces marked <code>&lt;&lt;interface&gt;&gt;</code>, concrete classes hanging off them with <code>..|&gt;</code>. New joiners see in ten seconds where their new source plugs in - and which three methods they owe.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Demo 1 of 3 · the session's big artifact</span>
+      <h2>Build the Nova warehouse ERD <span class="tag demo">★ 9 min · follow along</span></h2>
+    </div>
+    <p class="lede">We rebuild Part 1's full Nova model from an empty editor, entity by entity - the exact order you'd use for any real model: relationships first, attributes second, comments last.</p>
+    <div class="steps">
+      <div class="step"><p>Open <a href="https://mermaid.live" target="_blank" rel="noopener">mermaid.live</a>, type <code>erDiagram</code>, then the skeleton sentence: <code>CUSTOMER ||--o{ ORDER : places</code>. Two boxes, one crow's foot. Say it out loud both ways using the decoder rule.</p></div>
+      <div class="step"><p>Add the other customer relationships: <code>CUSTOMER ||--o{ SUBSCRIPTION : signs</code> and <code>CUSTOMER ||--o{ EVENT : generates</code>. CUSTOMER is now visibly the hub - correct, it's the business's center of gravity.</p></div>
+      <div class="step"><p>Add campaigns with DASHED lines: <code>CAMPAIGN |o..o{ ORDER : "gets credit for"</code> and <code>CAMPAIGN }o..o{ CUSTOMER : targets</code>. Multi-word labels need quotes - same quoting rule as Session 1.</p></div>
+      <div class="step"><p>Furnish CUSTOMER: open a brace block, add <code>int customer_id PK</code>, <code>string email UK</code>, <code>date signed_up_on</code>. Watch the box grow rows with key badges.</p></div>
+      <div class="step"><p>Furnish ORDER, and put the gotcha in writing: <code>int campaign_id FK "null for organic orders"</code>. That one comment is the difference between a diagram and documentation.</p></div>
+      <div class="step"><p>Fill the remaining three entities from Part 1's block, then compare. Commit yours to a repo README in a <code>```mermaid</code> fence - Nova's data model now lives where the code lives.</p></div>
+    </div>
+    <div class="callout tip">
+      <strong>Layout looking tangled?</strong>
+      ER layout follows declaration order. Declare the hub entity's relationships first and the diagram usually organizes itself around it. Still messy? Fewer entities per diagram beats fighting the layout engine.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Demo 2 of 3</span>
+      <h2>Diagram YOUR schema <span class="tag demo">★ 6 min · build your own</span></h2>
+    </div>
+    <p class="lede">Nova is rehearsal; your warehouse is the performance. Pick one table cluster you actually query and give it the same treatment.</p>
+    <div class="steps">
+      <div class="step"><p>Choose 3-5 related tables you know well - a fact table and its dimensions is the classic pick. Resist the urge to do the whole warehouse.</p></div>
+      <div class="step"><p>Write the relationship sentences FIRST, no attributes. Read each one aloud in both directions - this is where you'll discover you're not actually sure whether that join is one-to-one or one-to-many.</p></div>
+      <div class="step"><p>Add attribute blocks for the two most-queried tables only: keys tagged, types honest, and at least one quoted comment recording a gotcha you know ("timezone is UTC", "soft deletes only").</p></div>
+      <div class="step"><p>Check every many-to-many: if you drew <code>}o--o{</code> directly, find (or propose) the bridge table - it almost always exists in the warehouse already.</p></div>
+      <div class="step"><p>Send the mermaid.live link to the teammate who knows this data best with one question: "what's wrong?" Their correction IS the documentation improving.</p></div>
+    </div>
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p>Teams that keep a small ERD at the top of each dbt domain folder cut onboarding questions dramatically - not because the diagram is complete, but because it names the entities and joins, which is 80% of what "how does this data work?" actually means.</p>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Demo 3 of 3</span>
+      <h2>Class-diagram the ingestion SDK <span class="tag demo">★ 4 min · follow along</span></h2>
+    </div>
+    <p class="lede">Four classes, four minutes: Nova's connector family from Part 3, rebuilt to prove the class syntax is smaller than it looks.</p>
+    <div class="steps">
+      <div class="step"><p>Start with <code>classDiagram</code>, declare <code>class Connector</code> with two members: <code>+connect() bool</code> and <code>+read() Batch*</code>. The trailing <code>*</code> says abstract - subclasses owe an implementation.</p></div>
+      <div class="step"><p>Add the two concrete sources and wire inheritance: <code>Connector &lt;|-- EventStreamConnector</code>, <code>Connector &lt;|-- CrmExportConnector</code>. Arrowhead points at the parent.</p></div>
+      <div class="step"><p>Add <code>Pipeline</code> with <code>-List~Connector~ sources</code> - tildes, not angle brackets, for generics.</p></div>
+      <div class="step"><p>Finish with the two diamonds: <code>Pipeline o-- "1..*" Connector : reads from</code> and <code>Pipeline *-- RunLog : owns</code>. Say the lifecycle rule for each diamond out loud - if you can, you've got this session.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 30-45 min total</span></h2>
+    </div>
+    <ul>
+      <li>Finish your Demo 2 ERD to 5-8 entities and commit it to the repo or wiki where that data is actually discussed. One quoted comment per entity, minimum.</li>
+      <li>Cardinality drill: write the relationship sentence for five real pairs in your world (user/session, invoice/line, model/version...) - symbols only, then check by reading both directions aloud.</li>
+      <li>Rebuild Nova's ERD from memory, then diff against Part 1. Whatever you forgot - usually the <code>..</code> vs <code>--</code> choice - is the review topic.</li>
+      <li>Class-diagram one real piece of your pipeline code (3-5 classes). If you can't decide between <code>*--</code> and <code>o--</code> somewhere, that's a genuine design question - bring it to a teammate.</li>
+      <li>Self-study pass: add <code>&lt;&lt;interface&gt;&gt;</code> annotations and one namespace to your class diagram, and skim the official pages for both diagram types.</li>
+      <li>Bring to Session 5: one real project or roadmap you're currently tracking in a spreadsheet. It's about to become a gantt chart.</li>
+    </ul>
+  </section>
+
+  <!-- ============ OFFICIAL ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Official docs covered</h2>
+    </div>
+    <p class="lede">This session teaches the working content of the entity relationship diagram and class diagram pages of the official docs at <a href="https://mermaid.js.org" target="_blank" rel="noopener">mermaid.js.org</a> (mermaid 11.x).</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">ER: entities, relationships, attributes</span><span class="note">Part 1 - the relationship sentence, typed attribute blocks, PK/FK/UK, quoted comments</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">ER: cardinality + identifying relationships</span><span class="note">Parts 1-2 - full crow's foot table, -- vs .., the three everyday patterns</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Class: definition, members, visibility</span><span class="note">Part 3 - + - # ~, return types, $ static, * abstract</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Class: relationships + multiplicity</span><span class="note">Part 3 - all six arrows, quoted multiplicities, labels</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Class: generics, annotations, namespaces, notes</span><span class="note">self-study card - working intro; styling and interaction stay with the docs</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · <code>CUSTOMER ||--o{ ORDER : places</code> - which reading is correct?</p>
+      <button class="qopt" type="button">A · Each customer places exactly one order; orders may have many customers</button>
+      <button class="qopt" type="button">B · Each order has exactly one customer; each customer places zero or more orders</button>
+      <button class="qopt" type="button">C · Customers and orders are both optional on each side</button>
+      <p class="qwhy">Read the symbol nearest each entity: || sits by CUSTOMER (each order gets exactly one), o{ sits by ORDER (each customer gets zero or more). The decoder rule, applied.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · How do you mark customer_id as a foreign key inside an entity's attribute block?</p>
+      <button class="qopt" type="button">A · FK int customer_id - key marker comes first</button>
+      <button class="qopt" type="button">B · int customer_id (FK) - wrap the marker in parentheses</button>
+      <button class="qopt" type="button">C · int customer_id FK - type, name, then the key marker</button>
+      <p class="qwhy">Attribute lines read type, name, key(s), optional quoted comment - in that order. Multiple keys are comma-separated: int customer_id PK, FK.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · <code>Pipeline *-- RunLog</code> uses the filled diamond. What is it claiming?</p>
+      <button class="qopt" type="button">A · Composition: the RunLog is owned by the Pipeline and dies with it</button>
+      <button class="qopt" type="button">B · Aggregation: the RunLog is shared and outlives the Pipeline</button>
+      <button class="qopt" type="button">C · Inheritance: RunLog is a kind of Pipeline</button>
+      <p class="qwhy">*-- is composition - strong lifecycle ownership. The hollow diamond o-- is aggregation, the "part outlives the whole" claim we used for connectors.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 4 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>The ER sentence</b><span>ENTITY sym--sym ENTITY : verb. Say it aloud both directions before committing it.</span></div>
+      <div class="cheat-item"><b>Cardinality pairs</b><span>|o zero-or-one · || exactly-one · }o zero-or-more · }| one-or-more. Crow's foot points at the "many" side.</span></div>
+      <div class="cheat-item"><b>Line style</b><span>-- identifying (child can't exist without parent) · .. non-identifying (independent). Unsure? Default to ..</span></div>
+      <div class="cheat-item"><b>Attributes</b><span>type name KEY "comment" inside braces. PK / FK / UK, comma-separated for composites. Comment the traps.</span></div>
+      <div class="cheat-item"><b>Many-to-many</b><span>Never draw }o--o{ directly - resolve through a bridge entity with a composite PK, FK key pair.</span></div>
+      <div class="cheat-item"><b>Class members</b><span>+ public · - private · # protected · ~ package. Return type after method; $ static, * abstract.</span></div>
+      <div class="cheat-item"><b>Class arrows</b><span>&lt;|-- is-a · *-- owns (dies with) · o-- has (outlives) · --&gt; knows · ..&gt; uses · ..|&gt; implements.</span></div>
+      <div class="cheat-item"><b>Nova so far</b><span>Flow (S1-2), runtime (S3), and now the data model: 5 entities + the ingestion SDK. Next: the plan to build it.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 4 of 6 · learn-mermaid-with-phoebe · by Phoebe Fu</span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="03-runtime-stories.html">← Prev: Runtime stories</a> &nbsp;·&nbsp; <a href="05-plans-and-people.html">Next: Plans and people →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+<script type="module" src="../assets/mermaid-live.js?v=1"></script>
+</body>
+</html>

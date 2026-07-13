@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep dive 6.2 · Structure extras - learn mermaid with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-mermaid-with-phoebe</a> / Deep dive 6.2 of 3</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Mermaid with Phoebe · Deep dive 6.2 of 3</div>
+    <h1>Boxes with <span class="accent">opinions</span>: block, packet, treemap, and friends</h1>
+    <p class="sub">Four niche diagram types that solve very specific pains: a grid you control by hand, bytes laid out like an RFC, storage drawn to scale, and requirements that trace to the code that satisfies them. Most are beta - delightful anyway.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Self-paced</span>
+      <span class="chip audience">Data &amp; AI teams</span>
+      <span class="chip time">~30 min self-paced</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:3">Block: manual grids</span>
+      <span class="a2" style="flex:2">Packet: bytes</span>
+      <span class="a3" style="flex:2">Treemap: proportions</span>
+      <span class="a4" style="flex:3">Requirements: traceability</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this deep dive exists</h2>
+    </div>
+    <p class="lede">The main six sessions covered the daily drivers. This deep dive is the specialty shelf: four types you'll reach for maybe once a month - and when you do, nothing else will do the job. Honest framing up front: three of the four carry a <code>-beta</code> suffix, which means the syntax can still shift between versions. Use them for docs you control, keep the examples modest, and enjoy them - they are some of the most charming corners of mermaid. All four get a Nova workout below.</p>
+    <div class="legend">
+      <span class="pill solid">Live - every pink block renders real mermaid</span>
+      <span class="pill light">Self-study notes</span>
+      <span class="pill peach">★ Try it now</span>
+      <span class="pill inkpill">Niche on purpose - that's the point</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with</strong>
+      A hand-placed block-beta poster of Nova, the byte layout of Nova's event envelope in packet-beta, warehouse storage drawn to scale in treemap-beta, and Nova's data quality requirements formally traced to the pipeline components that satisfy them in requirementDiagram. Plus a clear sense of when each one beats a flowchart - and when it doesn't.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: BLOCK ============ -->
+  <section class="section" id="block">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers "Block diagram" (beta)</span>
+      <h2>block-beta: when auto-layout fights you <span class="tag concept">8 min</span></h2>
+    </div>
+    <p class="lede">Flowcharts let dagre decide where boxes go - usually a gift, occasionally a wrestling match. Block diagrams flip the deal: you declare a grid of columns and place every block yourself. Perfect for the tidy "poster" view of a platform where the POSITION is the message: sources on the left, platform in the middle, consumers on the right.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Auto layout lets the engine place boxes; manual layout in block-beta gives you a grid you fill yourself">
+        <style>
+          .alxT { font: 700 17px Inter, sans-serif; fill: #291B24; }
+          .alxW { font: 600 13px Inter, sans-serif; fill: #FFEFF5; }
+          .alxX { font: 400 12.5px Inter, sans-serif; fill: #806A78; }
+          .alxN { font: 600 14px Inter, sans-serif; fill: #3A2400; }
+          .alxG { stroke: #D9C6D2; stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
+          .alxA { stroke: #D9C6D2; stroke-width: 2.5; fill: none; marker-end: url(#alxAh); }
+        </style>
+        <defs>
+          <marker id="alxAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#D9C6D2" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <text class="alxT" x="30" y="34">Auto layout (flowchart)</text>
+        <text class="alxX" x="30" y="54">you declare edges, dagre picks positions</text>
+        <rect x="30" y="70" width="380" height="150" rx="12" fill="#FFEFF5"/>
+        <rect x="52" y="92" width="86" height="30" rx="8" fill="#D6246E"/><text class="alxW" x="66" y="112">events</text>
+        <rect x="60" y="168" width="86" height="30" rx="8" fill="#FF3670"/><text class="alxW" x="86" y="188">crm</text>
+        <rect x="196" y="126" width="86" height="30" rx="8" fill="#8E1146"/><text class="alxW" x="214" y="146">ingest</text>
+        <rect x="308" y="98" width="86" height="30" rx="8" fill="#FF9EBF"/><text class="alxW" x="342" y="118">dw</text>
+        <line class="alxA" x1="138" y1="110" x2="192" y2="134"/>
+        <line class="alxA" x1="146" y1="180" x2="192" y2="150"/>
+        <line class="alxA" x1="282" y1="138" x2="304" y2="118"/>
+        <text class="alxT" x="470" y="34">Manual layout (block-beta)</text>
+        <text class="alxX" x="470" y="54">you declare a grid, blocks land where you say</text>
+        <rect x="470" y="70" width="380" height="150" rx="12" fill="#FFEFF5"/>
+        <line class="alxG" x1="596" y1="80" x2="596" y2="210"/>
+        <line class="alxG" x1="722" y1="80" x2="722" y2="210"/>
+        <rect x="488" y="92" width="92" height="30" rx="8" fill="#D6246E"/><text class="alxW" x="504" y="112">events</text>
+        <rect x="488" y="168" width="92" height="30" rx="8" fill="#FF3670"/><text class="alxW" x="518" y="188">crm</text>
+        <rect x="614" y="130" width="92" height="30" rx="8" fill="#8E1146"/><text class="alxW" x="632" y="150">platform</text>
+        <rect x="740" y="92" width="92" height="30" rx="8" fill="#FF9EBF"/><text class="alxW" x="778" y="112">bi</text>
+        <rect x="740" y="168" width="92" height="30" rx="8" fill="#FF9EBF"/><text class="alxW" x="776" y="188">ml</text>
+        <rect x="30" y="246" width="14" height="14" rx="3" fill="#F59E0B"/>
+        <text class="alxN" x="54" y="258">Trade-off: block-beta obeys you completely - which means alignment mistakes are also yours completely.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - auto layout optimizes, manual layout obeys. block-beta is the "obeys" column.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode self">Self-study</span>The grid: columns, spans, space<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Three ideas run the whole show. <code>columns N</code> sets the grid width; blocks fill it left to right, wrapping to new rows. A suffix like <code>:2</code> makes a block span columns. And <code>space</code> (or <code>space:2</code>) is an invisible block - your alignment tool.</p>
+        <div class="mmd" data-caption="The grid mechanics in one diagram: three columns, a spanning block, and a space block used for centering.">
+<pre class="mmd-src">
+block-beta
+  columns 3
+  a["Sources"] b["Platform"] c["Consumers"]
+  d["Batch lane"]:2 e["Stream lane"]
+  space f["You choose the grid"] space
+</pre>
+        </div>
+        <ul>
+          <li><strong>Row wrapping is automatic:</strong> with <code>columns 3</code>, the 4th block starts row two. Count as you write.</li>
+          <li><strong>Spans eat columns:</strong> <code>d["Batch lane"]:2</code> takes two cells, so only one cell remains in that row.</li>
+          <li><strong>Shapes carry over from flowcharts:</strong> <code>x[("db")]</code> cylinder, <code>x(["pill"])</code>, <code>x{"decision"}</code> all work here.</li>
+          <li><strong>Nesting:</strong> <code>block:ID ... end</code> makes a composite block containing its own mini-grid - a group border without a subgraph.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Nova as a tidy 3-column poster<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The classic use: a platform poster where column one is sources, column two is the platform, column three is consumers. Edges still exist (<code>--&gt;</code>, with labels as <code>a-- "text" --&gt;b</code>), but layout no longer reflows when you add one - the grid holds.</p>
+        <div class="mmd" data-caption="Nova as a hand-placed poster: sources left, platform center, consumers right. The grid is the message.">
+<pre class="mmd-src">
+block-beta
+  columns 3
+  hdr["Nova data platform"]:3
+  ev["App events"] ing["Ingestion"] bi["Dashboards"]
+  crm["CRM export"] qa["Quality checks"] ml["ML features"]
+  space dw[("Warehouse")] space
+  ev --> ing
+  crm --> ing
+  ing --> qa
+  qa-- "pass" -->dw
+  dw --> bi
+  dw --> ml
+  style hdr fill:#FFD9E6,stroke:#D6246E
+</pre>
+        </div>
+        <div class="prompt-box good"><span class="label">★ Try it now</span>Flip this block to Code, open it on mermaid.live, and change columns 3 to columns 2. Watch every block re-wrap - then put it back. That one number is the entire layout engine.</div>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>A platform team kept redrawing their "what we own" slide every quarter because the flowchart version reshuffled itself whenever a box was added. Rebuilt as block-beta, the grid never moves: new services drop into their column, the poster stays recognizable, and executives stop asking "why does the diagram look different this time?"</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Gotchas<span class="mini">1 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Beta:</strong> current docs have started writing plain <code>block</code>; both <code>block</code> and <code>block-beta</code> parse in v11. This page uses <code>block-beta</code>, which works across all v11 releases.</li>
+          <li><strong>Arrows don't route politely.</strong> Edges draw fairly straight lines between cells - if they cross a block, rearrange the grid, not the edge.</li>
+          <li><strong>Never name a block <code>end</code></strong> - it closes composite blocks. Same reserved-word trap as flowcharts.</li>
+          <li><strong>Miscounted rows are the #1 bug:</strong> a forgotten <code>space</code> shifts everything after it one cell left. When the poster looks drunk, count cells per row first.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: PACKET ============ -->
+  <section class="section" id="packet">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers "Packet diagram" (beta)</span>
+      <h2>packet-beta: bytes, drawn like an RFC <span class="tag concept">6 min</span></h2>
+    </div>
+    <p class="lede">Packet diagrams draw bit-level field layouts - the picture you've seen in every TCP textbook. Niche? Extremely. But if you ever document a binary event envelope, a fixed-width file format, or a wire protocol, this type produces in six lines what would take an hour in a drawing tool.</p>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Nova's event envelope, bit by bit<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Each line is <code>start-end: "Field name"</code> in bit positions; rows wrap every 32 bits automatically. Since v11.7 you can also write <code>+8: "Field"</code> and let mermaid count on from wherever the previous field ended - much kinder when a design is still moving.</p>
+        <div class="mmd" data-caption="The fixed 128-bit header of Nova's binary event envelope - every field, every bit, one screen.">
+<pre class="mmd-src">
+---
+title: "Nova event envelope (header)"
+---
+packet-beta
+0-7: "Version"
+8-15: "Event type"
+16-31: "Tenant ID"
+32-63: "Event timestamp"
+64-95: "User ID hash"
+96-111: "Payload length"
+112-127: "Checksum"
+</pre>
+        </div>
+        <ul>
+          <li><strong>Ranges are inclusive:</strong> <code>0-7</code> is eight bits. Off-by-one here means your doc lies about the wire format.</li>
+          <li><strong>Auto-counting:</strong> <code>+16: "Tenant ID"</code> starts where the previous field stopped; you can mix <code>+n</code> and explicit ranges freely.</li>
+          <li><strong>Single bits:</strong> just <code>106: "ACK"</code> - one number, no range. Great for flag bits.</li>
+        </ul>
+        <div class="callout tip">
+          <strong>When a data person reaches for it</strong>
+          Documenting Kafka message envelopes, Avro/Protobuf-adjacent binary headers, fixed-width mainframe exports, or IoT payloads. Any time a colleague asks "which bytes hold the tenant ID?", this diagram IS the answer.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Gotchas<span class="mini">1 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Beta:</strong> introduced v11.0 as <code>packet-beta</code>; current docs write plain <code>packet</code>. Both parse in v11 - this page sticks with the widely compatible form.</li>
+          <li><strong>Gaps are errors:</strong> fields must be contiguous. Skip bits 40-47 and the parser complains - pad with a "Reserved" field like real RFCs do.</li>
+          <li><strong>It only does layout,</strong> not meaning: no types, no endianness, no units. Put those in a table next to the diagram.</li>
+          <li><strong>Long labels squeeze:</strong> a 4-bit field with a 30-character name gets unreadable. Abbreviate, expand in prose.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: TREEMAP ============ -->
+  <section class="section" id="treemap">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers "Treemap" (beta)</span>
+      <h2>treemap-beta: proportions you can feel <span class="tag concept">6 min</span></h2>
+    </div>
+    <p class="lede">A treemap tiles nested rectangles sized by value - hierarchy AND magnitude in one picture. For a data person this is the "where does it all go?" diagram: storage by domain, cost by team, rows by table. The syntax is the simplest on this page: indentation is the hierarchy.</p>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Nova's warehouse storage by domain<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Quoted names are nodes; indentation nests them; <code>"Leaf": value</code> sets the size. That's the whole grammar. Tag a node with <code>:::class</code> and style it with a <code>classDef</code> - handy for pointing at the elephant.</p>
+        <div class="mmd" data-caption="Nova warehouse storage in GB, by domain. Page views is the elephant - the classDef makes sure nobody misses it.">
+<pre class="mmd-src">
+treemap-beta
+"Nova warehouse (GB)"
+    "Events domain"
+        "Page views": 420:::hot
+        "Clicks": 310
+        "Sessions": 120
+    "CRM domain"
+        "Accounts": 80
+        "Contacts": 60
+    "ML features"
+        "Feature store": 150
+        "Training sets": 90
+
+classDef hot fill:#D6246E,color:#FFEFF5,stroke:#8E1146;
+</pre>
+        </div>
+        <ul>
+          <li><strong>Parents don't take values</strong> - they sum their children. Give a parent its own number and the picture stops being trustworthy.</li>
+          <li><strong>valueFormat</strong> (frontmatter config) formats numbers with d3 specifiers: <code>'$0,0'</code> for cost treemaps, <code>'.1%'</code> for shares.</li>
+          <li><strong>Depth discipline:</strong> two levels read instantly, three is the ceiling. Deeper than that, link out to a second treemap.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>The fastest storage-cost conversation ever: a treemap of warehouse GB by domain in the platform README. Finance saw in one glance that one event table dwarfed everything else combined - a conversation that three months of spreadsheet tabs had failed to start.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Gotchas<span class="mini">1 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Genuinely new:</strong> the docs warn the syntax "may evolve in future versions". Fine for living docs; risky for anything you'll print and frame.</li>
+          <li><strong>Indentation is load-bearing</strong> - a leaf indented one level too far silently changes the hierarchy. Diff carefully.</li>
+          <li><strong>Tiny values vanish:</strong> a 2 GB slice next to a 420 GB slice renders as a sliver with no readable label. Group small stuff into "Other".</li>
+          <li><strong>No negatives</strong> - treemaps size by area, and negative area isn't a thing.</li>
+          <li><strong>Cousin worth knowing:</strong> a venn diagram type also exists in recent releases - even newer than treemap, so we mention it and move on. Watch the release notes.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 4: REQUIREMENTS ============ -->
+  <section class="section" id="requirements">
+    <div class="section-kicker">
+      <span class="klabel">Part 4 · covers "Requirement diagram"</span>
+      <h2>requirementDiagram: promises, traced <span class="tag concept">8 min</span></h2>
+    </div>
+    <p class="lede">The grown-up of this page (no beta suffix): a SysML-style diagram that connects requirements to the things that satisfy and verify them. For a data team, read "requirement" as data quality SLA and "element" as pipeline component - suddenly your DQ policy has a picture, with risk levels and verification methods built into the grammar.</p>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Nova's data quality requirements, formally traced<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Two building blocks. A <strong>requirement</strong> has an id, text, a <code>risk</code> (low, medium, high) and a <code>verifymethod</code> (analysis, inspection, test, demonstration). An <strong>element</strong> is anything real - a DAG, a test suite, a doc. Relationships connect them: <code>{source} - &lt;type&gt; -&gt; {destination}</code> where type is one of contains, copies, derives, satisfies, verifies, refines, traces.</p>
+        <div class="mmd" data-caption="Nova's DQ contract: the dbt suite verifies freshness, the ingestion DAG satisfies the not-null rule, and the two requirements trace to each other.">
+<pre class="mmd-src">
+requirementDiagram
+
+requirement freshness {
+  id: "DQ-1"
+  text: "Warehouse tables refresh within 60 minutes"
+  risk: high
+  verifymethod: test
+}
+
+functionalRequirement no_null_ids {
+  id: "DQ-2"
+  text: "Customer ID is never null after ingestion"
+  risk: medium
+  verifymethod: inspection
+}
+
+element quality_checks {
+  type: "dbt test suite"
+  docref: "nova/dbt/tests"
+}
+
+element ingestion_job {
+  type: "Airflow DAG"
+  docref: "nova/dags/ingest"
+}
+
+quality_checks - verifies -> freshness
+ingestion_job - satisfies -> no_null_ids
+freshness - traces -> no_null_ids
+</pre>
+        </div>
+        <ul>
+          <li><strong>Six requirement flavors:</strong> <code>requirement</code>, <code>functionalRequirement</code>, <code>interfaceRequirement</code>, <code>performanceRequirement</code>, <code>physicalRequirement</code>, <code>designConstraint</code>. For DQ work the first two carry most of the load.</li>
+          <li><strong>satisfies vs verifies</strong> is the useful distinction: the ingestion job SATISFIES the rule (it does the work); the test suite VERIFIES it (it proves the work happened).</li>
+          <li><strong>Quote free text</strong> - names, text and docrefs can go unquoted, but the parser fails if it smells a keyword. Quotes end the guessing.</li>
+        </ul>
+        <div class="prompt-box good"><span class="label">★ Try it now</span>Add a third requirement to the block above on mermaid.live: "PII columns are masked in marts", risk high, verifymethod inspection - and connect your masking job to it with satisfies. Congratulations, your DQ policy is now a diagram.</div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Gotchas<span class="mini">1 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Layout is take-it-or-leave-it:</strong> big requirement webs get tangled. Split by domain (one diagram per data product) before you hit ten nodes.</li>
+          <li><strong>The enums are closed lists</strong> - <code>risk: critical</code> is a parse error. Map your own severity scale onto low/medium/high.</li>
+          <li><strong>The arrow is fussy:</strong> it's <code>- satisfies -&gt;</code> with single hyphens, not the flowchart's <code>--&gt;</code>. Muscle memory will betray you exactly once per session.</li>
+          <li><strong>It documents intent, not status</strong> - nothing turns red when a test fails. Pair it with your observability stack; this is the map, not the alarm.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 30-40 min total</span></h2>
+    </div>
+    <ul>
+      <li>Rebuild YOUR platform as a block-beta poster: 3 columns, sources / platform / consumers, one spanning header. Compare it honestly with the flowchart version - which one goes in the exec deck?</li>
+      <li>Take any binary or fixed-width format you touch (an event header, a legacy file feed) and packet-beta it. If you can't fill every bit, you've just found undocumented bytes - that's the exercise working.</li>
+      <li>Treemap your warehouse: pull row counts or GB by schema from your catalog, two levels deep, tag the biggest table with a classDef. Post it where finance can see it.</li>
+      <li>Write three real data quality requirements as a requirementDiagram, each with an element that satisfies it and one that verifies it. If nothing verifies a requirement, that's a gap - the diagram just did governance work.</li>
+      <li>Skim the release notes for the venn type before using it anywhere real - it's newer than everything on this page.</li>
+    </ul>
+  </section>
+
+  <!-- ============ OFFICIAL ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Official docs covered</h2>
+    </div>
+    <p class="lede">This deep dive works through these sections of the official docs at <a href="https://mermaid.js.org" target="_blank" rel="noopener">mermaid.js.org</a> (mermaid 11.x). Beta types are marked - expect their syntax to keep evolving.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Block diagram (beta)</span><span class="note">Part 1 - columns, spans, space, nesting, edges, style</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Packet diagram (beta)</span><span class="note">Part 2 - bit ranges, +n auto-count, single-bit flags</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Treemap (beta)</span><span class="note">Part 3 - indentation hierarchy, values, classDef, valueFormat</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Requirement diagram</span><span class="note">Part 4 - requirements, elements, risk/verifymethod, relationships</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Venn diagram</span><span class="note">mentioned only - too new to teach responsibly yet</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">1 · In a block-beta grid with columns 3, how do you make one block span two columns?</p>
+      <button class="qopt" type="button">A · wide["Batch lane"](2)</button>
+      <button class="qopt" type="button">B · wide["Batch lane"]:2</button>
+      <button class="qopt" type="button">C · span wide 2</button>
+      <p class="qwhy">The :n suffix sets the span - and space:n does the same for invisible spacer blocks. Count your cells per row after adding one.</p>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">2 · In packet-beta, which line adds a 16-bit field that starts wherever the previous field ended?</p>
+      <button class="qopt" type="button">A · 16: "Tenant ID"</button>
+      <button class="qopt" type="button">B · next-16: "Tenant ID"</button>
+      <button class="qopt" type="button">C · +16: "Tenant ID"</button>
+      <p class="qwhy">+n auto-continues from the previous field (v11.7+). Option A would declare a single flag bit at position 16 - a very different claim about your bytes.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">3 · Which line correctly connects Nova's dbt suite to a requirement in requirementDiagram?</p>
+      <button class="qopt" type="button">A · quality_checks - verifies -&gt; freshness</button>
+      <button class="qopt" type="button">B · quality_checks --verifies--&gt; freshness</button>
+      <button class="qopt" type="button">C · verifies(quality_checks, freshness)</button>
+      <p class="qwhy">Single hyphens around the relationship type: source - type -&gt; destination. The double-dash flowchart arrow is the classic mistake here.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Deep dive 6.2 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>block-beta skeleton</b><span>columns N, then blocks fill rows left to right. Flowchart shapes work: [(db)], ([pill]), {decision}.</span></div>
+      <div class="cheat-item"><b>Spans + space</b><span>a["label"]:2 spans two columns · space / space:2 are invisible blocks - your alignment tools.</span></div>
+      <div class="cheat-item"><b>Nesting + edges</b><span>block:ID ... end groups a mini-grid · edges: a --&gt; b, labeled: a-- "text" --&gt;b · never name a block "end".</span></div>
+      <div class="cheat-item"><b>packet-beta rows</b><span>0-15: "Field" explicit bits · +8: "Field" auto-continues (v11.7+) · single bit: 106: "ACK" · no gaps allowed.</span></div>
+      <div class="cheat-item"><b>treemap-beta</b><span>Indentation = hierarchy · "Leaf": value sizes it · parents sum children · :::class + classDef to highlight.</span></div>
+      <div class="cheat-item"><b>requirement block</b><span>requirement name { id: text: risk: low|medium|high verifymethod: analysis|inspection|test|demonstration }.</span></div>
+      <div class="cheat-item"><b>Relationships</b><span>src - satisfies -&gt; dest · types: contains, copies, derives, satisfies, verifies, refines, traces · single hyphens.</span></div>
+      <div class="cheat-item"><b>Beta radar</b><span>block, packet, treemap carry -beta (plain keywords also parse in v11) · requirementDiagram is stable · venn: newer still, wait.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Deep dive 6.2 of 3 · learn-mermaid-with-phoebe · by Phoebe Fu</span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="61-data-charts.html">← Prev: Data charts</a> &nbsp;·&nbsp; <a href="63-power-config.html">Next: Power config →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+<script type="module" src="../assets/mermaid-live.js?v=1"></script>
+</body>
+</html>

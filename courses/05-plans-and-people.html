@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 5 · Plans and people - learn mermaid with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-mermaid-with-phoebe</a> / Session 5 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Mermaid with Phoebe · Session 5 of 6</div>
+    <h1>Six diagrams for <span class="accent">humans</span>: plans, time, and teams</h1>
+    <p class="sub">Sessions 1-4 diagrammed the system. This one diagrams the work AROUND it: the roadmap, the history, the backlog, the releases, the stakeholder experience, and the thinking. Six diagram types, six mini-masterclasses, one Nova example each.</p>
+    <div class="chip-row">
+      <span class="chip level">🟠 Challenging</span>
+      <span class="chip audience">Data &amp; AI teams</span>
+      <span class="chip time">45 min live + self-study depth</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Recap</span>
+      <span class="a2" style="flex:4">3-24 · Six masterclasses</span>
+      <span class="a3" style="flex:4">24-42 · Three demos</span>
+      <span class="a4" style="flex:1">42-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this session exists</h2>
+    </div>
+    <p class="lede">A data platform is maybe 40% system and 60% coordination: when things ship, what happened before you joined, who's doing what this sprint, how releases flow, how stakeholders actually experience your work, and what the domain even contains. All of that coordination is usually trapped in slide decks and tribal memory. Mermaid has a diagram type for each of these - smaller grammars than flowcharts, learnable in minutes each. This is a breadth session: six types, one honest Nova example apiece. Depth comes from using the two or three YOUR week needs.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill peach">★ Try it now</span>
+      <span class="pill inkpill">Every diagram on this page is REAL mermaid, rendered live</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      Working syntax for gantt (roadmaps with dependencies and milestones), timeline (history), gitGraph (release flow), kanban (backlogs with metadata), user journey (experience with honest satisfaction scores), and mindmap (thinking) - plus a chooser table so you never wonder which of the six fits the meeting you're walking into.
+    </div>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The system in the center, orbited by six human diagrams: gantt for plans, timeline for history, kanban for backlog, gitgraph for releases, journey for experience, mindmap for thinking">
+        <style>
+          .swT { font: 700 18px Inter, sans-serif; fill: #291B24; }
+          .swW { font: 700 14px Inter, sans-serif; fill: #FFFFFF; }
+          .swD { font: 700 14px Inter, sans-serif; fill: #291B24; }
+          .swX { font: 400 12.5px Inter, sans-serif; fill: #806A78; }
+          .swN { font: 600 14px Inter, sans-serif; fill: #3A2400; }
+          .swL { stroke: #D9C6D2; stroke-width: 2; fill: none; }
+        </style>
+        <text class="swT" x="20" y="30">Sessions 1-4: the system. Session 5: the work around it.</text>
+        <rect x="360" y="118" width="160" height="58" rx="14" fill="#8E1146"/>
+        <text class="swW" x="392" y="142">the system</text>
+        <text class="swW" x="386" y="162">(Nova, S1-4)</text>
+        <line class="swL" x1="360" y1="132" x2="222" y2="80"/>
+        <line class="swL" x1="360" y1="162" x2="222" y2="226"/>
+        <line class="swL" x1="440" y1="118" x2="440" y2="78"/>
+        <line class="swL" x1="440" y1="176" x2="440" y2="218"/>
+        <line class="swL" x1="520" y1="132" x2="658" y2="80"/>
+        <line class="swL" x1="520" y1="162" x2="658" y2="226"/>
+        <rect x="82" y="46" width="140" height="42" rx="10" fill="#D6246E"/>
+        <text class="swW" x="102" y="72">gantt · plans</text>
+        <rect x="82" y="206" width="140" height="42" rx="10" fill="#FF3670"/>
+        <text class="swW" x="94" y="232">kanban · backlog</text>
+        <rect x="370" y="36" width="140" height="42" rx="10" fill="#FF9EBF"/>
+        <text class="swD" x="384" y="62">timeline · history</text>
+        <rect x="370" y="218" width="140" height="42" rx="10" fill="#FF9EBF"/>
+        <text class="swD" x="378" y="244">journey · experience</text>
+        <rect x="658" y="46" width="152" height="42" rx="10" fill="#FF3670"/>
+        <text class="swW" x="668" y="72">gitGraph · releases</text>
+        <rect x="658" y="206" width="152" height="42" rx="10" fill="#D6246E"/>
+        <text class="swW" x="670" y="232">mindmap · thinking</text>
+        <rect x="20" y="272" width="14" height="14" rx="3" fill="#F59E0B"/>
+        <text class="swN" x="44" y="284">Same superpower as ever: all six are text, so plans and histories diff in PRs like code.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - one system, six kinds of work orbiting it. Each orbit gets its own grammar today.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ PART 1: GANTT ============ -->
+  <section class="section" id="gantt">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers "Gantt diagrams"</span>
+      <h2>Gantt - the roadmap <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">The gantt is the diagram executives already know how to read - which makes it the highest-leverage type in this session. Mermaid's version is dates-in, bars-out: you declare tasks and dependencies, it computes the calendar.</p>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Anatomy: dateFormat, sections, tasks, after<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Four header lines set the stage, then every task is one line: <code>Name : tags, id, start, duration</code>. The magic word is <code>after</code> - chain tasks by id instead of hard-coding dates, and the whole plan reflows when one thing slips.</p>
+        <div class="mmd" data-caption="Nova's Q3 delivery plan: three sections, chained dependencies, one crit path, one milestone, weekends excluded.">
+<pre class="mmd-src">
+gantt
+  title Nova Q3 delivery plan
+  dateFormat YYYY-MM-DD
+  axisFormat %b %d
+  excludes weekends
+  section Foundations
+    Ingestion v2 rollout : done, ing2, 2026-07-06, 10d
+    Schema registry : active, reg, after ing2, 8d
+  section Quality
+    Quality gate library : crit, gates, after reg, 10d
+    Freshness SLAs : slas, after gates, 5d
+  section Serving
+    Feature store MVP : feat, after gates, 12d
+    Exec dashboards : dash, after slas, 8d
+    Q3 review : milestone, rev, 2026-09-28, 0d
+</pre>
+        </div>
+        <ul>
+          <li><strong>The task line, decoded:</strong> optional status tags first (<code>done</code>, <code>active</code>, <code>crit</code>, <code>milestone</code>), then an id you'll reference, then a start (a date OR <code>after someId</code>), then a duration (<code>10d</code>, <code>3w</code>) - or an end date.</li>
+          <li><strong><code>after ing2</code> beats 2026-07-20:</strong> hard-coded dates go stale the first time anything slips; dependencies reflow automatically. Date only the true anchors.</li>
+          <li><strong><code>crit</code> marks the critical path</strong> in red - the chain where a slip moves the end date. One glance answers "what must not slip?"</li>
+          <li><strong><code>milestone</code> + <code>0d</code></strong> renders a diamond - a point in time, not a bar. Reviews, launches, deadlines.</li>
+          <li><strong><code>excludes weekends</code></strong> stops bars from pretending your team works Saturdays. You can exclude specific dates too - release freezes, holidays.</li>
+        </ul>
+        <div class="callout tip">
+          <strong>Gantt is the strictest grammar in mermaid</strong>
+          Every task line wants its commas in place, and a stray colon in a task NAME will confuse the parser. Keep names short and punctuation-free; put detail in the ticket, not the bar label. When a gantt breaks, check the last line you touched - it's almost always a comma.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Living roadmaps - the workflow that makes gantt worth it<span class="mini">1 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A gantt in a slide deck is dead on arrival; a gantt in the repo README is a living document. The workflow that works: statuses updated in the same PR that finishes the work (<code>active</code> becomes <code>done</code> - a one-word diff), plan changes reviewed like code changes, and the diagram is never "the old version" because there is only one version. For long programs, look up <code>tickInterval</code> and compact display mode in the docs - the fine-tuning layer we're leaving for your rainy day.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: TIMELINE + GITGRAPH ============ -->
+  <section class="section" id="history">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers "Timeline" + "Gitgraph diagrams"</span>
+      <h2>Timeline + gitGraph - history <span class="tag concept">7 min live</span></h2>
+    </div>
+    <p class="lede">Two ways to draw the past: the timeline tells the story in eras for humans, the gitGraph tells it in branches for engineers. Both answer "how did we get here?" - the question every new joiner asks first.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Timeline - eras and events<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The simplest grammar of the day: <code>period : event</code>, one per line, extra events on continuation lines starting with a colon. Group periods into named <code>section</code> eras and the diagram color-bands them. Order matters - first line renders leftmost.</p>
+        <div class="mmd" data-caption="Nova's history in three eras - the diagram that turns tribal memory into onboarding material.">
+<pre class="mmd-src">
+timeline
+  title Nova platform history
+  section Scrappy era
+    2023 : CSV exports by hand
+         : first cron job
+  section Foundation era
+    2024 : warehouse launched
+         : quality checks v1
+  section Platform era
+    2025 : feature store pilot
+         : exec dashboards
+    2026 : Nova named + funded
+</pre>
+        </div>
+        <p>Periods are just labels - years here, but "Q1", "v2 launch", or "Before the incident" work exactly the same. The section names carry the narrative: notice how "Scrappy era" to "Platform era" tells the maturity story before a single event is read.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>gitGraph - the release flow<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>gitGraph draws commit history: <code>commit</code>, <code>branch</code>, <code>checkout</code>, <code>merge</code> read exactly like the git commands they mirror. Its killer use isn't documenting real history - git already stores that - it's explaining your branching CONVENTION as a picture new engineers absorb in seconds.</p>
+        <div class="mmd" data-caption="Nova's release convention: develop for features, main takes tagged merges, hotfixes branch from main.">
+<pre class="mmd-src">
+gitGraph
+  commit id: "init pipelines"
+  branch develop
+  commit id: "quality gates"
+  commit id: "fix null rates"
+  checkout main
+  merge develop tag: "v1.4"
+  branch hotfix
+  commit id: "patch crm parser"
+  checkout main
+  merge hotfix tag: "v1.4.1"
+</pre>
+        </div>
+        <ul>
+          <li><strong><code>branch</code> creates AND switches</strong> - commits after it land on the new branch until you <code>checkout</code> elsewhere (<code>switch</code> works too).</li>
+          <li><strong>Name your commits:</strong> <code>commit id: "quality gates"</code> beats auto-generated hashes for teaching diagrams; <code>tag: "v1.4"</code> hangs release labels on merges.</li>
+          <li><strong>Keep it idealized.</strong> Eight to twelve commits showing the CONVENTION - the real repo has ten thousand commits and no lesson in them.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>The most-viewed page in many platform teams' docs is "how we release" - and the teams that draw it as a gitGraph stop answering the same three questions in every onboarding: where do features branch from, what gets tagged, and where do hotfixes go. Twelve lines of text, asked-and-answered forever.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: KANBAN, JOURNEY, MINDMAP ============ -->
+  <section class="section" id="work-and-minds">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers "Kanban", "User journey" + "Mindmap"</span>
+      <h2>Kanban + journey + mindmap - work and minds <span class="tag concept">8 min live</span></h2>
+    </div>
+    <p class="lede">Three quick grammars to finish the set: the backlog as it stands, the experience as it feels, and the domain as you think it. Each is under ten lines to learn.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Kanban - the backlog snapshot<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Columns are top-level entries, cards indent beneath them, and metadata rides in an <code>@{ }</code> block: who owns it, which ticket, what priority. Perfect for sprint snapshots in a doc or an incident work-tracking page - places a full Jira board is overkill.</p>
+        <div class="mmd" data-caption="Nova's sprint board as text: columns, cards, and metadata for owner, ticket, and priority.">
+<pre class="mmd-src">
+kanban
+  todo[To do]
+    t1[Document event schema]@{ assigned: "Maya", ticket: "NOVA-121", priority: "High" }
+    t2[Backfill June orders]@{ ticket: "NOVA-118" }
+  doing[In progress]
+    t3[Freshness alerts]@{ assigned: "Ade", priority: "Very High" }
+  review[In review]
+    t4[CRM dedupe rule]@{ assigned: "Priya", ticket: "NOVA-115" }
+  done[Done]
+    t5[Warehouse cost report]
+</pre>
+        </div>
+        <p>Priority accepts <code>"Very High"</code>, <code>"High"</code>, <code>"Low"</code>, <code>"Very Low"</code>. All metadata is optional - a bare <code>t5[Warehouse cost report]</code> is a perfectly good card. Moving work = moving one line between columns, which means your standup snapshot diffs in git.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>User journey - experience with honest scores<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The journey diagram walks through an experience task by task, scoring each step 1-5 - and renders a face per step. Syntax: <code>Task name: score: actor</code> under <code>section</code> headers. The faces are the point: a row of frowns is an argument no metrics dashboard makes as fast.</p>
+        <div class="mmd" data-caption="An analyst asks a data question - scored honestly. The 1-score steps are next quarter's platform roadmap.">
+<pre class="mmd-src">
+journey
+  title An analyst asks a data question
+  section Finding the data
+    Search the catalog: 3: Analyst
+    Ask in the data channel: 2: Analyst, Data eng
+  section Getting an answer
+    Write the query: 4: Analyst
+    Wait for the backfill: 1: Analyst, Data eng
+  section Sharing it
+    Build the chart: 5: Analyst
+    Present to stakeholders: 4: Analyst
+</pre>
+        </div>
+        <p>Scores mean SATISFACTION of the actors doing the step: 1 is miserable, 5 is delighted - not priority, not effort. Multiple actors comma-separate and each gets a colored track. The discipline that makes this diagram valuable: score how it actually feels today, not how the process doc says it should feel.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Mindmap - the shape of your thinking<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Mindmaps are pure indentation: a root, then children nested by indent depth - and only RELATIVE indentation matters. Wrap node text in brackets to pick shapes: <code>((circle))</code> for the root, <code>[square]</code>, <code>(rounded)</code>, <code>{{hexagon}}</code> for emphasis tiers.</p>
+        <div class="mmd" data-caption="Nova's capability map - the whole platform as one thought, three levels deep.">
+<pre class="mmd-src">
+mindmap
+  root((Nova))
+    Ingestion
+      Event stream
+      CRM drop
+    Quality
+      Gates
+      Freshness SLAs
+    Serving
+      {{Warehouse}}
+      Dashboards
+      ML features
+    People
+      [Runbooks]
+      (Office hours)
+</pre>
+        </div>
+        <p>Best uses in a data team: scoping a new domain before anyone argues about tables, structuring a doc before writing it, and capability maps like this one. It's the five-minute diagram - when thinking is still soft, the mindmap holds it without forcing arrows and cardinalities on it too early.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Choosing between the six - the chooser table<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Six types is a toolbox, not a to-do list. Match the question in the room to the grammar:</p>
+        <table class="clean">
+          <thead><tr><th>The question in the room</th><th>Reach for</th><th>Because</th></tr></thead>
+          <tbody>
+            <tr><td>"When will it ship, and what must not slip?"</td><td><code>gantt</code></td><td>dependencies + crit path compute the answer</td></tr>
+            <tr><td>"How did we get here?"</td><td><code>timeline</code></td><td>eras and events tell a story left to right</td></tr>
+            <tr><td>"How do we branch and release?"</td><td><code>gitGraph</code></td><td>the convention, drawn in the team's own vocabulary</td></tr>
+            <tr><td>"Who's doing what right now?"</td><td><code>kanban</code></td><td>columns + owner/ticket metadata, diffable snapshots</td></tr>
+            <tr><td>"How painful is this for the people in it?"</td><td><code>journey</code></td><td>scored steps make friction visible as faces</td></tr>
+            <tr><td>"What does this domain even contain?"</td><td><code>mindmap</code></td><td>structure without commitment - ideal while thinking is soft</td></tr>
+          </tbody>
+        </table>
+        <p>Rule of thumb: pick by the QUESTION, not by which syntax you like. If the room is asking two questions, that's two diagrams - each small, rather than one overloaded.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Demo 1 of 3</span>
+      <h2>Build the Nova Q3 gantt <span class="tag demo">★ 8 min · follow along</span></h2>
+    </div>
+    <p class="lede">We rebuild Part 1's roadmap from an empty editor - the finicky one, done slowly, so the comma grammar sticks.</p>
+    <div class="steps">
+      <div class="step"><p>In <a href="https://mermaid.live" target="_blank" rel="noopener">mermaid.live</a>, lay the header: <code>gantt</code>, <code>title Nova Q3 delivery plan</code>, <code>dateFormat YYYY-MM-DD</code>, <code>excludes weekends</code>. Empty chart, no errors.</p></div>
+      <div class="step"><p>Add <code>section Foundations</code> and its first task with a real date: <code>Ingestion v2 rollout : done, ing2, 2026-07-06, 10d</code>. One bar appears, styled as finished.</p></div>
+      <div class="step"><p>Chain the second task with <code>after</code>: <code>Schema registry : active, reg, after ing2, 8d</code>. No date typed - the bar computes its own start.</p></div>
+      <div class="step"><p>Add <code>section Quality</code> with the crit task: <code>Quality gate library : crit, gates, after reg, 10d</code>. Red bar = the chain that decides the end date.</p></div>
+      <div class="step"><p>Add <code>section Serving</code> with two parallel chains (<code>after gates</code>, <code>after slas</code>) and close with the diamond: <code>Q3 review : milestone, rev, 2026-09-28, 0d</code>.</p></div>
+      <div class="step"><p>Now the payoff: change ing2's duration from <code>10d</code> to <code>15d</code> and watch the whole dependent plan reflow. That's the slide-deck gantt's funeral - re-plan by editing one number.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Demo 2 of 3</span>
+      <h2>Your release flow as gitGraph <span class="tag demo">★ 5 min · build your own</span></h2>
+    </div>
+    <p class="lede">Draw how YOUR team ships - the idealized convention, not the messy reality. If you can't draw it in twelve commits, that's information too.</p>
+    <div class="steps">
+      <div class="step"><p>Start with <code>gitGraph</code> and two or three <code>commit id: "..."</code> lines on main - name them after real kinds of work, not "commit 1".</p></div>
+      <div class="step"><p>Model your feature flow: <code>branch develop</code> (or feature branches, if that's your convention), a couple of commits, <code>checkout main</code>, <code>merge develop</code>.</p></div>
+      <div class="step"><p>Hang a release on the merge: <code>merge develop tag: "v1.4"</code>. If your team tags elsewhere, draw THAT - the diagram documents your convention, not the textbook's.</p></div>
+      <div class="step"><p>Add the exception path everyone asks about: a hotfix branch from main, one commit, merged back with a patch tag.</p></div>
+      <div class="step"><p>Gut check: does the drawing match what actually happened last release? If not, you've discovered the gap between the convention and the practice - worth a team conversation either way.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Demo 3 of 3</span>
+      <h2>Map your domain, then walk a mile in a stakeholder's journey <span class="tag demo">★ 5 min · build your own</span></h2>
+    </div>
+    <p class="lede">Two soft diagrams, back to back: your domain as a mindmap, then one recurring stakeholder experience as a journey - with scores you'd defend to their face.</p>
+    <div class="steps">
+      <div class="step"><p>Mindmap first: <code>root((your domain))</code>, then 3-5 branches, each 2-3 children deep. Set a three-minute timer - the mindmap is a thinking speed tool, and overworking it defeats the point.</p></div>
+      <div class="step"><p>Promote with shapes: <code>{{hexagon}}</code> the branch that matters most this quarter, <code>[square]</code> the ones that are stable and boring. Shape = emphasis, even here.</p></div>
+      <div class="step"><p>Now the journey: pick one experience that recurs - "stakeholder requests a new dashboard" is the classic. Two or three sections, five to seven tasks.</p></div>
+      <div class="step"><p>Score each step honestly as the STAKEHOLDER feels it, 1-5. The step you're tempted to score 3 "to be fair to the team" - that's usually a 2, and usually the finding.</p></div>
+      <div class="step"><p>Look at the lowest face on the render. That step is a roadmap candidate - and now you have the picture that argues for it in the next planning meeting.</p></div>
+    </div>
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p>A data team journey-mapped "requesting a new metric" and scored the waiting step a 1. The map went into the quarterly review; the self-serve metrics catalog it justified cut that wait from days to minutes. The diagram didn't fix anything - it made the pain undeniable enough to fund the fix.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 30-45 min total</span></h2>
+    </div>
+    <ul>
+      <li>Take the real roadmap living in your spreadsheet or deck and rebuild it as a gantt with <code>after</code> dependencies and one <code>crit</code> chain. Put it where the project is discussed and update statuses in PRs.</li>
+      <li>Write your team's or platform's timeline in three named eras. Show it to the longest-tenured teammate and let them correct the history - that correction is the real documentation happening.</li>
+      <li>Commit your Demo 2 gitGraph to the repo's CONTRIBUTING or release doc. Next onboarding, send the link instead of the speech.</li>
+      <li>Journey-map one recurring stakeholder experience you own, honest scores. Bring the lowest-scored step to your next planning conversation.</li>
+      <li>Chooser drill: for the last five diagrams-shaped questions that came up at work, name which of the six types you'd reach for - out loud, using the chooser table's question column.</li>
+      <li>Bring to Session 6: your messiest diagram from any session so far. The pro layer - themes, config, CI rendering, ELK layout - is how we make it presentation-grade.</li>
+    </ul>
+  </section>
+
+  <!-- ============ OFFICIAL ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Official docs covered</h2>
+    </div>
+    <p class="lede">This session teaches the working content of six syntax pages of the official docs at <a href="https://mermaid.js.org" target="_blank" rel="noopener">mermaid.js.org</a> (mermaid 11.x) - breadth-first, each to daily-driver depth.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Gantt diagrams</span><span class="note">Part 1 - dateFormat, sections, task grammar, after, tags, milestones, excludes</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Timeline</span><span class="note">Part 2 - title, periods and events, continuation lines, sections</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Gitgraph diagrams</span><span class="note">Part 2 - commit id/tag, branch, checkout, merge, the convention-diagram pattern</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Kanban</span><span class="note">Part 3 - columns, cards, @{ } metadata (assigned, ticket, priority)</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">User journey</span><span class="note">Part 3 - sections, task: score: actor, reading the faces honestly</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Mindmap</span><span class="note">Part 3 - indentation hierarchy, root((...)), node shapes</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Gantt fine-tuning: tickInterval, compact mode, more excludes</span><span class="note">self-study pointer - the long-program layer, in the docs when you need it</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · In a gantt, <code>Schema registry : reg, after ing2, 8d</code> means the task...</p>
+      <button class="qopt" type="button">A · runs at the same time as ing2, for 8 days</button>
+      <button class="qopt" type="button">B · starts 8 days after ing2 starts</button>
+      <button class="qopt" type="button">C · starts when ing2 ends, and runs 8 days - and reflows if ing2 slips</button>
+      <p class="qwhy">after chains the start to the other task's END. That reflow is the whole reason to prefer dependencies over hard-coded dates.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · In a user journey, the score in <code>Wait for the backfill: 1: Analyst</code> measures...</p>
+      <button class="qopt" type="button">A · How satisfied the actor feels during that step - 1 is miserable, 5 is delighted</button>
+      <button class="qopt" type="button">B · The priority of fixing that step, 1 being most urgent</button>
+      <button class="qopt" type="button">C · The effort the step takes, in story points</button>
+      <p class="qwhy">Journey scores are satisfaction, rendered as faces. Low faces make friction visible - which is exactly why the scores must be honest.</p>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · How does a mindmap know which node is whose child?</p>
+      <button class="qopt" type="button">A · Arrow syntax between parent and child, like flowcharts</button>
+      <button class="qopt" type="button">B · Indentation - each node is a child of the nearest line above with less indent</button>
+      <button class="qopt" type="button">C · Numbered levels declared at the top of the block</button>
+      <p class="qwhy">Pure indentation, and only RELATIVE depth matters. No arrows, no ids - which is why it's the fastest diagram in the toolbox.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 5 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>gantt</b><span>dateFormat + sections; task = Name : tags, id, start, dur. Chain with "after id" · done/active/crit/milestone · excludes weekends.</span></div>
+      <div class="cheat-item"><b>timeline</b><span>title, then period : event, extra events on ": ..." continuation lines. Group eras with section. Order = left to right.</span></div>
+      <div class="cheat-item"><b>gitGraph</b><span>commit id: "..." · branch creates AND switches · checkout main · merge dev tag: "v1.4". Draw the convention, not the history.</span></div>
+      <div class="cheat-item"><b>kanban</b><span>column[Title], cards indented under it, metadata via @{ assigned: "...", ticket: "...", priority: "High" }.</span></div>
+      <div class="cheat-item"><b>journey</b><span>section headers; Task name: score: actor, actor. Score = satisfaction 1-5, rendered as faces. Score honestly.</span></div>
+      <div class="cheat-item"><b>mindmap</b><span>root((center)), children by indentation - relative depth only. Shapes: [square] (rounded) ((circle)) {{hexagon}}.</span></div>
+      <div class="cheat-item"><b>The chooser</b><span>ship date → gantt · how we got here → timeline · how we release → gitGraph · who's on what → kanban · how it feels → journey · what's in scope → mindmap.</span></div>
+      <div class="cheat-item"><b>Nova so far</b><span>System (S1-3) + data model (S4) + now the plan, history, backlog, releases, experience, and map. Session 6 makes it all presentation-grade.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 5 of 6 · learn-mermaid-with-phoebe · by Phoebe Fu</span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="04-data-models.html">← Prev: Data models</a> &nbsp;·&nbsp; <a href="06-pro-layer.html">Next: The pro layer →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+<script type="module" src="../assets/mermaid-live.js?v=1"></script>
+</body>
+</html>

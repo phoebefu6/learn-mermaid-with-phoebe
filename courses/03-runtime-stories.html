@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 3 · Runtime stories - learn mermaid with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-mermaid-with-phoebe</a> / Session 3 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Mermaid with Phoebe · Session 3 of 6</div>
+    <h1>Who calls <span class="accent">whom</span>: sequence and state</h1>
+    <p class="sub">Flowcharts show structure - what exists and what connects. Today's two diagram types show BEHAVIOR: sequence diagrams for conversations over time, state diagrams for lifecycles. Together they are how you diagram what a system actually does at runtime.</p>
+    <div class="chip-row">
+      <span class="chip level">🟡 Moderate</span>
+      <span class="chip audience">Data &amp; AI teams</span>
+      <span class="chip time">45 min live + self-study</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Recap</span>
+      <span class="a2" style="flex:4">3-22 · Concepts (live cards)</span>
+      <span class="a3" style="flex:4">22-41 · Three demos</span>
+      <span class="a4" style="flex:1">41-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this session exists</h2>
+    </div>
+    <p class="lede">"The dashboard is slow" and "the job keeps retrying" are runtime stories, and Nova's zoned map from Session 2 cannot tell them - it has no concept of time or order. Sequence diagrams add the WHO-calls-whom-WHEN axis; state diagrams add the what-happens-to-one-thing-over-its-life axis. These two carry most incident writeups, design reviews, and debugging conversations you will ever have.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill peach">★ Try it now</span>
+      <span class="pill inkpill">Every pink diagram block is REAL mermaid, rendered live</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      Sequence diagram fluency - participants, the arrow vocabulary, activations, notes, autonumber - plus the control blocks (loop, alt, opt, par, critical, break) that express real logic. Then state diagrams: the pipeline-job lifecycle as a proper state machine with a choice point and a composite state. Nova gains its first two runtime artifacts.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: SEQUENCE BASICS ============ -->
+  <section class="section" id="sequence-basics">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers "Sequence diagram" basics</span>
+      <h2>Sequence diagrams - conversations over time <span class="tag concept">8 min live</span></h2>
+    </div>
+    <p class="lede">A sequence diagram is a transcript with geometry: participants across the top, time flowing DOWN, every arrow one message. If you can narrate "the dashboard asks the API, the API queries the warehouse...", you can already write one.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three lifelines with time flowing downward and request and reply arrows between them">
+        <style> .s3aT { font: 700 15px Inter, sans-serif; fill: #291B24; } .s3aW { font: 700 14px Inter, sans-serif; fill: #FFFFFF; } .s3aX { font: 400 13px Inter, sans-serif; fill: #806A78; } .s3aN { font: 600 14px Inter, sans-serif; fill: #3A2400; } .s3aLife { stroke: #D9C6D2; stroke-width: 2; stroke-dasharray: 5 5; }
+          .s3aMsg { stroke: #D6246E; stroke-width: 2.5; fill: none; marker-end: url(#s3aAh); } .s3aRep { stroke: #FF9EBF; stroke-width: 2.5; stroke-dasharray: 6 4; fill: none; marker-end: url(#s3aAr); } </style> <defs> <marker id="s3aAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"> <path d="M0,0 L6,3 L0,6" fill="none" stroke="#D6246E" stroke-width="1.5"/>
+          </marker> <marker id="s3aAr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"> <path d="M0,0 L6,3 L0,6" fill="none" stroke="#FF9EBF" stroke-width="1.5"/> </marker> </defs> <rect x="130" y="24" width="150" height="40" rx="10" fill="#D6246E"/>
+        <text class="s3aW" x="163" y="49">Dashboard</text> <rect x="400" y="24" width="150" height="40" rx="10" fill="#FF3670"/> <text class="s3aW" x="437" y="49">Query API</text> <rect x="670" y="24" width="150" height="40" rx="10" fill="#8E1146"/> <text class="s3aW" x="702" y="49">Warehouse</text> <line class="s3aLife" x1="205" y1="64" x2="205" y2="240"/>
+        <line class="s3aLife" x1="475" y1="64" x2="475" y2="240"/> <line class="s3aLife" x1="745" y1="64" x2="745" y2="240"/> <line class="s3aMsg" x1="205" y1="100" x2="467" y2="100"/> <text class="s3aT" x="280" y="92">request</text> <line class="s3aMsg" x1="475" y1="140" x2="737" y2="140"/> <text class="s3aT" x="560" y="132">SQL query</text>
+        <line class="s3aRep" x1="745" y1="180" x2="483" y2="180"/> <text class="s3aT" x="560" y="172">rows</text> <line class="s3aRep" x1="475" y1="220" x2="213" y2="220"/> <text class="s3aT" x="290" y="212">JSON reply</text> <line class="s3aMsg" x1="55" y1="90" x2="55" y2="225"/> <text class="s3aX" x="30" y="78">time</text>
+        <rect x="130" y="256" width="14" height="14" rx="3" fill="#F59E0B"/> <text class="s3aN" x="154" y="268">Solid arrow = request. Dotted arrow = reply. Time only ever flows down.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - the sequence mental model: lifelines down, messages across, time never goes up.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>Participants, actors, and the arrow vocabulary<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Declare who is in the conversation first - <code>participant</code> draws a box, <code>actor</code> draws a stick figure for humans. The <code>as</code> keyword gives a short ID a long display name: <code>participant api as Query API</code>. Then every line is <code>from ARROW to: message</code>.</p>
+        <div class="mmd" data-caption="The four arrows you will use daily - request, reply, async fire-and-forget, and the lost message.">
+<pre class="mmd-src">
+sequenceDiagram
+  participant dash as Dashboard
+  participant api as Query API
+  dash->>api: solid arrowhead - a request
+  api-->>dash: dotted arrowhead - the reply
+  dash-)api: open arrow - async, no reply expected
+  dash-xapi: cross - message that fails or is lost
+</pre>
+        </div>
+        <table class="clean">
+          <thead><tr><th>Arrow</th><th>Draws</th><th>Convention</th></tr></thead>
+          <tbody>
+            <tr><td><code>-&gt;&gt;</code></td><td>solid line, filled arrowhead</td><td>a request or call</td></tr>
+            <tr><td><code>--&gt;&gt;</code></td><td>dotted line, filled arrowhead</td><td>the reply or response</td></tr>
+            <tr><td><code>-)</code></td><td>solid line, open arrowhead</td><td>async fire-and-forget (events, queues)</td></tr>
+            <tr><td><code>-x</code></td><td>solid line, cross</td><td>a message that fails or is dropped</td></tr>
+            <tr><td><code>-&gt;</code></td><td>solid line, no arrowhead</td><td>rare - plain association</td></tr>
+          </tbody>
+        </table>
+        <div class="callout tip">
+          <strong>Two habits that keep big sequences sane</strong>
+          Short IDs, long display names (<code>participant dw as Warehouse</code> - you will type <code>dw</code> thirty times). And declare participants in the order you want the columns - declaration order IS the layout.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Activations, notes, autonumber - the Nova example<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Three finishing touches make a sequence read like documentation instead of scratchpaper. Append <code>+</code>/<code>-</code> to an arrow to activate/deactivate the receiver (the thin "busy bar" on the lifeline), <code>Note over a,b:</code> annotates, and <code>autonumber</code> numbers every message so people can say "step 4 is where it breaks".</p>
+        <div class="mmd" data-caption="Nova's dashboard asks the warehouse a question - activations show who is busy, notes explain, autonumber makes steps citable.">
+<pre class="mmd-src">
+sequenceDiagram
+  autonumber
+  actor ana as Analyst
+  participant dash as Dashboard
+  participant api as Query API
+  participant dw as Warehouse
+  ana->>dash: open revenue page
+  dash->>+api: GET /metrics/revenue
+  api->>+dw: SQL query
+  Note over api,dw: reads the marts schema only
+  dw-->>-api: result rows
+  api-->>-dash: JSON payload
+  dash-->>ana: rendered chart
+</pre>
+        </div>
+        <ul>
+          <li><strong>Activations stack:</strong> <code>-&gt;&gt;+</code> starts a busy bar on the receiver, the matching <code>--&gt;&gt;-</code> reply ends it. Nested calls nest the bars.</li>
+          <li><strong>Note placement:</strong> <code>Note right of x:</code>, <code>Note left of x:</code>, or <code>Note over a,b:</code> spanning two lifelines.</li>
+          <li><strong>autonumber</strong> is one word on its own line, right after <code>sequenceDiagram</code>. In an incident review, numbered steps are gold.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>The latency hunt.</strong> A team argued for a week about why a dashboard took nine seconds. Someone finally drew the sequence: the API called the warehouse once per widget - twelve times per page load. The diagram made the N+1 pattern visible in thirty seconds. The fix was one batched query; the diagram went into the postmortem.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: CONTROL BLOCKS ============ -->
+  <section class="section" id="control-blocks">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers "Sequence diagram: loops, alt, par, critical, break"</span>
+      <h2>Control blocks - logic in the conversation <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">Real conversations branch and repeat. Control blocks wrap a group of messages in a labeled frame: <code>loop</code> for repetition, <code>alt/else</code> for branching, <code>opt</code> for a maybe, <code>par</code> for simultaneous work, <code>critical</code> for must-happen sections, <code>break</code> for bailing out. All of them close with <code>end</code>.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The block vocabulary + Nova's retry logic<span class="mini">4 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <table class="clean">
+          <thead><tr><th>Block</th><th>Means</th><th>Shape</th></tr></thead>
+          <tbody>
+            <tr><td><code>loop label</code></td><td>these messages repeat</td><td><code>loop ... end</code></td></tr>
+            <tr><td><code>alt label</code></td><td>mutually exclusive branches</td><td><code>alt ... else ... end</code></td></tr>
+            <tr><td><code>opt label</code></td><td>happens or not - one optional branch</td><td><code>opt ... end</code></td></tr>
+            <tr><td><code>par label</code></td><td>branches run at the same time</td><td><code>par ... and ... end</code></td></tr>
+            <tr><td><code>critical label</code></td><td>must complete; options handle trouble</td><td><code>critical ... option ... end</code></td></tr>
+            <tr><td><code>break label</code></td><td>flow stops here when this happens</td><td><code>break ... end</code></td></tr>
+          </tbody>
+        </table>
+        <p>Here is Nova's nightly CRM sync with its real retry logic - a <code>loop</code> around an <code>alt</code>, and a <code>break</code> for the give-up path:</p>
+        <div class="mmd" data-caption="Nova ingestion retry - loop wraps the attempts, alt splits ready vs not-ready, break is the escape hatch.">
+<pre class="mmd-src">
+sequenceDiagram
+  participant sch as Scheduler
+  participant ing as Ingestion
+  participant crm as CRM API
+  sch->>ing: run nightly sync
+  loop up to 3 attempts
+    ing->>crm: request export
+    alt export ready
+      crm-->>ing: file URL
+    else not ready yet
+      crm-->>ing: 202, retry later
+    end
+  end
+  break still failing after 3 attempts
+    ing-)sch: page the on-call
+  end
+</pre>
+        </div>
+        <ul>
+          <li><strong>Blocks nest freely</strong> - the alt lives inside the loop here. Two levels is readable; three is a smell.</li>
+          <li><strong>Labels are conditions:</strong> write them as facts a reader can check - "export ready", not "case 1".</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>Design reviews love alt blocks.</strong> "What happens when the export is NOT ready?" is the question senior engineers always ask. A sequence with an explicit else branch answers it before it is asked - and empty else branches in your draft are a to-do list of error handling you have not designed yet.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>par and critical - the concurrency blocks<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Two blocks you will reach for less often but want on the shelf:</p>
+        <ul>
+          <li><strong>par</strong> - work happening simultaneously: <code>par load dashboards</code> ... <code>and refresh ML features</code> ... <code>end</code>. Nova's warehouse fan-out (dashboards and feature store both reading after a load) is a natural par.</li>
+          <li><strong>critical</strong> - a section that MUST complete, with <code>option</code> branches for what happens on trouble: <code>critical acquire schema lock</code> ... <code>option lock timeout</code> ... <code>end</code>. Perfect for migrations and exactly-once guarantees.</li>
+        </ul>
+        <p>Also worth knowing from the docs: participants can carry clickable links via the <code>link</code>/<code>links</code> statements (menus on the participant box) - same spirit as flowchart click, same host-support caveats. We flag it as a docs lookup rather than core kit.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: STATE DIAGRAMS ============ -->
+  <section class="section" id="state-diagrams">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers "State diagrams" (stateDiagram-v2)</span>
+      <h2>State diagrams - lifecycles <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">A sequence diagram follows a conversation between many parties. A state diagram follows ONE thing through its life: a pipeline job, an order, a ticket, a model version. Nodes are states (nouns), arrows are transitions (events). If your team argues about "what does 'failed' actually mean", you need one of these.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sequence diagrams follow a conversation between many parties; state diagrams follow one thing through its lifecycle states">
+        <style> .s3bT { font: 700 16px Inter, sans-serif; fill: #291B24; } .s3bW { font: 700 13px Inter, sans-serif; fill: #FFFFFF; } .s3bX { font: 400 13px Inter, sans-serif; fill: #806A78; } .s3bN { font: 600 14px Inter, sans-serif; fill: #3A2400; } .s3bArr { stroke: #D9C6D2; stroke-width: 2.5; fill: none; marker-end: url(#s3bAh); }
+        </style> <defs> <marker id="s3bAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"> <path d="M0,0 L6,3 L0,6" fill="none" stroke="#D9C6D2" stroke-width="1.5"/> </marker> </defs>
+        <rect x="20" y="30" width="400" height="160" rx="14" fill="#FFEFF5" stroke="#FF9EBF" stroke-width="2"/> <text class="s3bT" x="40" y="60">Sequence = the conversation</text> <rect x="55" y="80" width="90" height="30" rx="8" fill="#D6246E"/> <text class="s3bW" x="72" y="100">Dashboard</text> <rect x="175" y="80" width="70" height="30" rx="8" fill="#FF3670"/> <text class="s3bW" x="196" y="100">API</text>
+        <rect x="285" y="80" width="100" height="30" rx="8" fill="#8E1146"/> <text class="s3bW" x="302" y="100">Warehouse</text> <line class="s3bArr" x1="145" y1="130" x2="185" y2="130"/> <line class="s3bArr" x1="245" y1="150" x2="295" y2="150"/> <text class="s3bX" x="40" y="178">many parties, messages over time</text> <rect x="460" y="30" width="400" height="160" rx="14" fill="#FFEFF5" stroke="#FF9EBF" stroke-width="2"/>
+        <text class="s3bT" x="480" y="60">State = one thing's life</text> <rect x="490" y="80" width="86" height="30" rx="15" fill="#FF9EBF"/> <text class="s3bT" x="507" y="100" style="font-size:13px">queued</text> <rect x="616" y="80" width="86" height="30" rx="15" fill="#D6246E"/> <text class="s3bW" x="632" y="100">running</text> <rect x="742" y="80" width="100" height="30" rx="15" fill="#8E1146"/>
+        <text class="s3bW" x="756" y="100">succeeded</text> <line class="s3bArr" x1="576" y1="95" x2="610" y2="95"/> <line class="s3bArr" x1="702" y1="95" x2="736" y2="95"/> <text class="s3bX" x="480" y="178">one job, states as nouns, events as arrows</text> <rect x="20" y="218" width="14" height="14" rx="3" fill="#F59E0B"/> <text class="s3bN" x="44" y="230">Pick by question: "who talks to whom?" = sequence · "what can happen to it?" = state.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - two lenses on runtime: the conversation between parties vs the lifecycle of one thing.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>stateDiagram-v2 - states, transitions, start and end<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Always use <code>stateDiagram-v2</code> (the v2 renderer is the current one). <code>[*]</code> is both the entry point and the exit point - direction of the arrow decides which. Transitions take a label after a colon: the EVENT that causes the change.</p>
+        <div class="mmd" data-caption="Nova's pipeline job lifecycle, first pass - every arrow label is an event, every node a state the job can rest in.">
+<pre class="mmd-src">
+stateDiagram-v2
+  direction LR
+  [*] --> queued
+  queued --> running : worker picks up
+  running --> succeeded : all steps ok
+  running --> retrying : transient error
+  retrying --> running : backoff elapsed
+  running --> failed : fatal error
+  succeeded --> [*]
+  failed --> [*]
+</pre>
+        </div>
+        <ul>
+          <li><strong>States are nouns</strong> (queued, running), <strong>labels are events</strong> (worker picks up). If a state name contains a verb phrase, it is probably a transition in disguise.</li>
+          <li><strong>Long names:</strong> <code>state "Waiting for upstream data" as wait</code> gives a readable description to a short ID.</li>
+          <li><strong>direction LR/TB</strong> works exactly like flowcharts - lifecycles usually read best LR.</li>
+          <li><strong>Choice points:</strong> declare <code>state verdict &lt;&lt;choice&gt;&gt;</code> and fan transitions out of it with condition labels - one decision, many exits. You will see it in Demo 2.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Composite states and notes<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A composite state is a state with an inner life: <code>state running { ... }</code> opens a block where the sub-states live, with their own <code>[*]</code> entry. From outside, "running" is one box; zoom in and it has extract, transform, load. This is the state-diagram version of a subgraph - and the cure for lifecycle diagrams that mix altitudes.</p>
+        <p>Notes attach context without adding states:</p>
+        <div class="prompt-box good"><span class="label">Pattern</span>note right of quarantined
+  bad rows parked for review,
+  never silently dropped
+end note</div>
+        <div class="callout tip">
+          <strong>Altitude rule</strong>
+          If some states describe the job (queued, failed) and others describe steps inside it (extracting, loading), you are mixing altitudes - push the steps into a composite state and the diagram snaps into focus.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Concurrency and the rest of the toolbox<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Concurrent regions:</strong> inside a composite state, a line with just <code>--</code> splits it into regions that are active at the same time - a job that is simultaneously "processing" and "reporting heartbeats". Rare, but nothing else expresses it.</li>
+          <li><strong>Fork and join:</strong> <code>state f &lt;&lt;fork&gt;&gt;</code> and <code>state j &lt;&lt;join&gt;&gt;</code> split one transition into parallel paths and merge them back - the transition-level cousin of concurrent regions.</li>
+          <li><strong>Styling:</strong> stateDiagram-v2 supports classDef too, same spirit as Session 2 - one meaning per color still applies.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>The status-field audit.</strong> A team drew the state machine for their pipeline's status column and found four states in the database that no code could ever reach, and one transition (failed to succeeded, no retry in between) that should have been impossible but happened weekly. The diagram was 15 lines; the cleanup ticket paid for the session.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Demo 1 of 3 · Nova's first runtime artifact</span>
+      <h2>The nightly sync, end to end <span class="tag demo">★ 8 min · follow along</span></h2>
+    </div>
+    <p class="lede">We build Nova's full nightly CRM sync as one sequence: scheduler kicks it off, ingestion retries the flaky CRM API, quality checks rule on the batch, and the warehouse receives either data or a quarantine entry. Build it in mermaid.live layer by layer; the finished source is below.</p>
+
+    <div class="mmd" data-caption="Nova's nightly sync, complete - retries, verdicts, and the summary home. Numbered steps make it citable in reviews.">
+<pre class="mmd-src">
+sequenceDiagram
+  autonumber
+  participant sch as Scheduler
+  participant ing as Ingestion
+  participant crm as CRM API
+  participant qa as Quality checks
+  participant dw as Warehouse
+  sch->>+ing: run nightly sync
+  loop up to 3 attempts
+    ing->>crm: request export
+    alt export ready
+      crm-->>ing: file URL
+    else not ready yet
+      crm-->>ing: 202, retry later
+    end
+  end
+  ing->>+qa: validate rows
+  qa-->>-ing: verdict per batch
+  alt verdict is pass
+    ing->>dw: load to staging
+  else verdict is fail
+    ing->>dw: write to quarantine
+  end
+  Note over ing,dw: nothing is ever dropped silently
+  ing-->>-sch: run summary
+</pre>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p>Declare the five participants first, in column order: <code>sch</code>, <code>ing</code>, <code>crm</code>, <code>qa</code>, <code>dw</code>. Render - five lifelines, no messages, no errors.</p></div>
+      <div class="step"><p>Add the happy path only, straight through: kick off, one fetch, one validate, one load, one summary. Get the skeleton right before any logic.</p></div>
+      <div class="step"><p>Wrap the fetch in <code>loop up to 3 attempts</code> and split its outcome with <code>alt export ready / else not ready yet</code>. Watch the frames draw themselves.</p></div>
+      <div class="step"><p>Split the verdict: a second <code>alt</code> for pass vs fail, load vs quarantine. Notice you now have both alts a reviewer would ask about.</p></div>
+      <div class="step"><p>Add the polish layer: <code>autonumber</code> up top, activation <code>+</code>/<code>-</code> on ingestion and quality checks, and the <code>Note over</code> stating the no-silent-drops guarantee.</p></div>
+      <div class="step"><p>Read it back as an incident narrative: "at step 6 the CRM returned 202..." - if every step is citable, the diagram is review-ready. Save the share URL.</p></div>
+    </div>
+
+    <div class="callout tip">
+      <strong>Layering habit</strong>
+      Happy path first, then blocks, then polish. Sequences written top-to-bottom in one pass always need untangling; sequences written in layers rarely do.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Demo 2 of 3</span>
+      <h2>The job lifecycle, as a state machine <span class="tag demo">★ 7 min · follow along</span></h2>
+    </div>
+    <p class="lede">Same nightly job, different lens: one run's life from queued to its final resting state. We add a choice point for the verdict, and a composite state that opens up "running" to show the steps inside.</p>
+
+    <div class="mmd" data-caption="Nova's job lifecycle - composite running state, a choice point for the verdict, and no silent exits.">
+<pre class="mmd-src">
+stateDiagram-v2
+  [*] --> queued
+  queued --> running : worker picks up
+  state running {
+    [*] --> extract
+    extract --> transform
+    transform --> load
+    load --> [*]
+  }
+  running --> verdict : run finished
+  state verdict &lt;&lt;choice&gt;&gt;
+  verdict --> succeeded : checks pass
+  verdict --> quarantined : data checks fail
+  verdict --> retrying : transient error
+  retrying --> queued : backoff elapsed
+  retrying --> failed : attempts exhausted
+  succeeded --> [*]
+  quarantined --> [*]
+  failed --> [*]
+  note right of quarantined
+    bad rows parked for review,
+    never silently dropped
+  end note
+</pre>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p>Skeleton first: <code>[*] --&gt; queued --&gt; running --&gt; succeeded --&gt; [*]</code>, each transition on its own labeled line. The happy path of one job.</p></div>
+      <div class="step"><p>Add the trouble states: <code>retrying</code> looping back to <code>queued</code>, <code>failed</code> and <code>quarantined</code> as terminal states with their own <code>--&gt; [*]</code>.</p></div>
+      <div class="step"><p>Insert the choice: <code>state verdict &lt;&lt;choice&gt;&gt;</code>, route <code>running</code> into it, and fan out three labeled exits. One decision point instead of three arrows tangled off "running".</p></div>
+      <div class="step"><p>Open the composite: wrap extract, transform, load inside <code>state running { }</code> with their own <code>[*]</code> entry. The outer diagram stays clean; the detail is there when you zoom.</p></div>
+      <div class="step"><p>Add the note on <code>quarantined</code> - the design guarantee this diagram exists to defend. Compare against Demo 1: same system, conversation lens vs lifecycle lens.</p></div>
+    </div>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p>This exact diagram belongs in your pipeline's README next to the status enum. Every state in the diagram should exist in the code, and every state in the code should exist in the diagram - drift in either direction is a bug you can now see.</p>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Demo 3 of 3</span>
+      <h2>Sequence-ify a bug report <span class="tag demo">★ 4 min · build your own</span></h2>
+    </div>
+    <p class="lede">The highest-value daily use of sequence diagrams: turning a prose incident description into a picture that everyone can point at. Here is your prose - go draw it.</p>
+
+    <div class="prompt-box good"><span class="label">The incident, as reported</span>"Around 2am the dashboard showed stale numbers. Turns out the scheduler kicked off the sync, ingestion asked the CRM API three times and got 'not ready' every time, so it gave up and paged on-call. But the dashboard kept serving yesterday's cache and never told anyone it was stale."</div>
+
+    <div class="steps">
+      <div class="step"><p>List the participants named in the prose: scheduler, ingestion, CRM API, on-call (an <code>actor</code>), dashboard, and the analyst who saw stale numbers. Declare them in rough left-to-right order of involvement.</p></div>
+      <div class="step"><p>Convert each sentence into messages. "Asked three times, got not-ready every time" is a <code>loop</code> with a single outcome - no alt needed, that is the point of this incident.</p></div>
+      <div class="step"><p>"Gave up and paged" is a <code>break</code> block with an async <code>-)</code> message to on-call. "Kept serving yesterday's cache" is the dashboard replying to the analyst WITHOUT any upstream call - the silent failure, visible as an arrow that starts and ends downstream.</p></div>
+      <div class="step"><p>Add one <code>Note over</code> marking where an alert SHOULD have fired. Congratulations: the fix ticket writes itself from the diagram.</p></div>
+      <div class="step"><p>Keep your source - post it in the session channel. Next week we compare how differently people diagram the same prose, which is itself the lesson.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 30-45 min total</span></h2>
+    </div>
+    <ul>
+      <li>Sequence-ify one real flow you own end to end - an API you maintain, a report refresh, a deploy. Include at least one <code>alt</code> and one activation pair. Put it in the relevant README.</li>
+      <li>Draw the state machine for something with a status field in your database - a ticket, an order, a job. Then diff it against the actual enum in the code. Report what you find (there is always something).</li>
+      <li>Rebuild Nova's nightly sync from memory, then diff against Demo 1. The blocks you forgot are the ones to drill.</li>
+      <li>Take last quarter's gnarliest incident writeup and sequence-ify the first ten minutes of the timeline. Notice how many prose ambiguities ("the service failed" - which one? called by whom?) the diagram refuses to let you keep.</li>
+      <li>Bring to Session 4: a table or two from a schema you know well - names and key columns. We draw entity relationships next, and Nova gets its data model.</li>
+    </ul>
+  </section>
+
+  <!-- ============ OFFICIAL ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Official docs covered</h2>
+    </div>
+    <p class="lede">This session teaches the working content of the sequence diagram and state diagram pages at <a href="https://mermaid.js.org/syntax/sequenceDiagram.html" target="_blank" rel="noopener">mermaid.js.org</a> (mermaid 11.x). Left with the official docs: sequence box grouping, background highlighting, and the per-diagram config knobs.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Sequence: participants, actors, arrows, activations</span><span class="note">Part 1 - the daily vocabulary to working depth</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Sequence: loop, alt, opt, par, critical, break</span><span class="note">Part 2 - all six blocks, Nova retry as the worked example</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Sequence: notes + autonumber</span><span class="note">Part 1 + Demo 1 - annotation and citable steps</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">State diagrams: stateDiagram-v2 core</span><span class="note">Part 3 - states, transitions, [*], choice, direction</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">State diagrams: composite states + notes</span><span class="note">Part 3 + Demo 2 - nested lifecycles done properly</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Sequence: participant links and menus</span><span class="note">flagged in Part 2 self-study; syntax is a docs lookup</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · The conventional arrow for a REPLY in a sequence diagram is...</p>
+      <button class="qopt" type="button">A · ->> - solid with arrowhead</button>
+      <button class="qopt" type="button">B · -) - the open async arrow</button>
+      <button class="qopt" type="button">C · -->> - dotted with arrowhead</button>
+      <p class="qwhy">Solid = request, dotted = reply. The dash count carries the meaning - readers decode call vs response before reading any label.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · Your flow has one optional step that either happens or does not - no second branch. Which block?</p>
+      <button class="qopt" type="button">A · opt - one optional frame, no else</button>
+      <button class="qopt" type="button">B · alt with an empty else branch</button>
+      <button class="qopt" type="button">C · loop with a count of 0 or 1</button>
+      <p class="qwhy">alt is for mutually exclusive BRANCHES; opt is the single maybe. An empty else is a design smell, not a syntax trick.</p>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · When does a state earn composite treatment - state running { ... }?</p>
+      <button class="qopt" type="button">A · When it has more than two incoming transitions</button>
+      <button class="qopt" type="button">B · When it has meaningful sub-states at a lower altitude than the rest of the diagram</button>
+      <button class="qopt" type="button">C · Always - composite states are the v2 default</button>
+      <p class="qwhy">Composites fix altitude mixing: job-level states outside, step-level states (extract, transform, load) tucked inside the phase they belong to.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 3 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>Sequence skeleton</b><span>sequenceDiagram · participant id as Name (actor for humans) · declaration order = column order.</span></div>
+      <div class="cheat-item"><b>Arrows</b><span>->> request · -->> reply · -) async fire-and-forget · -x lost/failed. Solid asks, dotted answers.</span></div>
+      <div class="cheat-item"><b>Activations</b><span>->>+ activates the receiver, -->>- deactivates. Busy bars nest for nested calls.</span></div>
+      <div class="cheat-item"><b>Blocks</b><span>loop · alt/else · opt · par/and · critical/option · break - all close with end. Labels are checkable conditions.</span></div>
+      <div class="cheat-item"><b>Polish</b><span>autonumber for citable steps · Note over a,b: for guarantees and context. Layer: happy path, blocks, polish.</span></div>
+      <div class="cheat-item"><b>State skeleton</b><span>stateDiagram-v2 · [*] entry/exit · a --> b : event. States are nouns, transition labels are events.</span></div>
+      <div class="cheat-item"><b>State power tools</b><span>state x &lt;&lt;choice&gt;&gt; for decision fans · state Name { } composite for sub-states · note right of x ... end note.</span></div>
+      <div class="cheat-item"><b>Which lens?</b><span>"Who talks to whom?" = sequence. "What can happen to this one thing?" = state. Same system, two runtime stories.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 3 of 6 · learn-mermaid-with-phoebe · by Phoebe Fu</span>
+    <span><a href="02-flowchart-mastery.html">← Prev: Flowchart mastery</a> &nbsp;·&nbsp; <a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="04-data-models.html">Next: Data models →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+<script type="module" src="../assets/mermaid-live.js?v=1"></script>
+</body>
+</html>

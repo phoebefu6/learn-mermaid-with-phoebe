@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 1 · Diagrams as code - learn mermaid with phoebe</title>
+<link rel="stylesheet" href="../assets/style.css?v=1">
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="wrap">
+    <span class="crumb"><a href="../index.html">learn-mermaid-with-phoebe</a> / Session 1 of 6</span>
+    <button class="btn" id="toggle-all" type="button">Expand all</button>
+    <button class="btn primary" id="zoom-toggle" type="button">Projector zoom: off</button>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Learn Mermaid with Phoebe · Session 1 of 6</div>
+    <h1>Draw with <span class="accent">text</span>: diagrams as code</h1>
+    <p class="sub">Why the best diagrams in tech are typed, not dragged - and your first mermaid flowchart, live in the browser, pushed to GitHub, rendering in Notion, all before the coffee gets cold.</p>
+    <div class="chip-row">
+      <span class="chip level">🟢 Easiest</span>
+      <span class="chip audience">Data &amp; AI teams</span>
+      <span class="chip audience">Anyone who explains systems</span>
+      <span class="chip time">45 min live + self-study depth</span>
+    </div>
+    <div class="agenda">
+      <span class="a1" style="flex:1">0-3 · Welcome</span>
+      <span class="a2" style="flex:4">3-23 · Concepts (live cards)</span>
+      <span class="a3" style="flex:4">23-40 · Three demos</span>
+      <span class="a4" style="flex:1">40-45 · Q&amp;A</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <section class="section" id="intro">
+    <div class="section-kicker">
+      <span class="klabel">Part 0</span>
+      <h2>Why this session exists</h2>
+    </div>
+    <p class="lede">Every architecture conversation you've ever had ended the same way: someone draws boxes on a whiteboard, someone photographs it, and the photo dies in a chat thread. Mermaid fixes this. You type a few lines of text, and a crisp diagram renders - in GitHub, in Notion, in your docs, in this very page. Over six sessions we diagram one realistic data platform ("Nova") end to end: architecture, runtime, data model, roadmap, the lot. Today: your first flowchart, rendering in three real places.</p>
+    <div class="legend">
+      <span class="pill solid">Live - presented in session</span>
+      <span class="pill light">Self-study - read after class</span>
+      <span class="pill peach">★ Try it now</span>
+      <span class="pill inkpill">Every diagram on this page is REAL mermaid, rendered live</span>
+    </div>
+    <div class="callout win">
+      <strong>★ What you walk out with today</strong>
+      The diagrams-as-code mental model, working flowchart syntax (nodes, shapes, arrows, direction), a mermaid.live workflow, your first diagram rendering natively in GitHub and Notion - and Nova's 30,000-foot map, the first artifact of our running project. Every pink diagram block below is live mermaid: flip to Code, copy it, break it, fix it.
+    </div>
+  </section>
+
+  <!-- ============ PART 1: WHY TEXT BEATS DRAG ============ -->
+  <section class="section" id="why-text">
+    <div class="section-kicker">
+      <span class="klabel">Part 1 · covers "About Mermaid" + why diagrams-as-code</span>
+      <h2>Why text beats drag-and-drop <span class="tag concept">6 min live</span></h2>
+    </div>
+    <p class="lede">Mermaid is a JavaScript library that turns short text descriptions into rendered diagrams. The text IS the diagram - which means diagrams finally behave like code: versioned, diffable, reviewable, and impossible to lose.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Text source flows through the mermaid renderer into a crisp SVG diagram anywhere">
+        <style>
+          .wtT { font: 700 19px Inter, sans-serif; fill: #291B24; }
+          .wtW { font: 700 16px Inter, sans-serif; fill: #FFFFFF; }
+          .wtX { font: 400 13px Inter, sans-serif; fill: #806A78; }
+          .wtC { font: 600 13px 'SF Mono', Menlo, monospace; fill: #F6DFEA; }
+          .wtN { font: 600 14px Inter, sans-serif; fill: #3A2400; }
+          .wtArr { stroke: #D9C6D2; stroke-width: 2.5; fill: none; marker-end: url(#wtAh); }
+        </style>
+        <defs>
+          <marker id="wtAh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6" fill="none" stroke="#D9C6D2" stroke-width="1.5"/>
+          </marker>
+        </defs>
+        <rect x="20" y="34" width="250" height="120" rx="12" fill="#241320"/>
+        <text class="wtC" x="38" y="64">flowchart LR</text>
+        <text class="wtC" x="38" y="88">  A[Sources] --&gt; B[Pipeline]</text>
+        <text class="wtC" x="38" y="112">  B --&gt; C[Warehouse]</text>
+        <text class="wtT" x="20" y="185">Plain text</text>
+        <text class="wtX" x="20" y="207">lives in git, diffs in PRs,</text>
+        <text class="wtX" x="20" y="224">edits in any editor</text>
+        <line class="wtArr" x1="280" y1="94" x2="330" y2="94"/>
+        <rect x="336" y="54" width="180" height="80" rx="12" fill="#D6246E"/>
+        <text class="wtW" x="376" y="88">mermaid.js</text>
+        <text class="wtW" x="372" y="112">renders it</text>
+        <text class="wtT" x="336" y="185">The renderer</text>
+        <text class="wtX" x="336" y="207">built into GitHub, Notion,</text>
+        <text class="wtX" x="336" y="224">Obsidian, docs sites</text>
+        <line class="wtArr" x1="526" y1="94" x2="576" y2="94"/>
+        <rect x="582" y="34" width="278" height="120" rx="12" fill="#FFEFF5" stroke="#FF9EBF"/>
+        <rect x="606" y="74" width="66" height="30" rx="8" fill="#FF3670"/>
+        <rect x="700" y="74" width="66" height="30" rx="8" fill="#D6246E"/>
+        <rect x="792" y="74" width="52" height="30" rx="8" fill="#8E1146"/>
+        <line x1="672" y1="89" x2="696" y2="89" stroke="#C05585" stroke-width="2"/>
+        <line x1="766" y1="89" x2="788" y2="89" stroke="#C05585" stroke-width="2"/>
+        <text class="wtT" x="582" y="185">A crisp diagram</text>
+        <text class="wtX" x="582" y="207">SVG output, always sharp,</text>
+        <text class="wtX" x="582" y="224">restyled by theme, never stale</text>
+        <rect x="20" y="238" width="0" height="0" fill="none"/>
+      </svg>
+      <figcaption>🔍 Click to zoom - text in, renderer in the middle, diagram out. The text is the source of truth.</figcaption>
+    </figure>
+
+    <details class="card" open>
+      <summary><span class="mode live">Live</span>What mermaid is, and the pain it kills<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Mermaid is an open-source JavaScript library (70k+ GitHub stars, built into half the tools you already use) that renders diagrams from a markdown-ish text syntax. You describe WHAT connects to what; mermaid decides where boxes go and draws the SVG.</p>
+        <h4>Why this matters to you</h4>
+        <ul>
+          <li><strong>Diagrams stop rotting.</strong> A PowerPoint architecture slide is stale the week after it's made. A mermaid block sits next to the code or doc it describes and gets updated in the same pull request.</li>
+          <li><strong>Diagrams become reviewable.</strong> "You removed the validation step" is visible in a text diff. Nobody can diff a PNG.</li>
+          <li><strong>Speed.</strong> Typing 6 lines beats aligning 6 boxes. Layout is the machine's job now.</li>
+          <li><strong>AI speaks it fluently.</strong> Ask Claude or ChatGPT to "diagram this as mermaid" and you get working source you can paste anywhere - text diagrams are the native diagram format of the AI era.</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p><strong>The whiteboard photo problem.</strong> A data team designs their new ingestion flow on a whiteboard. Six months later the new joiner finds the photo in Slack: half-erased, glare over the important box, and two pipelines out of date. The team that wrote it as 12 lines of mermaid in the repo README? Their diagram was updated in the PR that changed the pipeline. Same effort, permanent payoff.</p>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Anatomy of a mermaid block<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Every mermaid diagram has the same skeleton: a <strong>diagram type keyword</strong> on the first line, then statements describing content. That first word decides the entire grammar that follows.</p>
+        <div class="mmd" data-caption="The smallest useful mermaid diagram - one type keyword, two nodes, one arrow. Flip to Code and read it.">
+<pre class="mmd-src">
+flowchart LR
+  %% this is a comment - renderers ignore it
+  idea[An idea] --> diagram[A shared picture]
+</pre>
+        </div>
+        <ul>
+          <li><strong>Line 1: the type.</strong> <code>flowchart</code>, <code>sequenceDiagram</code>, <code>erDiagram</code>, <code>gantt</code>, <code>mindmap</code>... ~15 stable types, each with its own mini-language. This course teaches the daily-driver set.</li>
+          <li><strong>Direction (flowcharts):</strong> <code>LR</code> = left to right, <code>TD</code> = top down. One flag, whole layout flips.</li>
+          <li><strong>Comments:</strong> lines starting <code>%%</code> are ignored - leave notes for the next editor.</li>
+          <li><strong>Indentation is cosmetic</strong> - mermaid doesn't care, but your reviewers do. Indent statements two spaces.</li>
+        </ul>
+        <div class="prompt-box good"><span class="label">★ Try it now</span>Open any diagram on this page, flip to Code, hit "Edit on mermaid.live" - change a label, watch it re-render as you type. That feedback loop is the whole workflow.</div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>How the rendering actually works<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Under the hood, mermaid parses your text into a graph structure, hands it to a layout engine (dagre by default; ELK optionally for complex graphs - Session 6) that computes where every node and edge should sit, then emits SVG styled by the active theme. Three consequences worth knowing:</p>
+        <ul>
+          <li><strong>You trade pixel control for speed.</strong> You cannot nudge one box 3px left, and that is the deal: mermaid is for thinking and communicating, not print-perfect posters. When exact layout truly matters, export the SVG and refine elsewhere.</li>
+          <li><strong>Layout can change between versions</strong> - same source, slightly different arrangement. The MEANING never changes; the placement might. This is why source, not screenshots, is what you commit.</li>
+          <li><strong>Themes restyle everything.</strong> The pink diagrams on this page are stock mermaid with a custom theme (Session 6 shows you exactly how). One config block, whole-deck restyle.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>When NOT to use mermaid<span class="mini">1 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Fluency includes knowing the tool's edges. Reach for something else when:</p>
+        <ul>
+          <li><strong>Pixel-perfect brand visuals</strong> - a marketing one-pager wants Figma or Illustrator, not auto-layout.</li>
+          <li><strong>Huge graphs</strong> - 200+ nodes turns into spaghetti in any auto-layout tool. Split into linked smaller diagrams instead (we do this with Nova in Session 2).</li>
+          <li><strong>Free-form spatial sketching</strong> - if the POSITION of things is the meaning (a floor plan, a customer journey map on a wall), a canvas tool like Excalidraw or tldraw fits better.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 2: FLOWCHART FUNDAMENTALS ============ -->
+  <section class="section" id="flowchart-basics">
+    <div class="section-kicker">
+      <span class="klabel">Part 2 · covers "Flowchart" syntax basics</span>
+      <h2>Flowchart fundamentals <span class="tag concept">9 min live</span></h2>
+    </div>
+    <p class="lede">The flowchart is mermaid's workhorse - it draws processes, architectures, decision trees, and org flows. Learn four things and you can already diagram most of your job: nodes, shapes, edges, direction.</p>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Nodes and shapes - the vocabulary<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>A node is an ID plus an optional label: <code>ing[Ingestion job]</code>. The brackets around the label pick the shape, and shapes carry meaning - readers decode them before reading a single word.</p>
+        <div class="mmd" data-caption="The five shapes you'll use daily. The bracket style around each label picks the shape.">
+<pre class="mmd-src">
+flowchart LR
+  a[Process step] --> b(Soft process)
+  b --> c{Decision?}
+  c -->|yes| d[(Database)]
+  c -->|no| e([Start / end])
+</pre>
+        </div>
+        <table class="clean">
+          <thead><tr><th>You type</th><th>You get</th><th>Convention</th></tr></thead>
+          <tbody>
+            <tr><td><code>a[text]</code></td><td>rectangle</td><td>a process or step</td></tr>
+            <tr><td><code>a(text)</code></td><td>rounded rectangle</td><td>a softer step, an activity</td></tr>
+            <tr><td><code>a{text}</code></td><td>diamond</td><td>a decision - pair with yes/no edge labels</td></tr>
+            <tr><td><code>a[(text)]</code></td><td>cylinder</td><td>a database or store</td></tr>
+            <tr><td><code>a([text])</code></td><td>stadium/pill</td><td>start and end points</td></tr>
+            <tr><td><code>a((text))</code></td><td>circle</td><td>a connector or event</td></tr>
+          </tbody>
+        </table>
+        <p>Node IDs (<code>a</code>, <code>ing</code>, <code>dw</code>) are how you reference nodes later - keep them short and meaningful. The label is what humans read. Mention a node ID again anywhere and mermaid knows it's the same node - no duplicates drawn.</p>
+        <div class="callout tip">
+          <strong>Quoting rule</strong>
+          Label contains punctuation that confuses the parser - parentheses, brackets, colons? Wrap it in quotes: <code>a["Read config (v2)"]</code>. This one habit prevents 80% of beginner syntax errors.
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Edges - how things connect<span class="mini">3 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Edges are the arrows. Three styles cover nearly everything: solid <code>--&gt;</code> for normal flow, dotted <code>-.-&gt;</code> for optional/async, thick <code>==&gt;</code> for the critical path. Add a label with pipes: <code>a --&gt;|nightly| b</code>.</p>
+        <div class="mmd" data-caption="Edge styles carry meaning: solid = normal, dotted = async or optional, thick = the path that matters.">
+<pre class="mmd-src">
+flowchart LR
+  src[App events] -->|stream| ing[Ingestion]
+  crm[CRM export] -.->|nightly batch| ing
+  ing ==> dw[(Warehouse)]
+  dw --> dash[Dashboards]
+  dw -.-> ml[ML features]
+</pre>
+        </div>
+        <ul>
+          <li><strong>Chain in one line:</strong> <code>a --&gt; b --&gt; c</code> works, and <code>a &amp; b --&gt; c</code> fans two nodes into one.</li>
+          <li><strong>No arrowhead:</strong> <code>a --- b</code> for plain association lines.</li>
+          <li><strong>Longer arrows nudge layout:</strong> extra dashes (<code>----&gt;</code>) ask for extra rank distance - a gentle layout hint, not a command.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>Direction - one flag, whole new layout<span class="mini">1 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>The token after <code>flowchart</code> sets flow direction: <code>TD</code> (top-down), <code>LR</code> (left-right), <code>BT</code>, <code>RL</code>. Rule of thumb: <strong>processes read LR</strong> like a sentence; <strong>hierarchies and decision trees read TD</strong>. When a diagram feels cramped, flipping direction is the first thing to try - it's free.</p>
+        <div class="prompt-box good"><span class="label">★ Try it now</span>Copy the edge-styles diagram above into mermaid.live and change LR to TD. Same meaning, new geometry, zero rework - that's the machine doing the layout job.</div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Reading error messages without fear<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Mermaid errors look scarier than they are: <em>"Parse error on line 3... Expecting 'SEMI', 'NEWLINE'..."</em> decodes as "line 3 confused me". The usual suspects, in order:</p>
+        <ul>
+          <li><strong>Unquoted special characters</strong> in a label - parentheses, brackets, colons. Fix: quote the label.</li>
+          <li><strong>A typo in the arrow</strong> - <code>-&gt;</code> instead of <code>--&gt;</code> (flowchart arrows need two dashes).</li>
+          <li><strong>Wrong grammar for the diagram type</strong> - flowchart syntax in a <code>sequenceDiagram</code> block, or vice versa. Check line 1 first.</li>
+          <li><strong>A reserved word as a node ID</strong> - naming a node <code>end</code> breaks flowcharts; use <code>End</code> or <code>fin</code>.</li>
+        </ul>
+        <p>Debugging habit: comment out half the lines with <code>%%</code>, re-render, and bisect until the guilty line is obvious. In mermaid.live the error appears as you type, so you always know WHICH edit broke it.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ PART 3: WHERE MERMAID LIVES ============ -->
+  <section class="section" id="where-it-renders">
+    <div class="section-kicker">
+      <span class="klabel">Part 3 · covers "Getting started" + ecosystem integrations</span>
+      <h2>Where mermaid renders <span class="tag concept">5 min live</span></h2>
+    </div>
+    <p class="lede">The superpower isn't the syntax - it's that the places you already write render it natively. Learn the fence, and your diagrams follow you everywhere.</p>
+
+    <figure class="zoomable">
+      <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One mermaid source rendering in many hosts: GitHub, Notion, Obsidian, VS Code, docs sites, mermaid.live">
+        <style>
+          .whW { font: 700 15px Inter, sans-serif; fill: #FFFFFF; }
+          .whT { font: 700 15px Inter, sans-serif; fill: #291B24; }
+          .whX { font: 400 12.5px Inter, sans-serif; fill: #806A78; }
+          .whN { font: 600 14px Inter, sans-serif; fill: #3A2400; }
+          .whL { stroke: #D9C6D2; stroke-width: 2; fill: none; }
+        </style>
+        <rect x="355" y="110" width="170" height="60" rx="14" fill="#D6246E"/>
+        <text class="whW" x="384" y="136">one mermaid</text>
+        <text class="whW" x="398" y="156">source</text>
+        <line class="whL" x1="355" y1="126" x2="205" y2="66"/>
+        <line class="whL" x1="355" y1="154" x2="205" y2="222"/>
+        <line class="whL" x1="440" y1="110" x2="440" y2="62"/>
+        <line class="whL" x1="440" y1="170" x2="440" y2="220"/>
+        <line class="whL" x1="525" y1="126" x2="675" y2="66"/>
+        <line class="whL" x1="525" y1="154" x2="675" y2="222"/>
+        <rect x="65" y="30" width="140" height="44" rx="10" fill="#8E1146"/>
+        <text class="whW" x="94" y="57">GitHub</text>
+        <rect x="65" y="200" width="140" height="44" rx="10" fill="#FF3670"/>
+        <text class="whW" x="94" y="227">Notion</text>
+        <rect x="370" y="20" width="140" height="44" rx="10" fill="#FF9EBF"/>
+        <text class="whT" x="396" y="47">Obsidian</text>
+        <rect x="370" y="218" width="140" height="44" rx="10" fill="#FF9EBF"/>
+        <text class="whT" x="398" y="245">VS Code</text>
+        <rect x="675" y="30" width="140" height="44" rx="10" fill="#FF3670"/>
+        <text class="whW" x="695" y="57">docs sites</text>
+        <rect x="675" y="200" width="140" height="44" rx="10" fill="#8E1146"/>
+        <text class="whW" x="690" y="227">mermaid.live</text>
+        <rect x="65" y="276" width="14" height="14" rx="3" fill="#F59E0B"/>
+        <text class="whN" x="89" y="288">Write once as text - every host renders it natively. No exports, no stale screenshots.</text>
+      </svg>
+      <figcaption>🔍 Click to zoom - one source, six homes. The fence syntax is the passport.</figcaption>
+    </figure>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>The fence: mermaid in markdown<span class="mini">2 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>In GitHub (README, issues, PRs, wikis), GitLab, Obsidian, and most docs platforms, you get a rendered diagram by fencing mermaid source as a code block with the <code>mermaid</code> language tag:</p>
+        <div class="prompt-box good"><span class="label">The fence - memorize this shape</span>```mermaid
+flowchart LR
+  a[Write text] --> b[Get diagram]
+```</div>
+        <ul>
+          <li><strong>GitHub:</strong> works in README files, issues, pull requests, discussions, and wikis. Diagram renders on page view.</li>
+          <li><strong>Notion:</strong> type <code>/code</code>, pick Mermaid as the language - Notion shows code and preview side by side or preview only.</li>
+          <li><strong>Obsidian:</strong> same fence, renders in preview mode. Your second brain gets diagrams for free.</li>
+          <li><strong>VS Code:</strong> install a mermaid preview extension and the fence renders in markdown preview - diagrams in your repo docs, visible while you edit.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode live">Live</span>mermaid.live - your workshop<span class="mini">1 min</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><a href="https://mermaid.live" target="_blank" rel="noopener">mermaid.live</a> is the official editor: source on the left, live render on the right, errors as you type. It's where you DRAFT; the fence is where diagrams LIVE. The share button encodes your whole diagram into the URL - no account, no save button, the link is the file. Every diagram block on this page has an "Edit on mermaid.live" button for exactly this reason.</p>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary><span class="mode self">Self-study</span>Everywhere else: slides, sites, AI chats<span class="mini">2 min read</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <ul>
+          <li><strong>Docs generators</strong> - MkDocs (Material), Docusaurus, VitePress, Hugo all render mermaid fences with a one-line config. Your architecture docs stay text end to end.</li>
+          <li><strong>This page</strong> loads mermaid.js from a CDN and renders every block client-side - about 10 lines of JavaScript, shown in full in Session 6.</li>
+          <li><strong>AI assistants</strong> - Claude and ChatGPT both emit mermaid on request ("diagram this pipeline as a mermaid flowchart"). You review the text, fix labels, paste into the fence. Minutes from description to committed diagram.</li>
+          <li><strong>Exports</strong> - mermaid.live exports PNG/SVG for slides; the mermaid CLI (<code>mmdc</code>) batch-exports in CI (Session 6).</li>
+        </ul>
+        <div class="callout example">
+          <span class="ex-pill">Real world</span>
+          <p>A data lead asks Claude to draft the mermaid for her ingestion redesign, pastes it into the design doc PR, and reviewers comment on specific LINES of the diagram like code review. The diagram merges with the design. Nobody opened a drawing tool at any point.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ============ DEMO 1 ============ -->
+  <section class="section" id="demo-1">
+    <div class="section-kicker">
+      <span class="klabel">Demo 1 of 3 · the running project starts here</span>
+      <h2>Nova at 30,000 feet <span class="tag demo">★ 8 min · follow along</span></h2>
+    </div>
+    <p class="lede">Meet Nova: a small, realistic data platform - events and CRM data in, warehouse in the middle, dashboards and ML out. Six sessions from now it will be fully documented in mermaid. First artifact: the high-level flow, built line by line in mermaid.live.</p>
+
+    <div class="mmd" data-caption="Nova's 30,000-foot map - the diagram we build together in this demo, and refine all course long.">
+<pre class="mmd-src">
+flowchart LR
+  ev[App events] -->|stream| ing[Ingestion]
+  crm[CRM export] -.->|nightly| ing
+  ing --> qa{Quality checks}
+  qa -->|pass| dw[(Warehouse)]
+  qa -->|fail| dlq[Quarantine]
+  dw --> bi[Dashboards]
+  dw --> ml[ML features]
+</pre>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p>Open <a href="https://mermaid.live" target="_blank" rel="noopener">mermaid.live</a>. Type just the first line: <code>flowchart LR</code>. Empty canvas, no errors - good start.</p></div>
+      <div class="step"><p>Add the happy path as one chain: <code>ev[App events] --&gt; ing[Ingestion] --&gt; dw[(Warehouse)] --&gt; bi[Dashboards]</code>. Four nodes, one line of text.</p></div>
+      <div class="step"><p>Add the decision: insert <code>qa{Quality checks}</code> between ingestion and warehouse, with <code>|pass|</code> and <code>|fail|</code> labeled edges. Watch the diamond appear and the layout reflow itself.</p></div>
+      <div class="step"><p>Add the second source: <code>crm[CRM export] -.-&gt;|nightly| ing</code>. Dotted, because it's batch - edge style carrying meaning.</p></div>
+      <div class="step"><p>Break it on purpose: remove the quotes idea - rename a node to <code>qa{Quality (v2) checks}</code> and watch the parse error. Fix it with quotes. You have now debugged mermaid.</p></div>
+      <div class="step"><p>Compare with the finished block above (flip it to Code). Yours should match within cosmetics - copy the share URL, you'll want it in Demo 2.</p></div>
+    </div>
+
+    <div class="callout tip">
+      <strong>Layout twitchy?</strong>
+      Node order in the source nudges layout. If two boxes cross wires, reorder the lines that declare them - usually enough. Session 2 adds subgraphs, which tame layout properly.
+    </div>
+  </section>
+
+  <!-- ============ DEMO 2 ============ -->
+  <section class="section" id="demo-2">
+    <div class="section-kicker">
+      <span class="klabel">Demo 2 of 3</span>
+      <h2>Ship it: GitHub and Notion <span class="tag demo">★ 6 min · build your own</span></h2>
+    </div>
+    <p class="lede">A diagram in an editor is a draft. A diagram rendering where your team already reads - that's documentation. Put Nova's map in both places you write most.</p>
+
+    <div class="steps">
+      <div class="step"><p>In any GitHub repo you own (or a fresh scratch repo), open the README, click edit, and add a <code>```mermaid</code> fence with your Demo 1 source inside. Commit.</p></div>
+      <div class="step"><p>View the README. GitHub renders the diagram natively - no image upload happened. Resize the window; it's crisp at every size, because it's SVG.</p></div>
+      <div class="step"><p>Edit the diagram IN the GitHub editor: change "Dashboards" to "BI dashboards", commit again, and check the file diff. The reviewable-diagram superpower, live.</p></div>
+      <div class="step"><p>Now Notion: on any page, type <code>/code</code>, set the language to Mermaid, paste the same source. Toggle to preview. One source, second home.</p></div>
+      <div class="step"><p>Optional third home: paste the fence into an Obsidian note or a VS Code markdown preview if you use either.</p></div>
+    </div>
+
+    <div class="callout example">
+      <span class="ex-pill">Real world</span>
+      <p>The highest-leverage place for your first real mermaid diagram is the README of the repo people ask you about most. "How does this pipeline work?" becomes a link, and the diagram updates in the same PRs that change the pipeline.</p>
+    </div>
+  </section>
+
+  <!-- ============ DEMO 3 ============ -->
+  <section class="section" id="demo-3">
+    <div class="section-kicker">
+      <span class="klabel">Demo 3 of 3</span>
+      <h2>Diagram your own week <span class="tag demo">★ 5 min · build your own</span></h2>
+    </div>
+    <p class="lede">Syntax sticks when it draws YOUR world. Pick one real flow you own - your reporting pipeline, your release process, your morning routine - and map it with today's vocabulary.</p>
+
+    <div class="steps">
+      <div class="step"><p>Pick a flow with 5-10 steps and at least one decision point. Real ones work best: "how a data request gets to a dashboard", "how we ship a model", "how expense approval works".</p></div>
+      <div class="step"><p>Draft in mermaid.live: start/end pills, rectangles for steps, one diamond with labeled yes/no edges, a cylinder if data gets stored anywhere.</p></div>
+      <div class="step"><p>Apply meaning to edge styles: dotted for the async/optional parts, thick for the critical path.</p></div>
+      <div class="step"><p>Stuck on syntax? Ask an AI assistant to draft it, then FIX its output yourself - editing generated mermaid is exactly the skill the next five sessions build on.</p></div>
+      <div class="step"><p>Share the mermaid.live URL with one colleague who knows the flow. Their first correction ("step 3 goes to finance first, actually") proves the diagram is doing its job: making thinking visible.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ HOMEWORK ============ -->
+  <section class="section" id="exercise">
+    <div class="section-kicker">
+      <span class="klabel">Homework</span>
+      <h2>Try it yourself - this week <span class="tag exercise">◐ 30-45 min total</span></h2>
+    </div>
+    <ul>
+      <li>Put one mermaid diagram in a real README at work - the repo or doc people ask you about most. The fence, five minutes, permanent payoff.</li>
+      <li>Rebuild Nova's 30,000-foot map from memory (no peeking), then diff against the block in Demo 1. Whatever you forgot is the syntax to review.</li>
+      <li>Do the shape drill: one flowchart using all six shapes from Part 2's table, each used for its conventional meaning.</li>
+      <li>Break three things on purpose in mermaid.live - an unquoted label, a one-dash arrow, a node named <code>end</code> - and read the errors. Debugging without fear starts here.</li>
+      <li>Bring to Session 2: one real diagram of yours that grew past 10 nodes and got messy. Subgraphs are the medicine, and we'll apply it to Nova and to yours.</li>
+    </ul>
+  </section>
+
+  <!-- ============ OFFICIAL ============ -->
+  <section class="section" id="official">
+    <div class="section-kicker">
+      <span class="klabel">Source material</span>
+      <h2>Official docs covered</h2>
+    </div>
+    <p class="lede">This session teaches the working content of these sections of the official docs at <a href="https://mermaid.js.org" target="_blank" rel="noopener">mermaid.js.org</a> (mermaid 11.x). What stays with the official ecosystem: the full shape catalog reference, video tutorials, and the Mermaid Chart SaaS product.</p>
+    <div class="covered">
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">About Mermaid</span><span class="note">Part 1 - what it is, the diagrams-as-code case</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Getting started</span><span class="note">Part 3 + Demos - live editor, the fence, first integrations</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Flowchart: nodes, shapes, edges, direction</span><span class="note">Part 2 - the daily-driver subset to working depth</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Flowchart: full shape catalog + v11 shape syntax</span><span class="note">Session 2 finishes - 30+ shapes via @{ shape: ... }</span></div>
+      <div class="covered-row"><span class="status pill light">◐</span><span class="name">Syntax and configuration</span><span class="note">comments + structure today; config and directives in Session 6</span></div>
+      <div class="covered-row"><span class="status pill solid">✓</span><span class="name">Ecosystem: tutorials + integrations overview</span><span class="note">Part 3 - GitHub, Notion, Obsidian, VS Code, docs sites</span></div>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="section" id="quiz">
+    <div class="section-kicker">
+      <span class="klabel">Check yourself</span>
+      <h2>Three questions before you go 🎯 <span class="tag exercise">◐ 90 seconds</span></h2>
+    </div>
+    <div class="quiz-q" data-answer="2">
+      <p class="qtext">1 · Your label "Load (v2) data" throws a parse error. The fix is...</p>
+      <button class="qopt" type="button">A · Remove the parentheses - mermaid can't render them</button>
+      <button class="qopt" type="button">B · Escape them with backslashes</button>
+      <button class="qopt" type="button">C · Quote the label: a["Load (v2) data"]</button>
+      <p class="qwhy">Quotes tell the parser "everything inside is just text". The single most useful debugging habit in mermaid.</p>
+    </div>
+    <div class="quiz-q" data-answer="0">
+      <p class="qtext">2 · Why commit mermaid source instead of an exported PNG?</p>
+      <button class="qopt" type="button">A · Text diffs in PRs and updates with the code - the PNG rots</button>
+      <button class="qopt" type="button">B · PNGs are too large for git</button>
+      <button class="qopt" type="button">C · GitHub can't display PNG files in READMEs</button>
+      <p class="qwhy">The whole point of diagrams-as-code: versionable, diffable, reviewable, updated in the same PR that changes the system.</p>
+    </div>
+    <div class="quiz-q" data-answer="1">
+      <p class="qtext">3 · Which line starts a top-down flowchart?</p>
+      <button class="qopt" type="button">A · diagram TD</button>
+      <button class="qopt" type="button">B · flowchart TD</button>
+      <button class="qopt" type="button">C · flowchart --top-down</button>
+      <p class="qwhy">Type keyword first, direction second. LR for processes that read like sentences, TD for hierarchies and decisions.</p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <!-- ============ CHEAT SHEET ============ -->
+  <section class="cheat" id="cheatsheet">
+    <h3>Session 1 cheat sheet <span>· pin this</span></h3>
+    <div class="grid-2">
+      <div class="cheat-item"><b>The skeleton</b><span>Type keyword first line (flowchart LR), statements after, %% for comments. The first word picks the grammar.</span></div>
+      <div class="cheat-item"><b>Shapes</b><span>[step] · (soft) · {decision} · [(database)] · ([start/end]) · ((event)). Shape = meaning.</span></div>
+      <div class="cheat-item"><b>Edges</b><span>--&gt; solid · -.-&gt; dotted (async) · ==&gt; thick (critical) · ---&gt; no head with --- · label with |text|.</span></div>
+      <div class="cheat-item"><b>Direction</b><span>LR reads like a sentence (processes) · TD reads like a tree (hierarchies, decisions). Flip when cramped.</span></div>
+      <div class="cheat-item"><b>The fence</b><span>```mermaid + source + ``` renders in GitHub, GitLab, Obsidian, Notion (/code → Mermaid), most docs sites.</span></div>
+      <div class="cheat-item"><b>Debug order</b><span>Quote weird labels → check arrow dashes → check line 1 type → rename any node called "end" → bisect with %%.</span></div>
+      <div class="cheat-item"><b>Workshop</b><span>Draft in mermaid.live (errors as you type, URL = the file) · live in the fence next to the code it describes.</span></div>
+      <div class="cheat-item"><b>Nova so far</b><span>events + CRM → ingestion → quality gate → warehouse → dashboards + ML. We refine it for five more sessions.</span></div>
+    </div>
+  </section>
+
+  <footer class="pagefoot">
+    <span>Session 1 of 6 · learn-mermaid-with-phoebe · by Phoebe Fu</span>
+    <span><a href="../index.html">← All sessions</a> &nbsp;·&nbsp; <a href="02-flowchart-mastery.html">Next: Flowchart mastery →</a></span>
+  </footer>
+
+</main>
+
+<script src="../assets/app.js?v=1"></script>
+<script type="module" src="../assets/mermaid-live.js?v=1"></script>
+</body>
+</html>
