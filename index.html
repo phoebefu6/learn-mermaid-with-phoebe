@@ -53,6 +53,17 @@
   .hero-live { margin-top: -1.4rem; }
   .hero-live .hlede { color: var(--muted); font-size: .95rem; margin: 1.4rem 0 0; }
   .hero-live .hlede b { color: var(--ink); }
+
+  .mm-section { margin-top: 1.6rem; }
+  .mm-section h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: .2rem; }
+  .mm-section .mm-lede { color: var(--muted); font-size: .92rem; margin-bottom: .4rem; }
+  .mm-wrap { border: 1px solid var(--hairline); border-radius: var(--radius); background: linear-gradient(180deg,#fff, #F6FAFD); padding: .6rem; overflow-x: auto; }
+  .mm-svg { width: 100%; height: auto; display: block; max-width: 60rem; margin: 0 auto; min-width: 34rem; }
+  .mm-link { cursor: pointer; text-decoration: none; }
+  .mm-node rect { transition: opacity .15s ease, filter .15s ease; }
+  .mm-node text { pointer-events: none; }
+  .mm-link:hover .mm-node rect { filter: brightness(1.06); }
+  .mm-edge { transition: opacity .15s ease; }
 </style>
 </head>
 <body>
@@ -87,6 +98,12 @@ flowchart LR
   dw --> ml[ML features]
 </pre>
     </div>
+  </section>
+
+  <section class="section mm-section">
+    <h2>The knowledge map 🧠</h2>
+    <p class="mm-lede">The whole course at a glance - hover a session to spotlight its concepts, click any node to jump in.</p>
+    <div class="mm-wrap"><div id="mindmap"></div></div>
   </section>
 
   <section class="section" id="sessions">
@@ -183,6 +200,45 @@ flowchart LR
   </footer>
 </main>
 
+<script>
+window.MINDMAP_DATA = {
+  title: "Mermaid\nDiagrams",
+  centerColor: "#8E1146",
+  sessions: [
+    { label: "Diagrams\nas code", href: "courses/01-diagrams-as-code.html", color: "#34D399",
+      concepts: [
+        { label: "Text vs drag", href: "courses/01-diagrams-as-code.html" },
+        { label: "Flowcharts", href: "courses/01-diagrams-as-code.html" },
+        { label: "Where it renders", href: "courses/01-diagrams-as-code.html" } ] },
+    { label: "Flowchart\nmastery", href: "courses/02-flowchart-mastery.html", color: "#34D399",
+      concepts: [
+        { label: "Subgraphs", href: "courses/02-flowchart-mastery.html" },
+        { label: "Styling", href: "courses/02-flowchart-mastery.html" },
+        { label: "Interaction", href: "courses/02-flowchart-mastery.html" } ] },
+    { label: "Sequence\n& state", href: "courses/03-runtime-stories.html", color: "#FBBF24",
+      concepts: [
+        { label: "Sequence", href: "courses/03-runtime-stories.html" },
+        { label: "Control blocks", href: "courses/03-runtime-stories.html" },
+        { label: "State machines", href: "courses/03-runtime-stories.html" } ] },
+    { label: "ER & class\ndiagrams", href: "courses/04-data-models.html", color: "#FBBF24",
+      concepts: [
+        { label: "ER diagrams", href: "courses/04-data-models.html" },
+        { label: "Cardinality", href: "courses/04-data-models.html" },
+        { label: "Class diagrams", href: "courses/04-data-models.html" } ] },
+    { label: "Plans &\npeople", href: "courses/05-plans-and-people.html", color: "#FB923C",
+      concepts: [
+        { label: "Gantt", href: "courses/05-plans-and-people.html" },
+        { label: "Timeline", href: "courses/05-plans-and-people.html" },
+        { label: "Kanban", href: "courses/05-plans-and-people.html" } ] },
+    { label: "The pro\nlayer", href: "courses/06-pro-layer.html", color: "#F87171",
+      concepts: [
+        { label: "Theming", href: "courses/06-pro-layer.html" },
+        { label: "Architecture", href: "courses/06-pro-layer.html" },
+        { label: "CLI & CI", href: "courses/06-pro-layer.html" } ] }
+  ]
+};
+</script>
+<script src="assets/mindmap.js?v=1"></script>
 <script src="assets/app.js?v=1"></script>
 <script type="module" src="assets/mermaid-live.js?v=1"></script>
 </body>
