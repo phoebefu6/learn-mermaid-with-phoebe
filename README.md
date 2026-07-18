@@ -1,3 +1,8 @@
+<!-- learn-with-phoebe hub banner -->
+> ### 📚 Part of [**Learn with Phoebe**](https://phoebefu6.github.io/learn-with-phoebe/)
+> The shelf of 20 free, hands-on courses on AI, data, and the craft around them. **[Browse every course ↗](https://phoebefu6.github.io/learn-with-phoebe/)**
+<!-- /learn-with-phoebe hub banner -->
+
 # learn mermaid with phoebe
 
 Six 45-minute sessions + three self-paced deep dives on [mermaid](https://mermaid.js.org) - the text-to-diagram language built into GitHub, Notion, Obsidian, and most docs tools.
