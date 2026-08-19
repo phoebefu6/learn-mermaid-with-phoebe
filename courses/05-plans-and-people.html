@@ -106,6 +106,48 @@
       <summary><span class="mode live">Live</span>Anatomy: dateFormat, sections, tasks, after<span class="mini">4 min</span><span class="caret">▶</span></summary>
       <div class="body">
         <p>Four header lines set the stage, then every task is one line: <code>Name : tags, id, start, duration</code>. The magic word is <code>after</code> - chain tasks by id instead of hard-coding dates, and the whole plan reflows when one thing slips.</p>
+<figure class="zoomable">
+  <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A gantt diagram source snippet on the left declaring two chained tasks, ingestion v2 marked done and schema registry marked active starting after ingestion v2, next to the rendered result on the right showing two bars where the second bar begins exactly where the first ends.">
+    <defs>
+      <marker id="arrMm1a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#D6246E"/>
+      </marker>
+    </defs>
+    <style>
+      .mm1aT { font: 700 13px Inter, sans-serif; fill: #291B24; }
+      .mm1aL { font: 700 11px Inter, sans-serif; fill: #806A78; letter-spacing: .04em; }
+      .mm1aC { font: 400 11px monospace; fill: #F6DFEA; }
+      .mm1aR { font: 600 11.5px Inter, sans-serif; fill: #291B24; }
+      .mm1aN { font: 400 12px Inter, sans-serif; fill: #806A78; }
+    </style>
+    <rect x="0" y="0" width="880" height="320" fill="#FFFFFF"/>
+    <text class="mm1aT" x="40" y="28">Source becomes a chained gantt bar</text>
+    <text class="mm1aL" x="40" y="46">SOURCE</text>
+    <text class="mm1aL" x="460" y="46">RENDERS AS</text>
+
+    <rect x="40" y="54" width="380" height="214" rx="12" fill="#241320" stroke="#F2E6EE" stroke-width="1.5"/>
+    <text class="mm1aC" x="56" y="100">gantt</text>
+    <text class="mm1aC" x="56" y="120">title Nova Q3 delivery plan</text>
+    <text class="mm1aC" x="56" y="140">section Foundations</text>
+    <text class="mm1aC" x="56" y="160">Ingestion v2: done, ing2,</text>
+    <text class="mm1aC" x="56" y="180">  2026-07-06, 10d</text>
+    <text class="mm1aC" x="56" y="200">Schema registry: active, reg,</text>
+    <text class="mm1aC" x="56" y="220">  after ing2, 8d</text>
+
+    <line x1="424" y1="161" x2="452" y2="161" stroke="#D6246E" stroke-width="3" marker-end="url(#arrMm1a)"/>
+
+    <rect x="460" y="54" width="380" height="214" rx="12" fill="#FFFFFF" stroke="#F2E6EE" stroke-width="1.5"/>
+    <text class="mm1aR" x="476" y="145">ing2</text>
+    <rect x="540" y="132" width="140" height="22" rx="4" fill="#806A78"/>
+    <text class="mm1aR" x="476" y="185">reg</text>
+    <rect x="680" y="172" width="100" height="22" rx="4" fill="#D6246E"/>
+    <line x1="680" y1="132" x2="680" y2="194" stroke="#D9C6D2" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+    <text class="mm1aN" x="40" y="294">Chain tasks with after instead of hard-coded dates, and the whole plan reflows when one task slips.</text>
+  </svg>
+  <figcaption>&#128269; Click to zoom - after chains tasks, so the plan reflows itself</figcaption>
+</figure>
+
         <div class="mmd" data-caption="Nova's Q3 delivery plan: three sections, chained dependencies, one crit path, one milestone, weekends excluded.">
 <pre class="mmd-src">
 gantt
@@ -183,6 +225,53 @@ timeline
       <summary><span class="mode live">Live</span>gitGraph - the release flow<span class="mini">4 min</span><span class="caret">▶</span></summary>
       <div class="body">
         <p>gitGraph draws commit history: <code>commit</code>, <code>branch</code>, <code>checkout</code>, <code>merge</code> read exactly like the git commands they mirror. Its killer use isn't documenting real history - git already stores that - it's explaining your branching CONVENTION as a picture new engineers absorb in seconds.</p>
+<figure class="zoomable">
+  <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A gitGraph source snippet on the left showing a commit on main, a branch called develop with one commit, and a merge back to main tagged v1.4, next to the rendered result on the right showing main as a straight rail with the develop branch rising above it and merging back down at the tag.">
+    <defs>
+      <marker id="arrMm1b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#D6246E"/>
+      </marker>
+    </defs>
+    <style>
+      .mm1bT { font: 700 13px Inter, sans-serif; fill: #291B24; }
+      .mm1bL { font: 700 11px Inter, sans-serif; fill: #806A78; letter-spacing: .04em; }
+      .mm1bC { font: 400 11px monospace; fill: #F6DFEA; }
+      .mm1bR { font: 600 11px Inter, sans-serif; fill: #291B24; }
+      .mm1bTag { font: 700 10.5px Inter, sans-serif; fill: #3A2400; }
+      .mm1bN { font: 400 12px Inter, sans-serif; fill: #806A78; }
+    </style>
+    <rect x="0" y="0" width="880" height="320" fill="#FFFFFF"/>
+    <text class="mm1bT" x="40" y="28">Source becomes the branching picture</text>
+    <text class="mm1bL" x="40" y="46">SOURCE</text>
+    <text class="mm1bL" x="460" y="46">RENDERS AS</text>
+
+    <rect x="40" y="54" width="380" height="214" rx="12" fill="#241320" stroke="#F2E6EE" stroke-width="1.5"/>
+    <text class="mm1bC" x="56" y="110">gitGraph</text>
+    <text class="mm1bC" x="56" y="132">  commit id: "init pipelines"</text>
+    <text class="mm1bC" x="56" y="154">  branch develop</text>
+    <text class="mm1bC" x="56" y="176">  commit id: "quality gates"</text>
+    <text class="mm1bC" x="56" y="198">  checkout main</text>
+    <text class="mm1bC" x="56" y="220">  merge develop tag: "v1.4"</text>
+
+    <line x1="424" y1="161" x2="452" y2="161" stroke="#D6246E" stroke-width="3" marker-end="url(#arrMm1b)"/>
+
+    <rect x="460" y="54" width="380" height="214" rx="12" fill="#FFFFFF" stroke="#F2E6EE" stroke-width="1.5"/>
+    <line x1="500" y1="200" x2="820" y2="200" stroke="#8E1146" stroke-width="2"/>
+    <circle cx="520" cy="200" r="6" fill="#8E1146"/>
+    <text class="mm1bR" x="520" y="222" text-anchor="middle">init</text>
+    <polyline points="560,200 560,140 700,140" fill="none" stroke="#D6246E" stroke-width="2"/>
+    <circle cx="630" cy="140" r="6" fill="#D6246E"/>
+    <text class="mm1bR" x="630" y="126" text-anchor="middle">gates</text>
+    <polyline points="700,140 760,140 760,200" fill="none" stroke="#D6246E" stroke-width="2"/>
+    <circle cx="760" cy="200" r="6" fill="#8E1146"/>
+    <rect x="726" y="158" width="68" height="20" rx="8" fill="#FFF7E6" stroke="#F59E0B"/>
+    <text class="mm1bTag" x="760" y="172" text-anchor="middle">v1.4</text>
+
+    <text class="mm1bN" x="40" y="294">The picture teaches the branching convention, not real history - git already stores that.</text>
+  </svg>
+  <figcaption>&#128269; Click to zoom - gitGraph draws your branching convention, not real history</figcaption>
+</figure>
+
         <div class="mmd" data-caption="Nova's release convention: develop for features, main takes tagged merges, hotfixes branch from main.">
 <pre class="mmd-src">
 gitGraph

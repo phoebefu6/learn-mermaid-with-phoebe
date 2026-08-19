@@ -129,6 +129,52 @@
       <summary><span class="mode self">Core</span>Nova's warehouse spend, in six lines<span class="mini">2 min</span><span class="caret">▶</span></summary>
       <div class="body">
         <p><strong>Use it in data work for:</strong> cost splits, storage by domain, ticket categories - any "what makes up the total" moment in a budget doc or postmortem. Above five or six slices, switch to a table; pies stop communicating.</p>
+<figure class="zoomable">
+  <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A pie chart source snippet on the left listing Nova's warehouse spend as Compute 55, Storage 30 and Egress 15, next to the rendered donut on the right sized to those exact proportions with a three-chip legend.">
+    <defs>
+      <marker id="arrMm2a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#D6246E"/>
+      </marker>
+    </defs>
+    <style>
+      .mm2aT { font: 700 13px Inter, sans-serif; fill: #291B24; }
+      .mm2aL { font: 700 11px Inter, sans-serif; fill: #806A78; letter-spacing: .04em; }
+      .mm2aC { font: 400 11px monospace; fill: #F6DFEA; }
+      .mm2aK { font: 700 11px Inter, sans-serif; fill: #291B24; }
+      .mm2aN { font: 400 12px Inter, sans-serif; fill: #806A78; }
+    </style>
+    <rect x="0" y="0" width="880" height="320" fill="#FFFFFF"/>
+    <text class="mm2aT" x="40" y="28">Six lines become a sized-to-scale donut</text>
+    <text class="mm2aL" x="40" y="46">SOURCE</text>
+    <text class="mm2aL" x="460" y="46">RENDERS AS</text>
+
+    <rect x="40" y="54" width="380" height="214" rx="12" fill="#241320" stroke="#F2E6EE" stroke-width="1.5"/>
+    <text class="mm2aC" x="56" y="110">pie showData</text>
+    <text class="mm2aC" x="56" y="132">title Nova warehouse spend</text>
+    <text class="mm2aC" x="56" y="160">"Compute" : 55</text>
+    <text class="mm2aC" x="56" y="182">"Storage" : 30</text>
+    <text class="mm2aC" x="56" y="204">"Egress" : 15</text>
+
+    <line x1="424" y1="161" x2="452" y2="161" stroke="#D6246E" stroke-width="3" marker-end="url(#arrMm2a)"/>
+
+    <rect x="460" y="54" width="380" height="214" rx="12" fill="#FFFFFF" stroke="#F2E6EE" stroke-width="1.5"/>
+    <circle cx="650" cy="140" r="65" fill="none" stroke="#D9C6D2" stroke-width="26"/>
+    <circle cx="650" cy="140" r="65" fill="none" stroke="#D6246E" stroke-width="26" stroke-dasharray="224.62 183.78" transform="rotate(-90 650 140)"/>
+    <circle cx="650" cy="140" r="65" fill="none" stroke="#FF3670" stroke-width="26" stroke-dasharray="122.52 285.88" stroke-dashoffset="-224.62" transform="rotate(-90 650 140)"/>
+    <circle cx="650" cy="140" r="65" fill="none" stroke="#F59E0B" stroke-width="26" stroke-dasharray="61.26 347.15" stroke-dashoffset="-347.15" transform="rotate(-90 650 140)"/>
+
+    <rect x="486" y="240" width="14" height="14" rx="3" fill="#D6246E"/>
+    <text class="mm2aK" x="506" y="251">Compute 55</text>
+    <rect x="620" y="240" width="14" height="14" rx="3" fill="#FF3670"/>
+    <text class="mm2aK" x="640" y="251">Storage 30</text>
+    <rect x="746" y="240" width="14" height="14" rx="3" fill="#F59E0B"/>
+    <text class="mm2aK" x="766" y="251">Egress 15</text>
+
+    <text class="mm2aN" x="40" y="294">Slices draw clockwise in source order - list largest first for the classic look.</text>
+  </svg>
+  <figcaption>&#128269; Click to zoom - six lines of code become a real spend breakdown</figcaption>
+</figure>
+
         <div class="mmd" data-caption="pie with showData - values print next to the legend, so nobody squints at slice angles.">
 <pre class="mmd-src">
 pie showData title Nova warehouse spend
@@ -224,6 +270,59 @@ xychart-beta
       <summary><span class="mode self">Core</span>Nova's event flow through the quality gate<span class="mini">3 min</span><span class="caret">▶</span></summary>
       <div class="body">
         <p><strong>Use it in data work for:</strong> pipeline volume accounting - where records enter, split, and land. A sankey makes data LOSS visible: that thin quarantine ribbon below is the chart equivalent of a failing quality check, and it often comes straight out of a GROUP BY.</p>
+<figure class="zoomable">
+  <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A sankey source snippet on the left listing four flows of Nova's events through a quality gate, 60 from app events and 25 from CRM export entering, 78 continuing to the warehouse and 7 diverted to quarantine, next to a rendered flow diagram on the right sized to those exact volumes with a thin quarantine ribbon showing the loss.">
+    <defs>
+      <marker id="arrMm2b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#D6246E"/>
+      </marker>
+    </defs>
+    <style>
+      .mm2bT { font: 700 13px Inter, sans-serif; fill: #291B24; }
+      .mm2bL { font: 700 11px Inter, sans-serif; fill: #806A78; letter-spacing: .04em; }
+      .mm2bC { font: 400 11px monospace; fill: #F6DFEA; }
+      .mm2bK { font: 600 10.5px Inter, sans-serif; fill: #291B24; }
+      .mm2bN { font: 400 12px Inter, sans-serif; fill: #806A78; }
+    </style>
+    <rect x="0" y="0" width="880" height="320" fill="#FFFFFF"/>
+    <text class="mm2bT" x="40" y="28">CSV rows become a flow, to scale</text>
+    <text class="mm2bL" x="40" y="46">SOURCE</text>
+    <text class="mm2bL" x="460" y="46">RENDERS AS</text>
+
+    <rect x="40" y="54" width="380" height="214" rx="12" fill="#241320" stroke="#F2E6EE" stroke-width="1.5"/>
+    <text class="mm2bC" x="56" y="110">sankey-beta</text>
+    <text class="mm2bC" x="56" y="132">App events,Quality gate,60</text>
+    <text class="mm2bC" x="56" y="154">CRM export,Quality gate,25</text>
+    <text class="mm2bC" x="56" y="176">Quality gate,Warehouse,78</text>
+    <text class="mm2bC" x="56" y="198">Quality gate,Quarantine,7</text>
+
+    <line x1="424" y1="161" x2="452" y2="161" stroke="#D6246E" stroke-width="3" marker-end="url(#arrMm2b)"/>
+
+    <rect x="460" y="54" width="380" height="214" rx="12" fill="#FFFFFF" stroke="#F2E6EE" stroke-width="1.5"/>
+
+    <rect x="650" y="60" width="14" height="140" fill="#291B24"/>
+    <text class="mm2bK" x="657" y="52" text-anchor="middle">Quality gate</text>
+
+    <rect x="480" y="60" width="14" height="99" fill="#D6246E"/>
+    <text class="mm2bK" x="474" y="114" text-anchor="end">App events 60</text>
+    <rect x="480" y="161" width="14" height="41" fill="#FF3670"/>
+    <text class="mm2bK" x="474" y="185" text-anchor="end">CRM export 25</text>
+
+    <rect x="800" y="60" width="14" height="128" fill="#8E1146"/>
+    <text class="mm2bK" x="796" y="128" text-anchor="start">Warehouse 78</text>
+    <rect x="800" y="190" width="14" height="12" fill="#F59E0B"/>
+    <text class="mm2bK" x="796" y="200" text-anchor="start">Quarantine 7</text>
+
+    <polygon points="494,60 494,159 650,200 650,60" fill="#D6246E" opacity=".25"/>
+    <polygon points="494,161 494,202 650,200 650,60" fill="#FF3670" opacity=".18"/>
+    <polygon points="664,60 664,188 800,188 800,60" fill="#291B24" opacity=".2"/>
+    <polygon points="664,188 664,200 800,202 800,188" fill="#F59E0B" opacity=".4"/>
+
+    <text class="mm2bN" x="40" y="294">60 + 25 in equals 78 + 7 out - mermaid will not check that balance for you.</text>
+  </svg>
+  <figcaption>&#128269; Click to zoom - a thin ribbon makes data loss impossible to miss</figcaption>
+</figure>
+
         <div class="mmd" data-caption="60M app events + 25M CRM rows enter the gate; 78M pass to the warehouse, 7M land in quarantine.">
 <pre class="mmd-src">
 sankey-beta
