@@ -834,3 +834,9 @@ figure.zoomable.can-scroll figcaption::after {
    overflow:auto parent cut it in half; in normal flow nothing can clip it. The right margin
    keeps it clear of the Copy button; long labels wrap instead of running under it. */
 .prompt-box > .label{ position: static; display: table; margin: 0 5.2rem .55rem 0; white-space: normal; line-height: 1.45; }
+
+/* Mermaid draws to its own edge (2026-10-12): it sizes live diagrams 1-2px too tight, cutting the
+   bottom of axis labels and node text. Let the svg paint past its box; the frame has padding. */
+[id^="mmdlive"], .mermaid svg, svg[id^="mmdlive"], [id^="mmdlive"] foreignObject { overflow: visible; }
+/* Radar and pie labels are drawn up to ~25px outside the svg frame: give the panel room. */
+.mmd-panel.mmd-render { padding-left: 40px; padding-right: 40px; justify-content: safe center; }
